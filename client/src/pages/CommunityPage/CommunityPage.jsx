@@ -1,7 +1,7 @@
 import { Footer, Header } from '../../components';
 import { Container, Title } from './styles';
 
-const LoginPage = () => {
+const CommunityPage = () => {
   return (
     <Container>
       <Header />
@@ -11,4 +11,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default CommunityPage;
