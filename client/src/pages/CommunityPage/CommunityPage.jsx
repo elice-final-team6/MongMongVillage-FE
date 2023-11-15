@@ -70,18 +70,6 @@ const CommunityPage = () => {
       time: '2023-11-15 16:23:30',
       mainImg: './imges/img2.png',
     },
-    // {
-    //   id: 6,
-    //   category: 'info',
-    //   title: '서울 주차 편한 애견카페 아시나요???',
-    //   content:
-    //     '서울에 주차 여러대 가능한 큰 애견카페 아시면 추천 부탁드립니다. 서울에 주차 여러대 가능한 큰 애견카페 아시면 추천 부탁드립니다. 서울에 주차 여러대 가능한 큰 애견카페 아시면 추천 부탁드립니다. 서울에 주차 여러대 가능한 큰 애견카페 아시면 추천 부탁드립니다.',
-    //   user: '이은혜',
-    //   comment: 5,
-    //   like: 1,
-    //   time: '2023-11-16 16:23:30',
-    //    mainImg: 'https://kr.freepik.com/free-photo/front-view-dog-making-funny-faces_6146900.htm#query=%EA%B0%95%EC%95%84%EC%A7%80&position=10&from_view=keyword&track=sph&uuid=c3a9fe0e-647c-4084-928f-45a4e27b0975',
-    // },
   ]);
 
   // 정렬을 위해 list 복사한 state
@@ -93,29 +81,20 @@ const CommunityPage = () => {
   // 카테고리 filtered state
   const [filteredCategory, setFilteredCategory] = useState('all');
 
-  // 현재 페이지를 나타내는 state
-  const itemsPerPage = 5;
-  const [currentPage, setCurrentPage] = useState(1);
+  // 검색 기능을 위한 state
+  const [searchTerm, setSearchTerm] = useState('');
 
-  // 페이지 변경 시 호출될 함수
-  const handlePageChange = ({ selected }) => {
-    // 선택된 페이지로 리스트 업데이트
-    const newPage = selected + 1;
-    setCurrentPage(newPage);
-
-    // 페이지에 따라 필터된 리스트 업데이트
-    const startIndex = (newPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const newFilteredList = list.slice(startIndex, endIndex);
-    setFilteredList(newFilteredList);
+  // 검색창 input을 입력받는 onChange 핸들러
+  const handleSearchInputChange = (e) => {
+    setSearchTerm(e.target.value);
   };
 
-  // 카테고리 선택 onChange
+  // 카테고리 선택 onChange 핸들러
   const handleNavClick = (category) => {
     setFilteredCategory(category);
   };
 
-  // 정렬 onChange
+  // 정렬 onChange 핸들러
   const handleSortChange = (e) => {
     setSortOption(e.target.value);
   };
@@ -157,14 +136,22 @@ const CommunityPage = () => {
   // 컴포넌트가 마운트될 때와 sortOption, filteredCategory 변경될 때마다 정렬 수행
   useEffect(() => {
     sortedList();
-  }, [sortOption, filteredCategory, currentPage]);
+  }, [sortOption, filteredCategory, searchTerm]);
 
   // 게시글 리스트 render
   const renderList = () => {
-    console.log(filteredList);
+    const searchTermLowerCase = searchTerm.toLowerCase();
+
+    // 검색어가 비어있지 않을 때만 필터링 수행
+    // 비어있을땐 filteredList 그대로 넣어줌
+    const filteredListBySearch = searchTerm
+      ? filteredList.filter((item) =>
+          item.title.toLowerCase().includes(searchTermLowerCase),
+        )
+      : filteredList;
 
     // filteredList 로 뿌려줌
-    return filteredList.map((item) => (
+    return filteredListBySearch.map((item) => (
       <div className="ListItem" key={item.id}>
         <div className="ContentAndImg">
           <div>
@@ -226,7 +213,11 @@ const CommunityPage = () => {
 
       <SearchContainer>
         <SearchButton>🔍</SearchButton>
-        <SearchInput type="text" placeholder="커뮤니티 게시글 검색" />
+        <SearchInput
+          type="text"
+          placeholder="커뮤니티 게시글 검색"
+          onChange={handleSearchInputChange}
+        />
       </SearchContainer>
 
       <div style={{ marginBottom: '60px' }}>[ 페이지네이션 들어갈 공간 ]</div>
