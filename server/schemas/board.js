@@ -21,15 +21,15 @@ const boardSchema = new Schema({
         type: String, // 견종 목록
         default: null,
     }, 
+    likeCount: {
+        Number,
+        default: 0,
+    }
+    ,
     category: { // 자유글, 정보글
         type: String,
-        default: '자유글',
+        default: null,
     },
-    likers: [{
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: "User",
-    }]
 }, { timestamps: true });
 
 module.exports = mongoose.model('Board', boardSchema);
