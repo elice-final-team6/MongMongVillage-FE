@@ -6,6 +6,10 @@
   font-style: normal;
 }
 
+* {
+  font-family: 'GmarketSansMedium';
+}
+
 body {
   margin: 0;
   height: 100%;

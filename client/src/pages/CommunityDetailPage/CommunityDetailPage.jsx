@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Footer, Header } from '../../components';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   Container,
-  CommunityNav,
+  Post,
+  Comments,
+  Category,
+  Title,
+  Content,
+  Like,
+  BTN,
+  UnderContent,
+  ContentButton,
+  ContentInfo,
   ListContainer,
-  SearchContainer,
-  SearchInput,
-  SearchButton,
-  SelectSort,
-  PostBTN,
-  SearchAndPost,
-  SearchInputBox,
-} from './CommunityPage.styles';
+  PostComments,
+} from './CommunityDetailPage.styles.js';
 
-const CommunityPage = () => {
-  // navigate 객체 생성
+const CommunityDetailPage = () => {
   const navigate = useNavigate();
-  // 목 데이터
+
   const [list, setList] = useState([
     {
       id: 1,
@@ -150,96 +152,45 @@ const CommunityPage = () => {
     },
   ]);
 
-  // 정렬을 위해 list 복사한 state
-  const [filteredList, setFilteredList] = useState(list);
+  // params를 통해 id 값만 가져옴
+  const { id } = useParams();
 
-  // 최신순, 인기순 정렬 옵션 state
-  const [sortOption, setSortOption] = useState('latest');
+  // 해당 게시글 정보 저장
+  const [selectedPost, setSelectedPost] = useState(
+    list.find((post) => post.id === parseInt(id, 10)),
+  );
 
-  // 카테고리 filtered state
-  const [filteredCategory, setFilteredCategory] = useState('all');
-
-  // 검색 기능을 위한 state
-  const [searchTerm, setSearchTerm] = useState('');
-
-  // 검색창 input을 입력받는 onChange 핸들러
-  const handleSearchInputChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  // 카테고리 선택 onChange 핸들러
-  const handleNavClick = (category) => {
-    setFilteredCategory(category);
-  };
-
-  // 정렬 onChange 핸들러
-  const handleSortChange = (e) => {
-    setSortOption(e.target.value);
-  };
-
-  // 정렬 함수
-  const sortedList = () => {
-    // 받아온 글 목록 list 복제
-    let filteredListCopy = [...list];
-
-    // 카테고리 먼저 정렬
-    if (filteredCategory === 'all') {
-      filteredListCopy = list;
-    } else if (filteredCategory === 'free') {
-      filteredListCopy = filteredListCopy.filter(
-        (item) => item.category === filteredCategory,
-      );
-    } else if (filteredCategory === 'info') {
-      filteredListCopy = filteredListCopy.filter(
-        (item) => item.category === filteredCategory,
-      );
-    } else if (filteredCategory === 'question') {
-      filteredListCopy = filteredListCopy.filter(
-        (item) => item.category === filteredCategory,
-      );
-    }
-
-    // 인기순, 최신순 정렬
-    if (sortOption === 'popular') {
-      setFilteredList([...filteredListCopy].sort((a, b) => b.like - a.like));
-    } else {
-      setFilteredList(
-        [...filteredListCopy].sort(
-          (a, b) => new Date(b.time) - new Date(a.time),
-        ),
-      );
-    }
-  };
-
-  // 컴포넌트가 마운트될 때와 sortOption, filteredCategory, searchTerm 변경될 때마다 정렬 수행
   useEffect(() => {
-    sortedList();
-  }, [sortOption, filteredCategory, searchTerm]);
+    // 좋아요 수가 변경될 때마다 해당 정보를 다시 받아옴
+    setSelectedPost(list.find((post) => post.id === parseInt(id, 10)));
+
+    // 확인용 console
+    console.log(list, selectedPost);
+  }, [id, list]);
 
   // id 값을 params로 넘겨줄 함수 - detail 페이지로 정보 넘겨주기
   const handlePostClick = (postId) => {
+    setSelectedPost(list.find((post) => post.id === parseInt(postId, 10)));
     navigate(`/community/${postId}`);
+    window.scrollTo(0, 0);
   };
 
-  const handleNewPostClick = () => {
-    navigate('/community/newpost');
-    window.scrollTo(0, 0);
+  // 좋아요 눌렀을 때 실행되는 함수
+  const handleLikeClick = (postId) => {
+    const updateList = [...list];
+    const selectedPostIndex = list.findIndex((post) => post.id === postId);
+    updateList[selectedPostIndex] = {
+      ...selectedPost,
+      like: selectedPost.like + 1,
+    };
+
+    setList(updateList);
   };
 
   // 게시글 리스트 render
   const renderList = () => {
-    const searchTermLowerCase = searchTerm.toLowerCase();
-
-    // 검색어가 비어있지 않을 때만 필터링 수행
-    // 비어있을땐 filteredList 그대로 넣어줌
-    const filteredListBySearch = searchTerm
-      ? filteredList.filter((item) =>
-          item.title.toLowerCase().includes(searchTermLowerCase),
-        )
-      : filteredList;
-
     // filteredList 로 뿌려줌
-    return filteredListBySearch.map((item) => (
+    return list.map((item) => (
       <div className="ListItem" key={item.id}>
         <div
           className="ContentAndImg"
@@ -261,7 +212,7 @@ const CommunityPage = () => {
           />
         </div>
         <p>
-          {item.userImg} {item.user} / 댓글 : {item.comment.length} / 좋아요 :{' '}
+          {item.userImg} {item.user} / 댓글 : {item.comment.length} / 좋아요 :
           {item.like} / 작성시간 : {item.time}
         </p>
       </div>
@@ -272,67 +223,65 @@ const CommunityPage = () => {
     <Container>
       <Header />
 
-      <CommunityNav filteredCategory={filteredCategory}>
-        <div className="all" onClick={() => handleNavClick('all')}>
-          전체
-        </div>
-        <div className="free" onClick={() => handleNavClick('free')}>
-          자유글
-        </div>
-        <div className="info" onClick={() => handleNavClick('info')}>
-          정보글
-        </div>
-        <div className="question" onClick={() => handleNavClick('question')}>
-          질문글
-        </div>
-      </CommunityNav>
+      {selectedPost && (
+        <>
+          <Post>
+            <Category>{selectedPost.category}</Category>
+            <Title>{selectedPost.title}</Title>
+            <div>{selectedPost.mainImg}</div>
+            <Content>{selectedPost.content}</Content>
+          </Post>
 
-      <SelectSort>
-        <label htmlFor="sort">
-          <input
-            type="radio"
-            id="latest"
-            name="sort"
-            value="latest"
-            checked={sortOption === 'latest'}
-            onChange={handleSortChange}
-          />
-          <p>최신순</p>
-        </label>
-        <label htmlFor="sort">
-          <input
-            type="radio"
-            id="popular"
-            name="sort"
-            value="popular"
-            checked={sortOption === 'popular'}
-            onChange={handleSortChange}
-          />
-          <p>인기순</p>
-        </label>
-      </SelectSort>
+          <Like likeCount={selectedPost.like} onClick={handleLikeClick}>
+            <div>👍</div>
+            <p>{selectedPost.like}</p>
+          </Like>
+
+          <UnderContent>
+            <ContentInfo>
+              <div>{selectedPost.userImg}</div>
+              <div>
+                <p>{selectedPost.user}</p>
+                <p>{selectedPost.time}</p>
+              </div>
+            </ContentInfo>
+            <ContentButton>
+              <BTN>수정</BTN>
+              <BTN>삭제</BTN>
+            </ContentButton>
+          </UnderContent>
+
+          <Comments>
+            <p>댓글 {selectedPost.comment.length}</p>
+            <div>
+              <input
+                style={{ width: '100%' }}
+                placeholder="댓글을 입력해주세요."
+              ></input>
+              <BTN>등록</BTN>
+            </div>
+            <PostComments>
+              {selectedPost.comment.map((com) => (
+                <div key={com.id}>
+                  <div className="CommentUser">
+                    <p>{com.userImg}</p>
+                    <p className="ComTitle">{com.writer}</p>
+                  </div>
+                  <p className="ComText">{com.text}</p>
+                  <p className="ComTime">{com.time}</p>
+                </div>
+              ))}
+            </PostComments>
+          </Comments>
+        </>
+      )}
 
       <ListContainer>{renderList()}</ListContainer>
 
-      <SearchAndPost>
-        <SearchContainer>
-          <SearchInputBox>
-            <SearchButton>🔍</SearchButton>
-            <SearchInput
-              type="text"
-              placeholder="커뮤니티 게시글 검색"
-              onChange={handleSearchInputChange}
-            />
-          </SearchInputBox>
-        </SearchContainer>
-        <PostBTN onClick={handleNewPostClick}>글작성</PostBTN>
-      </SearchAndPost>
-
-      <div style={{ marginBottom: '60px' }}>[ 페이지네이션 들어갈 공간 ]</div>
-
+      <div> 페이지네이션 구현 </div>
       <Footer />
     </Container>
   );
 };
 
-export default CommunityPage;
+export default CommunityDetailPage;
