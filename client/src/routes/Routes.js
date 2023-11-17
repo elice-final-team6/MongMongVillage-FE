@@ -30,8 +30,8 @@ export const ROUTE = {
     element: <CommunityDetailPage />,
   },
   New_Post_Page: {
-    path: '/newpost',
-    link: '/newpost',
+    path: '/community/newpost',
+    link: '/community/newpost',
     element: <NewPostPage />,
   },
   SIGNUP_PAGE: {
