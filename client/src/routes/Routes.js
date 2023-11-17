@@ -1,11 +1,4 @@
-import {
-  SignUpPage,
-  CommunityPage,
-  MainPage,
-  LoginPage,
-  CommunityDetailPage,
-  NewPostPage,
-} from '../pages';
+import { MainPage, LoginPage, CafeMapPage, CafeDetailPage, SignUpPage, CommunityPage, CommunityDetailPage, NewPostPage } from '../pages';
 import { MyPage } from '../pages/MyPage';
 
 export const ROUTE = {
@@ -19,6 +12,17 @@ export const ROUTE = {
     link: '/login',
     element: <LoginPage />,
   },
+  
+  CAFE_MAP_PAGE: {
+    path: '/cafemap',
+    link: '/cafemap',
+    element: <CafeMapPage />,
+  },
+  CAFE_DETAIL_PAGE: {
+    path: '/cafedetail',
+    link: '/catedetail',
+    element: <CafeDetailPage />,
+    
   COMMUNITY_PAGE: {
     path: '/community',
     link: '/community',
@@ -43,7 +47,7 @@ export const ROUTE = {
     path: '/mypage',
     link: '/mypage',
     element: <MyPage />,
-  },
+  }
 };
 
 export const ROUTE_ARR = Object.values(ROUTE);
