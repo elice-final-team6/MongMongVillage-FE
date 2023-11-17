@@ -1,4 +1,11 @@
-import { SignUpPage, CommunityPage, MainPage, LoginPage } from '../pages';
+import {
+  SignUpPage,
+  CommunityPage,
+  MainPage,
+  LoginPage,
+  CommunityDetailPage,
+  NewPostPage,
+} from '../pages';
 import { MyPage } from '../pages/MyPage';
 
 export const ROUTE = {
@@ -16,6 +23,16 @@ export const ROUTE = {
     path: '/community',
     link: '/community',
     element: <CommunityPage />,
+  },
+  COMMUNITY_DETAIL_PAGE: {
+    path: '/community/:id',
+    link: '/community/:id',
+    element: <CommunityDetailPage />,
+  },
+  New_Post_Page: {
+    path: '/newpost',
+    link: '/newpost',
+    element: <NewPostPage />,
   },
   SIGNUP_PAGE: {
     path: '/signUp',
