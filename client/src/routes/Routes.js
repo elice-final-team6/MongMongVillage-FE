@@ -1,63 +1,83 @@
 import {
-  MainPage,
-  LoginPage,
-  CafeMapPage,
-  CafeDetailPage,
-  SignUpPage,
-  CommunityPage,
-  CommunityDetailPage,
-  NewPostPage,
-} from '../pages';
-import { MyPage } from '../pages/MyPage';
+    MainPage,
+    LoginPage,
+    CafeMapPage,
+    CafeDetailPage,
+    SignUpPage,
+    CommunityPage,
+    CommunityDetailPage,
+    NewPostPage,
+    ReviewDetail,
+    ReviewListPage,
+    ReviewWritePage,
+  } from '../pages';
+  import { MyPage } from '../pages/MyPage';
+  
+  export const ROUTE = {
+    MAIN_PAGE: {
+      path: '/',
+      link: '/',
+      element: <MainPage />,
+    },
+    LOGIN_PAGE: {
+      path: '/login',
+      link: '/login',
+      element: <LoginPage />,
+    },
+  
+    CAFE_MAP_PAGE: {
+      path: '/cafemap',
+      link: '/cafemap',
+      element: <CafeMapPage />,
+    },
+    CAFE_DETAIL_PAGE: {
+      path: '/cafedetail',
+      link: '/catedetail',
+      element: <CafeDetailPage />,
+    },
+  
+    COMMUNITY_PAGE: {
+      path: '/community',
+      link: '/community',
+      element: <CommunityPage />,
+    },
+    COMMUNITY_DETAIL_PAGE: {
+      path: '/community/:id',
+      link: '/community/:id',
+      element: <CommunityDetailPage />,
+    },
+    New_Post_Page: {
+      path: '/community/newpost',
+      link: '/community/newpost',
+      element: <NewPostPage />,
+    },
+    SIGNUP_PAGE: {
+      path: '/signUp',
+      link: '/signUp',
+      element: <SignUpPage />,
+    },
+    MY_PAGE: {
+      path: '/mypage',
+      link: '/mypage',
+      element: <MyPage />,
+    },
+    REVIEW_LIST_PAGE: {
+        path: '/review',
+        link: '/review',
+        element: <ReviewListPage />,
+    },
+    REVIEW_WRITE_PAGE: {
+        path: '/review/write',
+        link: '/review/write',
+        element: <ReviewWritePage />,
+    },
+    REVIEW_DETAIL_PAGE: {
+        path: '/review/detail/:id',
+        link: '/review/detail',
+        element: <ReviewDetail />,
+    },
 
-export const ROUTE = {
-  MAIN_PAGE: {
-    path: '/',
-    link: '/',
-    element: <MainPage />,
-  },
-  LOGIN_PAGE: {
-    path: '/login',
-    link: '/login',
-    element: <LoginPage />,
-  },
-
-  CAFE_MAP_PAGE: {
-    path: '/cafemap',
-    link: '/cafemap',
-    element: <CafeMapPage />,
-  },
-  CAFE_DETAIL_PAGE: {
-    path: '/cafedetail',
-    link: '/catedetail',
-    element: <CafeDetailPage />,
-  },
-
-  COMMUNITY_PAGE: {
-    path: '/community',
-    link: '/community',
-    element: <CommunityPage />,
-  },
-  COMMUNITY_DETAIL_PAGE: {
-    path: '/community/:id',
-    link: '/community/:id',
-    element: <CommunityDetailPage />,
-  },
-  New_Post_Page: {
-    path: '/community/newpost',
-    link: '/community/newpost',
-    element: <NewPostPage />,
-  },
-  SIGNUP_PAGE: {
-    path: '/signUp',
-    link: '/signUp',
-    element: <SignUpPage />,
-  },
-  MY_PAGE: {
-    path: '/mypage',
-    link: '/mypage',
-    element: <MyPage />,
-  },
-};
-
-export const ROUTE_ARR = Object.values(ROUTE);
+  };
+  
+  export const ROUTE_ARR = Object.values(ROUTE);
+  
