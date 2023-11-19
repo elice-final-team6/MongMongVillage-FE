@@ -1,25 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { Footer, Header } from '../../components';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useRef, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDropzone } from 'react-dropzone';
 import {
   Container,
-  Post,
-  Comments,
-  Category,
+  CategorySelector,
+  Input,
+  TextArea,
+  ImageUploadContainer,
+  ImageUploadText,
   Title,
-  Content,
-  Like,
-  BTN,
-  UnderContent,
-  ContentButton,
-  ContentInfo,
-  ListContainer,
-  PostComments,
-  MainImg,
-} from './CommunityDetailPage.styles.js';
+  PostBTN,
+} from './NewPost.styles';
 
-const CommunityDetailPage = () => {
+const NewPost = () => {
   const navigate = useNavigate();
+  const titleInputRef = useRef();
+  const contentInputRef = useRef();
+  const categorySelectRef = useRef();
 
   const [list, setList] = useState([
     {
@@ -153,136 +150,113 @@ const CommunityDetailPage = () => {
     },
   ]);
 
-  // params를 통해 id 값만 가져옴
-  const { id } = useParams();
+  const [newPost, setNewPost] = useState({});
+  const [uploadedImage, setUploadedImage] = useState(null);
 
-  // 해당 게시글 정보 저장
-  const [selectedPost, setSelectedPost] = useState(
-    list.find((post) => post.id === parseInt(id, 10)),
-  );
+  const onDrop = (acceptedFiles) => {
+    // 이미지 업로드 로직 추가
+    const image = acceptedFiles[0];
+    setUploadedImage(image);
+  };
+
+  // img dropzone 사용
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
+
+  // 시간 혀여식 맞춰줌
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+  const day = String(currentDate.getDate()).padStart(2, '0');
+  const hours = String(currentDate.getHours()).padStart(2, '0');
+  const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+  const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+
+  const formattedTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 
   useEffect(() => {
-    // 좋아요 수가 변경될 때마다 해당 정보를 다시 받아옴
-    setSelectedPost(list.find((post) => post.id === parseInt(id, 10)));
+    // newPost가 업데이트될 때마다 이펙트가 실행됨
+    console.log('newPost:', newPost);
+    if (newPost.id) {
+      setList((prevList) => [...prevList, newPost]);
 
-    // 확인용 console
-    console.log(list, selectedPost);
-  }, [id, list]);
+      // !!! 해당 작성글로 이동하도록 수정 필요
+      navigate(`/community/${newPost.id}`);
+      window.scrollTo(0, 0);
+    }
+  }, [newPost, navigate]);
 
-  // id 값을 params로 넘겨줄 함수 - detail 페이지로 정보 넘겨주기
-  const handlePostClick = (postId) => {
-    setSelectedPost(list.find((post) => post.id === parseInt(postId, 10)));
-    navigate(`/community/${postId}`);
-    window.scrollTo(0, 0);
-  };
-
-  // 좋아요 눌렀을 때 실행되는 함수
-  const handleLikeClick = (postId) => {
-    const updateList = [...list];
-    const selectedPostIndex = list.findIndex((post) => post.id === postId);
-    updateList[selectedPostIndex] = {
-      ...selectedPost,
-      like: selectedPost.like + 1,
-    };
-
-    setList(updateList);
-  };
-
-  // 게시글 리스트 render
-  const renderList = () => {
-    // filteredList 로 뿌려줌
-    return list.map((item) => (
-      <div className="ListItem" key={item.id}>
-        <div
-          className="ContentAndImg"
-          key={item.id}
-          onClick={() => {
-            handlePostClick(item.id);
-          }}
-          style={{ cursor: 'pointer' }}
-        >
-          <div>
-            <p className="Category">[ {item.category} ]</p>
-            <p className="Title">{item.title}</p>
-            <p className="ellipsis">{item.content}</p>
-          </div>
-          <img
-            src={item.mainImg}
-            alt="메인이미지"
-            style={{ maxWidth: '100%' }}
-          />
-        </div>
-        <p>
-          {item.userImg} {item.user} / 댓글 : {item.comment.length} / 좋아요 :{' '}
-          {item.like} / 작성시간 : {item.time}
-        </p>
-      </div>
-    ));
+  // 글 등록 함수
+  const handleNewPost = () => {
+    if (categorySelectRef.current.value === '') {
+      alert('카테고리를 선택해주세요.');
+      categorySelectRef.current.focus();
+    } else if (titleInputRef.current.value === '') {
+      alert('글 제목을 입력해주세요');
+      titleInputRef.current.focus();
+    } else if (contentInputRef.current.value === '') {
+      alert('글 내용을 입력해주세요.');
+      contentInputRef.current.focus();
+    } else {
+      // !! 새 작성글을 list 에 추가하는 부분 변경 필요
+      setNewPost({
+        id: 6,
+        category: categorySelectRef.current.value,
+        title: titleInputRef.current.value,
+        content: contentInputRef.current.value,
+        user: '최은혜',
+        userImg: '👮‍♀️',
+        comment: [],
+        like: 0,
+        time: formattedTime,
+        mainImg: uploadedImage,
+      });
+    }
   };
 
   return (
     <Container>
-      <Header />
+      <Title>카테고리 선택</Title>
+      <CategorySelector
+        ref={categorySelectRef} // ref 설정
+      >
+        <option value="">카테고리 선택</option>
+        <option value="info">정보글</option>
+        <option value="free">자유글</option>
+        <option value="question">질문글</option>
+      </CategorySelector>
 
-      {selectedPost && (
-        <>
-          <Post>
-            <Category>{selectedPost.category}</Category>
-            <Title>{selectedPost.title}</Title>
-            <MainImg>{selectedPost.mainImg}</MainImg>
-            <Content>{selectedPost.content}</Content>
-          </Post>
+      <Title>게시글 작성</Title>
+      <Input
+        type="text"
+        placeholder="제목을 입력해주세요..."
+        ref={titleInputRef}
+      />
 
-          <Like likeCount={selectedPost.like} onClick={handleLikeClick}>
-            <div>👍</div>
-            <p>{selectedPost.like}</p>
-          </Like>
+      <TextArea
+        placeholder="내용을 입력해주세요..."
+        ref={contentInputRef} // ref 설정
+      />
 
-          <UnderContent>
-            <ContentInfo>
-              <div>{selectedPost.userImg}</div>
-              <div>
-                <p>{selectedPost.user}</p>
-                <p>{selectedPost.time}</p>
-              </div>
-            </ContentInfo>
-            <ContentButton>
-              <BTN>수정</BTN>
-              <BTN>삭제</BTN>
-            </ContentButton>
-          </UnderContent>
+      <Title>사진 업로드</Title>
+      <ImageUploadContainer {...getRootProps()}>
+        <input {...getInputProps()} />
+        <ImageUploadText>사진을 첨부하세요.</ImageUploadText>
+      </ImageUploadContainer>
 
-          <Comments>
-            <p>댓글 {selectedPost.comment.length}</p>
-            <div>
-              <input
-                style={{ width: '100%' }}
-                placeholder="댓글을 입력해주세요."
-              ></input>
-              <BTN>등록</BTN>
-            </div>
-            <PostComments>
-              {selectedPost.comment.map((com) => (
-                <div key={com.id}>
-                  <div className="CommentUser">
-                    <p>{com.userImg}</p>
-                    <p className="ComTitle">{com.writer}</p>
-                  </div>
-                  <p className="ComText">{com.text}</p>
-                  <p className="ComTime">{com.time}</p>
-                </div>
-              ))}
-            </PostComments>
-          </Comments>
-        </>
+      {uploadedImage && (
+        <div>
+          <p>등록 이미지 미리보기</p>
+          <img
+            src={URL.createObjectURL(uploadedImage)}
+            alt="Uploaded"
+            style={{ maxWidth: '100%' }}
+          />
+        </div>
       )}
 
-      <ListContainer>{renderList()}</ListContainer>
-
-      <div> 페이지네이션 구현 </div>
-      <Footer />
+      <PostBTN onClick={handleNewPost}>글 등록</PostBTN>
     </Container>
   );
 };
 
-export default CommunityDetailPage;
+export default NewPost;

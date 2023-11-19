@@ -257,8 +257,8 @@ const CommunityPage = () => {
           style={{ cursor: 'pointer' }}
         >
           <div>
-            <h3>[ {item.category} ]</h3>
-            <h4>{item.title}</h4>
+            <p className="Category">[ {item.category} ]</p>
+            <p className="Title">{item.title}</p>
             <p className="ellipsis">{item.content}</p>
           </div>
           <img

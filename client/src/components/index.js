@@ -18,3 +18,4 @@ export * from './MyReview';
 export * from './MyEditAndRemoveButtons';
 export * from './MyLikeItem';
 export * from './MyReviewItem';
+export * from './NewPost';

@@ -79,19 +79,35 @@ export const ListContainer = styled.div`
     }
   }
 
-  h3 {
+  .Category {
+    margin-top: 24px !important;
+    font-size: 24px !important;
     font-weight: bold;
   }
 
-  p {
-    font-size: 12px;
+  .Title {
+    margin-top: 40px;
+    margin-bottom: 28px;
+    font-size: 16px !important;
   }
 
   .ellipsis {
-    white-space: nowrap;
+    margin-top: 20px;
+    font-size: 12px !important;
+    white-space: pre-line; /* 여러 줄 보여주도록 */
     overflow: hidden;
     text-overflow: ellipsis;
+    line-height: 18px; /* 라인 간격 */
+    margin-bottom: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 두 줄까지 표시하도록 설정 */
+    -webkit-box-orient: vertical; /* 세로 방향으로 설정 */
     max-width: 1050px;
+  }
+
+  p {
+    margin-top: 24px;
+    font-size: 12px;
   }
 `;
 
@@ -142,6 +158,7 @@ export const SearchInput = styled.input`
 export const SelectSort = styled.div`
   display: flex;
   margin-top: 30px;
+  margin-bottom: 30px;
   font-size: 15px;
   margin-right: 90%;
 
