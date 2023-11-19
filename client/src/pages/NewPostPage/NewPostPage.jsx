@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Footer, Header } from '../../components';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
 import {
   Container,
@@ -153,9 +153,6 @@ const NewPostPage = () => {
   ]);
 
   const [newPost, setNewPost] = useState({});
-  const [category, setCategory] = useState('');
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
   const [uploadedImage, setUploadedImage] = useState(null);
 
   const onDrop = (acceptedFiles) => {
@@ -166,25 +163,6 @@ const NewPostPage = () => {
 
   // img dropzone 사용
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
-
-  // // 제목 state 셋
-  // // 카테고리 state 셋
-  // const handleCategoryClick = () => {
-  //   const categoryValue = categorySelectRef.current.value;
-  //   setCategory(categoryValue);
-  // };
-
-  // // 제목 state 셋
-  // const handleTitleInput = () => {
-  //   const titleValue = titleInputRef.current.value;
-  //   setTitle(titleValue);
-  // };
-
-  // // 내용 state 셋
-  // const handleContentInput = () => {
-  //   const contentValue = contentInputRef.current.value;
-  //   setContent(contentValue);
-  // };
 
   // 시간 혀여식 맞춰줌
   const currentDate = new Date();
@@ -211,22 +189,22 @@ const NewPostPage = () => {
 
   // 글 등록 함수
   const handleNewPost = () => {
-    if (category === '') {
+    if (categorySelectRef.current.value === '') {
       alert('카테고리를 선택해주세요.');
       categorySelectRef.current.focus();
-    } else if (title === '') {
+    } else if (titleInputRef.current.value === '') {
       alert('글 제목을 입력해주세요');
       titleInputRef.current.focus();
-    } else if (content === '') {
+    } else if (contentInputRef.current.value === '') {
       alert('글 내용을 입력해주세요.');
       contentInputRef.current.focus();
     } else {
       // !! 새 작성글을 list 에 추가하는 부분 변경 필요
       setNewPost({
         id: 6,
-        category: category,
-        title: title,
-        content: content,
+        category: categorySelectRef.current.value,
+        title: titleInputRef.current.value,
+        content: contentInputRef.current.value,
         user: '최은혜',
         userImg: '👮‍♀️',
         comment: [],
@@ -243,8 +221,6 @@ const NewPostPage = () => {
       <NewPostContainer>
         <Title>카테고리 선택</Title>
         <CategorySelector
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
           ref={categorySelectRef} // ref 설정
         >
           <option value="">카테고리 선택</option>
@@ -257,15 +233,11 @@ const NewPostPage = () => {
         <Input
           type="text"
           placeholder="제목을 입력해주세요..."
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
           ref={titleInputRef}
         />
 
         <TextArea
           placeholder="내용을 입력해주세요..."
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
           ref={contentInputRef} // ref 설정
         />
 

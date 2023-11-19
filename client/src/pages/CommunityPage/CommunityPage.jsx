@@ -14,6 +14,13 @@ import {
   SearchInputBox,
 } from './CommunityPage.styles';
 
+const CATEGORY_DIC = {
+  all: 'all',
+  free: 'free',
+  info: 'info',
+  question: 'question',
+};
+
 const CommunityPage = () => {
   // navigate 객체 생성
   const navigate = useNavigate();
@@ -157,7 +164,7 @@ const CommunityPage = () => {
   const [sortOption, setSortOption] = useState('latest');
 
   // 카테고리 filtered state
-  const [filteredCategory, setFilteredCategory] = useState('all');
+  const [filteredCategory, setFilteredCategory] = useState(CATEGORY_DIC.all);
 
   // 검색 기능을 위한 state
   const [searchTerm, setSearchTerm] = useState('');
@@ -183,17 +190,17 @@ const CommunityPage = () => {
     let filteredListCopy = [...list];
 
     // 카테고리 먼저 정렬
-    if (filteredCategory === 'all') {
+    if (filteredCategory === CATEGORY_DIC.all) {
       filteredListCopy = list;
-    } else if (filteredCategory === 'free') {
+    } else if (filteredCategory === CATEGORY_DIC.free) {
       filteredListCopy = filteredListCopy.filter(
         (item) => item.category === filteredCategory,
       );
-    } else if (filteredCategory === 'info') {
+    } else if (filteredCategory === CATEGORY_DIC.info) {
       filteredListCopy = filteredListCopy.filter(
         (item) => item.category === filteredCategory,
       );
-    } else if (filteredCategory === 'question') {
+    } else if (filteredCategory === CATEGORY_DIC.question) {
       filteredListCopy = filteredListCopy.filter(
         (item) => item.category === filteredCategory,
       );
@@ -273,29 +280,20 @@ const CommunityPage = () => {
       <Header />
 
       <CommunityNav filteredCategory={filteredCategory}>
-        <div
-          className={filteredCategory === 'all' ? 'selected' : ''}
-          onClick={() => handleNavClick('all')}
-        >
-          <span>전체</span>
+        <div className="all" onClick={() => handleNavClick(CATEGORY_DIC.all)}>
+          전체
+        </div>
+        <div className="free" onClick={() => handleNavClick(CATEGORY_DIC.free)}>
+          자유글
+        </div>
+        <div className="info" onClick={() => handleNavClick(CATEGORY_DIC.info)}>
+          정보글
         </div>
         <div
-          className={filteredCategory === 'free' ? 'selected' : ''}
-          onClick={() => handleNavClick('free')}
+          className="question"
+          onClick={() => handleNavClick(CATEGORY_DIC.question)}
         >
-          <span>자유글</span>
-        </div>
-        <div
-          className={filteredCategory === 'info' ? 'selected' : ''}
-          onClick={() => handleNavClick('info')}
-        >
-          <span>정보글</span>
-        </div>
-        <div
-          className={filteredCategory === 'question' ? 'selected' : ''}
-          onClick={() => handleNavClick('question')}
-        >
-          <span>질문글</span>
+          질문글
         </div>
       </CommunityNav>
 
