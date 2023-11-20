@@ -13,7 +13,6 @@ const commentSchema = new Schema({
         required: true,
         ref: "Board",
     },
-    images: [String],
     content: {
         type: String,
         required: true,

@@ -87,7 +87,7 @@ exports.getDetailBoard = async (boardId) => {
         const board = await Board.findOne({ _id: boardId })
             .populate({ path: 'user_id', select: '_id nickname image' });
         const comments = await Comment.find({ board_id: boardId })
-            .select('_id user_id images content createdAt updatedAt')
+            .select('_id user_id content createdAt updatedAt')
             .populate({ path: 'user_id', select: '_id image nickname' });
 
         console.log('게시글: ', board);
