@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const connect = () => {
-    mongoose.connect('mongodb+srv://dbsrud0872po:CqIqC3f9iUFb2jtd@cluster0.xlljunn.mongodb.net/mongoose-test?retryWrites=true&w=majority')
+    mongoose.connect(process.env.MONGO_URL)
     .then((res) => {
         console.log('몽고디비 연결 성공');
     })

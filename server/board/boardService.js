@@ -1,9 +1,31 @@
 const Board = require('./model/boardSchema');
-const User = require('../user/model/userSchema');
 const Comment = require('../comment/model/commentSchema');
+const User = require('../user/model/userSchema');
+const Like = require('./model/likeSchema');
 
-exports.createBoard = async () => {
+exports.createBoard = async (userId, title, content, animalType, category, imageUrl) => {
+    try {
+        animalType = animalType || null;
+        category = category || null;
 
+        const board = await Board.create({
+            user_id: userId,
+            comment_id: [],
+            title: title,
+            content: content,
+            images: imageUrl,
+            animal_type: animalType,
+            like_count: 0,
+            category: category,
+        });
+        console.log(board);
+        return {
+            status: 201,
+            message: '게시글이 성공적으로 작성되었습니다.'
+        }
+    } catch (error) {
+        throw error;
+    }
 }
 
 exports.updateBoard = async () => {
@@ -30,7 +52,7 @@ exports.deleteBoard = async (userId, boardId) => {
 
 exports.getAllBoards = async (currentPage, perPage) => {
   try {
-    const totalBoards = await Board.countDocuments({});
+    const totalNumberOfBoards = await Board.countDocuments({});
     const boards = await Board
                 .find({})
                 .sort({createdAt: -1})
@@ -39,8 +61,8 @@ exports.getAllBoards = async (currentPage, perPage) => {
                 .populate({ path: 'user_id', select: '_id image nickname' });
     return {
         status: 200,
-        totalBoards: totalBoards, 
-        boards: boards,
+        totalNumberOfBoards,
+        boards,
     }
   } catch (error) {
     throw error;
@@ -49,7 +71,7 @@ exports.getAllBoards = async (currentPage, perPage) => {
 
 exports.getCategoryBoards = async (category, currentPage, perPage) => {
     try {
-        const totalBoards = await Board.countDocuments({ category: category });
+        const totalNumberOfBoards = await Board.countDocuments({ category: category });
         const boards = await Board 
                     .find({ category: category })
                     .sort({ createdAt: -1 })
@@ -57,17 +79,29 @@ exports.getCategoryBoards = async (category, currentPage, perPage) => {
                     .limit(perPage);
         return {
             status: 200,
-            totalBoards: totalBoards, 
-            boards: boards,
+            totalNumberOfBoards, 
+            boards,
         }
     } catch (error) {
         throw error;
     }
 }
 
-// 홈 페이지 상위 4개 게시글(좋아요 순)
+// 홈 페이지 상위 4개 게시글(좋아요순 기준 같으면 최신순)
 exports.getBestBoards = async () => {
-
+    try {
+        const boards = await Board.find({})
+                    .populate({ path: 'user_id', select: '_id nickname' })
+                    .sort('-like_count -createdAt')
+                    .limit(4)
+                    .select('_id images title like_count')
+        return {
+            status: 200,
+            boards,
+        }
+    } catch (error) {
+        throw error;
+    }
 }
 
 exports.getBoardsByUserId = async (userId) => {
@@ -100,8 +134,60 @@ exports.getDetailBoard = async (boardId) => {
         }
         return {
             status: 200,
-            board: board,
-            comments: comments,
+            board,
+            comments,
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
+exports.getLiked = async (boardId, userId) => {
+    try {
+        const isLikedResult = await Like.findOne({ board_id: boardId, user_id: userId });
+        console.log(isLikedResult);
+        if (isLikedResult === null) return { checked: false };
+        else return { checked: true };
+    } catch (error) {
+        throw error;
+    }
+}
+// 좋아요 생성
+exports.setLiked = async (boardId, userId) => {
+    try {
+        await Like.create({
+            user_id: userId,
+            board_id: boardId,
+        });
+        const likeCount = await Like.countDocuments({ board_id: boardId });
+
+        await Board.findByIdAndUpdate(boardId, { like_count: likeCount });
+        return {
+            status: 200,
+            isLiked: true
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
+// 좋아요 취소
+exports.deleteLiked = async (boardId, userId) => {
+    try {
+        const result = await Like.findOneAndDelete({ board_id: boardId, user_id: userId });
+
+        if (result === null) {
+            return {
+                status: 400,
+                errMsg: '좋아요 취소 실패'
+            }
+        }
+        const likeCount = await Like.countDocuments({ board_id: boardId });
+
+        await Board.findByIdAndUpdate(boardId, { like_count: likeCount });
+        return {
+            status: 200,
+            isLiked: false
         }
     } catch (error) {
         throw error;
