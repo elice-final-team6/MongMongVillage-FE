@@ -9,7 +9,7 @@ export const Container = styled.div`
 
 export const Title = styled.h1`
   color: white;
-  background-color: var(--main-yellow-color);
+  background-color: #ffd100;
   font-size: 26px;
   text-align: center;
 `;

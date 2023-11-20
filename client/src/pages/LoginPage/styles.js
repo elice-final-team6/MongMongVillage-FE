@@ -22,7 +22,6 @@ export const Img = styled.img`
 
 export const SNSButton = styled.button`
   width: 100%;
-  border: none;
   border-radius: 20px;
   display: flex;
   padding: 10px;
@@ -30,7 +29,6 @@ export const SNSButton = styled.button`
   box-shadow: 2px 1px 1px lightgray;
   justify-content: space-around;
   font-size: 16px;
-  cursor: pointer;
   &.google-login-button {
     background-color: white;
     border: 1px solid lightgray;
@@ -59,7 +57,5 @@ export const TextButtonContainer = styled.div`
 `;
 
 export const TextButton = styled.button`
-  cursor: pointer;
   background: none;
-  border: none;
 `;

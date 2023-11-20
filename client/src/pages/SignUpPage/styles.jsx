@@ -19,7 +19,6 @@ export const CheckButton = styled.button`
   border: none;
   background-color: lightgray;
   border-radius: 20px;
-  cursor: pointer;
   margin-left: 10px;
   width: 25%;
   height: min-content;

@@ -15,6 +15,10 @@ export const Post = styled.div`
   flex-direction: column;
 `;
 
+export const MainImg = styled.div`
+  margin-top: 40px;
+`;
+
 export const Title = styled.h2`
   border-bottom: 2px solid lightgray;
   padding-bottom: 30px;
@@ -27,11 +31,13 @@ export const Category = styled.p`
   width: 90px;
   border-radius: 16px;
   padding-top: 4px;
+  margin-bottom: 40px;
 `;
 
 export const Content = styled.div`
   margin-top: 40px;
   margin-bottom: 50px;
+  line-height: 24px;
 `;
 
 export const Like = styled.div`
@@ -108,7 +114,6 @@ export const Comments = styled.div`
   align-items: flex-start;
   margin-top: 40px;
   margin-bottom: 80px;
-  border-bottom: 1px solid lightgray;
   width: 100%;
 
   p {
@@ -175,19 +180,35 @@ export const ListContainer = styled.div`
     }
   }
 
-  h3 {
+  .Category {
+    margin-top: 24px !important;
+    font-size: 24px !important;
     font-weight: bold;
   }
 
-  p {
-    font-size: 12px;
+  .Title {
+    margin-top: 40px;
+    margin-bottom: 28px;
+    font-size: 16px !important;
   }
 
   .ellipsis {
-    white-space: nowrap;
+    margin-top: 20px;
+    font-size: 12px !important;
+    white-space: pre-line; /* 여러 줄 보여주도록 */
     overflow: hidden;
     text-overflow: ellipsis;
+    line-height: 18px; /* 라인 간격 */
+    margin-bottom: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 두 줄까지 표시하도록 설정 */
+    -webkit-box-orient: vertical; /* 세로 방향으로 설정 */
     max-width: 1050px;
+  }
+
+  p {
+    margin-top: 24px;
+    font-size: 12px;
   }
 `;
 
