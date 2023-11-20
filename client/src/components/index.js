@@ -22,5 +22,8 @@ export * from './NewPost';
 export * from './CommunityNav';
 export * from './CommunitySelectSort';
 export * from './CommunitySearchAndPost';
-// 새로
 export * from './CommunityList';
+export * from './CommunityPost';
+export * from './CommunityPostLike';
+export * from './CommunityUnderContent';
+export * from './CommunityComments';
