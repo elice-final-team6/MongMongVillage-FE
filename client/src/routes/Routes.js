@@ -48,11 +48,11 @@ export const ROUTE = {
 
   COMMUNITY_DETAIL_PAGE: {
     path: '/community/:id',
-    link: '/community/:id',
+    link: '/community',
     element: <CommunityDetailPage />,
   },
 
-  New_Post_Page: {
+  NEW_POST_PAGE: {
     path: '/community/newpost',
     link: '/community/newpost',
     element: <NewPostPage />,

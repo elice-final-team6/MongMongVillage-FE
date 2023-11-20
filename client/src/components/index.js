@@ -19,3 +19,8 @@ export * from './MyEditAndRemoveButtons';
 export * from './MyLikeItem';
 export * from './MyReviewItem';
 export * from './NewPost';
+export * from './CommunityNav';
+export * from './CommunitySelectSort';
+export * from './CommunitySearchAndPost';
+// 새로
+export * from './CommunityList';

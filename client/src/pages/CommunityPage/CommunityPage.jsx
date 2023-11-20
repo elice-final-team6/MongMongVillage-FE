@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Footer, Header } from '../../components';
 import {
-  Container,
+  Footer,
+  Header,
   CommunityNav,
-  ListContainer,
-  SearchContainer,
-  SearchInput,
-  SearchButton,
-  SelectSort,
-  PostBTN,
-  SearchAndPost,
-  SearchInputBox,
-} from './CommunityPage.styles';
+  CommunitySelectSort,
+  CommunitySearchAndPost,
+  CommunityList,
+} from '../../components';
+import { ROUTE } from '../../routes/Routes';
+import { Container } from './CommunityPage.styles';
 
 const CATEGORY_DIC = {
   all: 'all',
@@ -225,118 +222,48 @@ const CommunityPage = () => {
 
   // id 값을 params로 넘겨줄 함수 - detail 페이지로 정보 넘겨주기
   const handlePostClick = (postId) => {
-    navigate(`/community/${postId}`);
+    navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${postId}`);
+    // navigate(`/community/${postId}`);
   };
 
+  // 각 게시글 클릭시 실행 함수
   const handleNewPostClick = () => {
-    navigate('/community/newpost');
+    navigate(ROUTE.NEW_POST_PAGE.link);
+    // navigate('/community/newpost');
     window.scrollTo(0, 0);
   };
 
-  // 게시글 리스트 render
-  const renderList = () => {
-    const searchTermLowerCase = searchTerm.toLowerCase();
-
-    // 검색어가 비어있지 않을 때만 필터링 수행
-    // 비어있을땐 filteredList 그대로 넣어줌
-    const filteredListBySearch = searchTerm
-      ? filteredList.filter((item) =>
-          item.title.toLowerCase().includes(searchTermLowerCase),
-        )
-      : filteredList;
-
-    // filteredList 로 뿌려줌
-    return filteredListBySearch.map((item) => (
-      <div className="ListItem" key={item.id}>
-        <div
-          className="ContentAndImg"
-          key={item.id}
-          onClick={() => {
-            handlePostClick(item.id);
-          }}
-          style={{ cursor: 'pointer' }}
-        >
-          <div>
-            <p className="Category">[ {item.category} ]</p>
-            <p className="Title">{item.title}</p>
-            <p className="ellipsis">{item.content}</p>
-          </div>
-          <img
-            src={item.mainImg}
-            alt="메인이미지"
-            style={{ maxWidth: '100%' }}
-          />
-        </div>
-        <p>
-          {item.userImg} {item.user} / 댓글 : {item.comment.length} / 좋아요 :{' '}
-          {item.like} / 작성시간 : {item.time}
-        </p>
-      </div>
-    ));
-  };
+  // 검색어 관련 기능
+  const searchTermLowerCase = searchTerm.toLowerCase();
+  const filteredListBySearch = searchTerm
+    ? filteredList.filter((item) =>
+        item.title.toLowerCase().includes(searchTermLowerCase),
+      )
+    : filteredList;
 
   return (
     <Container>
       <Header />
 
-      <CommunityNav filteredCategory={filteredCategory}>
-        <div className="all" onClick={() => handleNavClick(CATEGORY_DIC.all)}>
-          전체
-        </div>
-        <div className="free" onClick={() => handleNavClick(CATEGORY_DIC.free)}>
-          자유글
-        </div>
-        <div className="info" onClick={() => handleNavClick(CATEGORY_DIC.info)}>
-          정보글
-        </div>
-        <div
-          className="question"
-          onClick={() => handleNavClick(CATEGORY_DIC.question)}
-        >
-          질문글
-        </div>
-      </CommunityNav>
+      <CommunityNav
+        filteredCategory={filteredCategory}
+        handleNavClick={handleNavClick}
+      ></CommunityNav>
 
-      <SelectSort>
-        <label htmlFor="sort">
-          <input
-            type="radio"
-            id="latest"
-            name="sort"
-            value="latest"
-            checked={sortOption === 'latest'}
-            onChange={handleSortChange}
-          />
-          <p>최신순</p>
-        </label>
-        <label htmlFor="sort">
-          <input
-            type="radio"
-            id="popular"
-            name="sort"
-            value="popular"
-            checked={sortOption === 'popular'}
-            onChange={handleSortChange}
-          />
-          <p>인기순</p>
-        </label>
-      </SelectSort>
+      <CommunitySelectSort
+        sortOption={sortOption}
+        handleSortChange={handleSortChange}
+      ></CommunitySelectSort>
 
-      <ListContainer>{renderList()}</ListContainer>
+      <CommunityList
+        filteredListBySearch={filteredListBySearch}
+        handlePostClick={handlePostClick}
+      ></CommunityList>
 
-      <SearchAndPost>
-        <SearchContainer>
-          <SearchInputBox>
-            <SearchButton>🔍</SearchButton>
-            <SearchInput
-              type="text"
-              placeholder="커뮤니티 게시글 검색"
-              onChange={handleSearchInputChange}
-            />
-          </SearchInputBox>
-        </SearchContainer>
-        <PostBTN onClick={handleNewPostClick}>글작성</PostBTN>
-      </SearchAndPost>
+      <CommunitySearchAndPost
+        handleSearchInputChange={handleSearchInputChange}
+        handleNewPostClick={handleNewPostClick}
+      ></CommunitySearchAndPost>
 
       <div style={{ marginBottom: '60px' }}>[ 페이지네이션 들어갈 공간 ]</div>
 
