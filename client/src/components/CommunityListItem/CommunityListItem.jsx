@@ -17,7 +17,6 @@ import { FaCircleUser } from 'react-icons/fa6';
 import { FaHeart } from 'react-icons/fa';
 
 const CommunityListItem = ({ item, handlePostClick }) => {
-  console.log(item);
   return (
     <Container
       key={item.id}
