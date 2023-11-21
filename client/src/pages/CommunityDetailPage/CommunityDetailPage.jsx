@@ -9,12 +9,13 @@ import {
   CommunityComments,
   CommunityPagination,
 } from '../../components';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Container } from './CommunityDetailPage.styles.js';
 import { ROUTE } from '../../routes/Routes.js';
 
 const CommunityDetailPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [list, setList] = useState([
     {
@@ -864,7 +865,6 @@ const CommunityDetailPage = () => {
         'https://i.pinimg.com/564x/9d/b6/47/9db647b8e500c0bab2ac6d3b3f210cb6.jpg',
     },
   ]);
-
   // params를 통해 id 값만 가져옴
   const { id } = useParams();
   // 해당 게시글 정보 저장
@@ -872,16 +872,12 @@ const CommunityDetailPage = () => {
     list.find((post) => post.id === parseInt(id, 10)),
   );
 
-  useEffect(() => {
-    // 좋아요 수가 변경될 때마다 해당 정보를 다시 받아옴
-    const post = list.find((post) => post.id === parseInt(id, 10));
-    setSelectedPost(post);
-  }, [id, list, setSelectedPost]);
-
   // id 값을 params로 넘겨줄 함수 - detail 페이지로 정보 넘겨주기
   const handlePostClick = (postId) => {
     setSelectedPost(list.find((post) => post.id === parseInt(postId, 10)));
-    navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${postId}`);
+    navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${postId}`, {
+      state: { filteredList: filteredList },
+    });
     // navigate(`/community/${postId}`);
     window.scrollTo(0, 0);
   };
@@ -903,14 +899,16 @@ const CommunityDetailPage = () => {
   const ITEMS_PER_PAGE = 5;
   // 현재 페이지 상태
   const [currentPage, setCurrentPage] = useState(1);
-  // 시작 인덱스와 끝 인덱스 계산
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const { state } = location;
+  const filteredList = state ? state.filteredList : [];
 
   // 현재 페이지에 표시될 아이템들
-  const currentPageItems = list.slice(startIndex, endIndex);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  // 현재 페이지에 표시될 아이템들
+  const currentPageItems = filteredList.slice(startIndex, endIndex);
   // 전체 페이지 수 계산
-  const totalPages = Math.ceil(list.length / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(filteredList.length / ITEMS_PER_PAGE);
 
   // 이전 페이지로 이동하는 함수
   const goToPrevPage = () => {
@@ -925,6 +923,14 @@ const CommunityDetailPage = () => {
     setCurrentPage(page);
   };
 
+  useEffect(() => {
+    // 좋아요 수가 변경될 때마다 해당 정보를 다시 받아옴
+    const post = list.find((post) => post.id === parseInt(id, 10));
+    if (post) {
+      setSelectedPost(post);
+    }
+  }, [id, list]);
+
   return (
     <Container>
       <Header />
@@ -932,7 +938,7 @@ const CommunityDetailPage = () => {
         <>
           <CommunityPost selectedPost={selectedPost} />
           <CommunityPostLike
-            likeCount={selectedPost.like}
+            like={selectedPost.like}
             onClick={handleLikeClick}
           ></CommunityPostLike>
           <CommunityUnderContent

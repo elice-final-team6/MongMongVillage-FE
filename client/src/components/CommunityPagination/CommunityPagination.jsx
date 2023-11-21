@@ -35,7 +35,6 @@ const CommunityPagination = ({
       <PageButton onClick={goToPrevPage} disabled={currentPage === 1}>
         {'<'}
       </PageButton>
-      ...
       {pages.map((page) => (
         <PageButton
           key={page}
@@ -45,7 +44,6 @@ const CommunityPagination = ({
           {page}
         </PageButton>
       ))}
-      ...
       <PageButton onClick={goToNextPage} disabled={currentPage === totalPages}>
         {'>'}
       </PageButton>

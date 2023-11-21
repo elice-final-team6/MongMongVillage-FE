@@ -893,6 +893,7 @@ const CommunityPage = () => {
 
   // 정렬 함수
   const sortedList = () => {
+    // window.scrollTo(0, 0);
     // 받아온 글 목록 list 복제
     let filteredListCopy = [...list];
 
@@ -925,13 +926,12 @@ const CommunityPage = () => {
     }
 
     // 검색어에 따라 set
-    const filteredListCopySearch = [...filteredList];
     if (searchTerm) {
       const searchTermLowerCase = searchTerm.toLowerCase();
-      setFilteredList(
-        filteredListCopySearch.filter((item) => {
-          return item.title.toLowerCase().includes(searchTermLowerCase);
-        }),
+      setFilteredList((prevList) =>
+        prevList.filter((item) =>
+          item.title.toLowerCase().includes(searchTermLowerCase),
+        ),
       );
     }
   };
@@ -988,7 +988,9 @@ const CommunityPage = () => {
 
   // 각 게시글 클릭시 실행 함수
   const handlePostClick = (postId) => {
-    navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${postId}`);
+    navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${postId}`, {
+      state: { filteredList: filteredList },
+    });
     window.scrollTo(0, 0);
   };
 
