@@ -64,6 +64,7 @@ export const PostCommentsContainer = styled.div`
       border: none !important;
       display: flex !important;
       flex-direction: row !important;
+      align-items: center;
     }
   }
 
@@ -75,5 +76,12 @@ export const PostCommentsContainer = styled.div`
   }
   .ComTime {
     font-size: 12px;
+  }
+
+  img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 12px;
   }
 `;

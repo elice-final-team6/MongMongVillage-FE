@@ -28,3 +28,4 @@ export * from './CommunityPostLike';
 export * from './CommunityUnderContent';
 export * from './CommunityComments';
 export * from './CommunityListItem';
+export * from './CommunityPagination';

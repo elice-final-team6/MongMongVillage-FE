@@ -13,7 +13,9 @@ const CommunityPost = ({ selectedPost }) => {
     <PostContainer>
       <Category>{selectedPost.category}</Category>
       <Title>{selectedPost.title}</Title>
-      <MainImg>{selectedPost.mainImg}</MainImg>
+      <MainImg>
+        <img src={selectedPost.mainImg} />
+      </MainImg>
       <Content>{selectedPost.content}</Content>
     </PostContainer>
   );

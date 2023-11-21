@@ -18,7 +18,9 @@ const CommunityComments = ({ selectedPost }) => {
           {selectedPost.comment.map((com) => (
             <div key={com.id}>
               <div className="CommentUser">
-                <p>{com.userImg}</p>
+                <p>
+                  <img src={com.userImg} />
+                </p>
                 <p className="ComTitle">{com.writer}</p>
               </div>
               <p className="ComText">{com.text}</p>

@@ -1,11 +1,11 @@
 import React from 'react';
 import { LikeContainer } from './CommunityPostLike.styles';
 
-const CommunityPostLike = ({ likeCount, onClick }) => {
+const CommunityPostLike = ({ like, onClick }) => {
   return (
-    <LikeContainer likeCount={likeCount} onClick={onClick}>
+    <LikeContainer like={like} onClick={onClick}>
       <div>👍</div>
-      <p>{likeCount}</p>
+      <p>{like}</p>
     </LikeContainer>
   );
 };

@@ -1,3 +1,6 @@
+import { CommunityCategory } from '../../libs';
+import { FaCircleUser } from 'react-icons/fa6';
+import { FaHeart } from 'react-icons/fa';
 import {
   Container,
   PostImg,
@@ -11,27 +14,31 @@ import {
   Count,
   Category,
   Content,
-} from './styles';
-import { CommunityCategory } from '../../libs';
-import { FaCircleUser } from 'react-icons/fa6';
-import { FaHeart } from 'react-icons/fa';
+} from './CommunityListItem.styles.js';
 
-const CommunityListItem = ({ item, handlePostClick }) => {
+const CommunityListItem = ({
+  item,
+  handlePostClick,
+  //  handleUserClick,
+}) => {
   return (
-    <Container
-      key={item.id}
-      onClick={() => {
-        handlePostClick(item.id);
-      }}
-    >
+    <Container key={item.id}>
       <LeftContainer>
-        <TopContainer>
+        <TopContainer
+          onClick={() => {
+            handlePostClick(item.id);
+          }}
+        >
           <Category>{item.category}</Category>
           <Title>{item.title}</Title>
           <Content>{item.content}</Content>
         </TopContainer>
         <BottomContainer>
-          <Writer>
+          <Writer
+          // onClick={() => {
+          //   handleUserClick(item.user.id);
+          // }}
+          >
             {item.userImg ? (
               <img alt="유저프로필이미지" src={item.userImg} />
             ) : (

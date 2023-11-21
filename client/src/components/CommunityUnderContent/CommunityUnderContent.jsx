@@ -7,10 +7,13 @@ import {
 } from './CommunityUnderContent.styles';
 
 const CommunityUnderContent = ({ selectedPost }) => {
+  console.log(selectedPost);
   return (
     <UnderContentContainer>
       <ContentInfo>
-        <div>{selectedPost.userImg}</div>
+        <div>
+          <img src={selectedPost.userImg} />
+        </div>
         <div>
           <p>{selectedPost.user}</p>
           <p>{selectedPost.time}</p>

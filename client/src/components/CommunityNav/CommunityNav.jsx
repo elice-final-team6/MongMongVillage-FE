@@ -3,13 +3,13 @@ import { CommunityNavContainer, CommunityNavItem } from './CommunityNav.styles';
 import { CommunityCategory } from '../../libs';
 import { useState } from 'react';
 
-const CommunityNav = ({ handleNavClick, filteredCategory }) => {
+const CommunityNav = ({ handleNavClick, category }) => {
   const [selectedCategory, setSelectedCategory] = useState(
     CommunityCategory.all,
   );
   return (
     <>
-      <CommunityNavContainer filteredCategory={filteredCategory}>
+      <CommunityNavContainer category={category}>
         <CommunityNavItem
           onClick={() => {
             setSelectedCategory(CommunityCategory.all);
