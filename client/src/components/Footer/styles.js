@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   width: 100%;
   background-color: white;
+  height: 224px;
 `;
 
 export const FooterContainer = styled.div`
@@ -37,7 +38,7 @@ export const CommunityList = styled.span`
 `;
 
 export const Info = styled.span`
-  padding: 20px 15px 0 15px;
+  padding: 35px 15px 0 15px;
   display: flex;
   justify-content: space-between;
 `;
@@ -53,7 +54,7 @@ export const Content = styled.p`
     text-align: left;
     display: inline-block;
     position: absolute;
-    top: 9px;
+    top: 18px;
     left: 70px;
     `};
 
