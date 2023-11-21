@@ -28,6 +28,7 @@ export const Category = styled.span`
 `;
 
 export const Content = styled.div`
+  padding-top: 10px;
   margin: 30px 30px 0 0;
   font-size: 16px;
   width: 100%; // 컨테이너의 너비 설정
@@ -41,6 +42,9 @@ export const Content = styled.div`
   -webkit-box-orient: vertical;
 
   white-space: normal;
+
+  max-height: 2.4em;
+  line-height: 1.2em;
 `;
 
 export const PostImg = styled.img`

@@ -18,7 +18,7 @@ const CommunityDetailPage = () => {
   const [list, setList] = useState([
     {
       id: 1,
-      category: 'free',
+      category: '자유글',
       title: '강아지 훈련',
       content: '강아지 훈련을 위해 훈련소를 방문했어요',
       user: '이은혜',
@@ -43,7 +43,7 @@ const CommunityDetailPage = () => {
     },
     {
       id: 2,
-      category: 'free',
+      category: '자유글',
       title: '애견카페 방문',
       content: '예쁜 애견카페를 방문했어요',
       user: '이은혜',
@@ -68,7 +68,7 @@ const CommunityDetailPage = () => {
     },
     {
       id: 3,
-      category: 'question',
+      category: '질문글',
       title: '강아지 미용실 추천해주실 수 있나요?',
       content: '미용 잘 하는 곳 추천해주세요.',
       user: '이은혜',
@@ -93,7 +93,7 @@ const CommunityDetailPage = () => {
     },
     {
       id: 4,
-      category: 'question',
+      category: '질문글',
       title: '안양천 강아지 놀이터 어디가 좋은가요?',
       content:
         '서울 양천구 근처에 좋은 강아지 놀이터가 있나요? 서울 양천구 근처에 좋은 강아지 놀이터가 있나요? 서울 양천구 근처에 좋은 강아지 놀이터가 있나요? 서울 양천구 근처에 좋은 강아지 놀이터가 있나요?',
@@ -119,7 +119,7 @@ const CommunityDetailPage = () => {
     },
     {
       id: 5,
-      category: 'info',
+      category: '정보글',
       title: '목동 강아지 놀이터 정보 공유',
       content:
         '목동 안양천에 넓고 예쁜 강아지 놀이터가 있어요 모두 가보세요. 목동 안양천에 넓고 예쁜 강아지 놀이터가 있어요 모두 가보세요. 목동 안양천에 넓고 예쁜 강아지 놀이터가 있어요 모두 가보세요. 목동 안양천에 넓고 예쁜 강아지 놀이터가 있어요 모두 가보세요. 목동 안양천에 넓고 예쁜 강아지 놀이터가 있어요 모두 가보세요. 목동 안양천에 넓고 예쁜 강아지 놀이터가 있어요 모두 가보세요. 목동 안양천에 넓고 예쁜 강아지 놀이터가 있어요 모두 가보세요.',

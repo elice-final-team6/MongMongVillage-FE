@@ -10,13 +10,10 @@ import {
 } from '../../components';
 import { ROUTE } from '../../routes/Routes';
 import { Container } from './CommunityPage.styles';
+import { CommunityCategory } from '../../libs';
 
-const CATEGORY_DIC = {
-  all: 'all',
-  free: 'free',
-  info: 'info',
-  question: 'question',
-};
+// 카테고리 객체
+const CATEGORY_DIC = CommunityCategory;
 
 const CommunityPage = () => {
   // navigate 객체 생성
@@ -25,7 +22,7 @@ const CommunityPage = () => {
   const [list] = useState([
     {
       id: 1,
-      category: 'free',
+      category: '전체',
       title: '강아지 훈련',
       content: '강아지 훈련을 위해 훈련소를 방문했어요',
       user: '이은혜',
@@ -51,7 +48,7 @@ const CommunityPage = () => {
     },
     {
       id: 2,
-      category: 'free',
+      category: '자유글',
       title: '애견카페 방문',
       content: '예쁜 애견카페를 방문했어요',
       user: '이은혜',
@@ -77,7 +74,7 @@ const CommunityPage = () => {
     },
     {
       id: 3,
-      category: 'question',
+      category: '질문글',
       title: '강아지 미용실 추천해주실 수 있나요?',
       content: '미용 잘 하는 곳 추천해주세요.',
       user: '이은혜',
@@ -103,7 +100,7 @@ const CommunityPage = () => {
     },
     {
       id: 4,
-      category: 'question',
+      category: '질문글',
       title: '안양천 강아지 놀이터 어디가 좋은가요?',
       content:
         '서울 양천구 근처에 좋은 강아지 놀이터가 있나요? 서울 양천구 근처에 좋은 강아지 놀이터가 있나요? 서울 양천구 근처에 좋은 강아지 놀이터가 있나요? 서울 양천구 근처에 좋은 강아지 놀이터가 있나요?',
@@ -130,7 +127,7 @@ const CommunityPage = () => {
     },
     {
       id: 5,
-      category: 'info',
+      category: '정보글',
       title: '목동 강아지 놀이터 정보 공유',
       content:
         '목동 안양천에 넓고 예쁜 강아지 놀이터가 있어요 모두 가보세요. 목동 안양천에 넓고 예쁜 강아지 놀이터가 있어요 모두 가보세요. 목동 안양천에 넓고 예쁜 강아지 놀이터가 있어요 모두 가보세요. 목동 안양천에 넓고 예쁜 강아지 놀이터가 있어요 모두 가보세요. 목동 안양천에 넓고 예쁜 강아지 놀이터가 있어요 모두 가보세요. 목동 안양천에 넓고 예쁜 강아지 놀이터가 있어요 모두 가보세요. 목동 안양천에 넓고 예쁜 강아지 놀이터가 있어요 모두 가보세요.목동 안양천에 넓고 예쁜 강아지 놀이터가 있어요 모두 가보세요. 목동 안양천에 넓고 예쁜 강아지 놀이터가 있어요 모두 가보세요. 목동 안양천에 넓고 예쁜 강아지 놀이터가 있어요 모두 가보세요. 목동 안양천에 넓고 예쁜 강아지 놀이터가 있어요 모두 가보세요. 목동 안양천에 넓고 예쁜 강아지 놀이터가 있어요 모두 가보세요.목동 안양천에 넓고 예쁜 강아지 놀이터가 있어요 모두 가보세요. 목동 안양천에 넓고 예쁜 강아지 놀이터가 있어요 모두 가보세요. 목동 안양천에 넓고 예쁜 강아지 놀이터가 있어요 모두 가보세요. 목동 안양천에 넓고 예쁜 강아지 놀이터가 있어요 모두 가보세요. 목동 안양천에 넓고 예쁜 강아지 놀이터가 있어요 모두 가보세요.',
@@ -231,7 +228,7 @@ const CommunityPage = () => {
   // id 값을 params로 넘겨줄 함수 - detail 페이지로 정보 넘겨주기
   const handlePostClick = (postId) => {
     navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${postId}`);
-    // navigate(`/community/${postId}`);
+    window.scrollTo(0, 0);
   };
 
   // 각 게시글 클릭시 실행 함수
