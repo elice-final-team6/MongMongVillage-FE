@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Modal from 'react-modal';
 import {
   CommunityList,
   CommunityPost,
@@ -6,6 +7,7 @@ import {
   CommunityUnderContent,
   CommunityComments,
   CommunityPagination,
+  EditCommunityPostModal,
 } from '../../components/index.js';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Container } from './CommunityDetailPage.styles.js';
@@ -881,24 +883,26 @@ const CommunityDetailPage = () => {
   };
 
   // 좋아요 눌렸는지 확인 state
-  const [likeClick, setLikeClick] = useState(false);
+  const [likeclick, setlikeclick] = useState(false);
   // 좋아요 눌렀을 때 실행되는 함수
-  const handleLikeClick = (postId) => {
+  const handleLikeclick = (postId) => {
     const updateList = [...list];
     const selectedPostIndex = list.findIndex((post) => post.id === postId);
 
-    if (likeClick === false) {
+    if (likeclick === false) {
+      // 해당 게시글의 좋아요 + 1
       updateList[selectedPostIndex] = {
         ...selectedPost,
         like: selectedPost.like + 1,
       };
-      setLikeClick(true);
+      setlikeclick(true);
+      // 여기서 api 를 통해 내가 누른 좋아요 목록에 글을 추가해줘야 함
     } else {
       updateList[selectedPostIndex] = {
         ...selectedPost,
         like: selectedPost.like - 1,
       };
-      setLikeClick(false);
+      setlikeclick(false);
     }
 
     setList(updateList);
@@ -933,6 +937,19 @@ const CommunityDetailPage = () => {
     setCurrentPage(page);
   };
 
+  // 게시글 수정 함수
+  const handleEdit = (post) => {
+    navigate(`${ROUTE.EDIT_POST_PAGE.link}/${post.id}`);
+    window.scrollTo(0, 0);
+  };
+  // 게시글 삭제 함수
+  const handleDelete = (postId) => {
+    // 삭제 관련 작업 수행
+    alert('게시글이 삭제되었습니다.');
+    navigate(ROUTE.COMMUNITY_PAGE.link);
+    window.scrollTo(0, 0);
+  };
+
   useEffect(() => {
     // 좋아요 수가 변경될 때마다 해당 정보를 다시 받아옴
     const post = list.find((post) => post.id === parseInt(id, 10));
@@ -948,12 +965,14 @@ const CommunityDetailPage = () => {
           <CommunityPost selectedPost={selectedPost} />
           <CommunityPostLike
             like={selectedPost.like}
-            likeClick={likeClick}
-            onClick={handleLikeClick}
+            likeclick={likeclick}
+            onClick={handleLikeclick}
           ></CommunityPostLike>
           <CommunityUnderContent
             /* 수정, 삭제 함수 만들어 props로 넘겨주고 기능 구현 필요*/
             selectedPost={selectedPost}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
           ></CommunityUnderContent>
           <CommunityComments selectedPost={selectedPost}></CommunityComments>
         </>

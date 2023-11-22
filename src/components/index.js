@@ -19,6 +19,7 @@ export * from './MyEditAndRemoveButtons';
 export * from './MyLikeItem';
 export * from './MyReviewItem';
 export * from './NewPost';
+export * from './EditCommunityPost';
 export * from './CommunityNav';
 export * from './CommunitySelectSort';
 export * from './CommunitySearchAndPost';

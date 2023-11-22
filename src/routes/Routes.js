@@ -13,6 +13,7 @@ import {
   ReviewDetail,
   CommunityDetailPage,
   ReviewWritePage,
+  EditPostPage,
 } from '../pages';
 
 export const ROUTE = {
@@ -98,6 +99,12 @@ export const ROUTE = {
     path: '/mypage/activity',
     link: '/mypage/activity',
     element: <MyActivityPage />,
+  },
+
+  EDIT_POST_PAGE: {
+    path: '/community/edit/:id',
+    link: '/community/edit',
+    element: <EditPostPage />,
   },
 };
 
