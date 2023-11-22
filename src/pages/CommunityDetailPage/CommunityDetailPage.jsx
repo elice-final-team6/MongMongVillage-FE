@@ -874,13 +874,13 @@ const CommunityDetailPage = () => {
   const handlePostClick = (postId) => {
     setSelectedPost(list.find((post) => post.id === parseInt(postId, 10)));
     navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${postId}`, {
-      state: { filteredList: filteredList, list: list },
+      state: { filteredList: filteredList },
     });
     // navigate(`/community/${postId}`);
     window.scrollTo(0, 0);
   };
 
-  // 좋아요가 이미 눌렸는지 확인
+  // 좋아요 눌렸는지 확인 state
   const [likeClick, setLikeClick] = useState(false);
   // 좋아요 눌렀을 때 실행되는 함수
   const handleLikeClick = (postId) => {
