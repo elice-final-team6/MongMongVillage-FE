@@ -32,14 +32,16 @@ export const PostBTN = styled.button`
 `;
 
 export const SearchButton = styled.button`
+  margin-top: 12px;
   margin-left: 20px;
   background: none;
 `;
 
 export const SearchInput = styled.input`
   padding: 8px;
+  margin-top: 0;
   border: none;
-  margin-right: 20px;
+  margin-left: 50px;
   height: 24px;
   width: 500px;
 `;

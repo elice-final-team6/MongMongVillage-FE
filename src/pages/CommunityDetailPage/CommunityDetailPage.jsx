@@ -874,20 +874,32 @@ const CommunityDetailPage = () => {
   const handlePostClick = (postId) => {
     setSelectedPost(list.find((post) => post.id === parseInt(postId, 10)));
     navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${postId}`, {
-      state: { filteredList: filteredList },
+      state: { filteredList: filteredList, list: list },
     });
     // navigate(`/community/${postId}`);
     window.scrollTo(0, 0);
   };
 
+  // 좋아요가 이미 눌렸는지 확인
+  const [likeClick, setLikeClick] = useState(false);
   // 좋아요 눌렀을 때 실행되는 함수
   const handleLikeClick = (postId) => {
     const updateList = [...list];
     const selectedPostIndex = list.findIndex((post) => post.id === postId);
-    updateList[selectedPostIndex] = {
-      ...selectedPost,
-      like: selectedPost.like + 1,
-    };
+
+    if (likeClick === false) {
+      updateList[selectedPostIndex] = {
+        ...selectedPost,
+        like: selectedPost.like + 1,
+      };
+      setLikeClick(true);
+    } else {
+      updateList[selectedPostIndex] = {
+        ...selectedPost,
+        like: selectedPost.like - 1,
+      };
+      setLikeClick(false);
+    }
 
     setList(updateList);
   };
@@ -936,6 +948,7 @@ const CommunityDetailPage = () => {
           <CommunityPost selectedPost={selectedPost} />
           <CommunityPostLike
             like={selectedPost.like}
+            likeClick={likeClick}
             onClick={handleLikeClick}
           ></CommunityPostLike>
           <CommunityUnderContent

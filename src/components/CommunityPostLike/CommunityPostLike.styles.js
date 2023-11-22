@@ -9,7 +9,7 @@ export const LikeContainer = styled.div`
   justify-content: center !important;
   border: 2px solid lightgray;
   border-radius: 40px;
-  background-color: ${(props) => (props.likeCount > 0 ? 'lavender' : 'white')};
+  background-color: ${(props) => (props.likeClick ? 'lavender' : 'white')};
   width: 80px;
   height: 80px;
 
