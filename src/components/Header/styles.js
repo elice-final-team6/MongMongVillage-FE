@@ -47,6 +47,4 @@ export const Navitem = styled.nav`
   background-color: var(--main-yellow-color);`}
 `;
 
-export const Space = styled.div`
-  width: 15%;
-`;
+export const Space = styled.div``;

@@ -59,3 +59,21 @@ export const DogCafeListItemDate = styled.p`
   font-size: 15px;
   color: #585858;
 `;
+
+export const LoadingContainer = styled.div`
+  width: 90%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+`;
+
+export const ErrorContainer = styled.div`
+  width: 90%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+`;

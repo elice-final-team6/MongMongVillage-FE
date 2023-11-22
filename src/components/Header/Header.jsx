@@ -5,6 +5,7 @@ import { ROUTE } from '../../routes/Routes';
 
 const Header = () => {
   const navigate = useNavigate();
+  const token = sessionStorage.getItem('token');
 
   return (
     <Container>
@@ -31,16 +32,28 @@ const Header = () => {
         >
           카페정보
         </Navitem>
-        <Space />
-        <Navitem id="login" onClick={() => navigate(ROUTE.LOGIN_PAGE.link)}>
-          로그인
-        </Navitem>
-        <Navitem id="signup" onClick={() => navigate(ROUTE.SIGNUP_PAGE.link)}>
-          회원가입
-        </Navitem>
-        <Navitem id="mypage" onClick={() => navigate(ROUTE.MY_PAGE.link)}>
-          마이페이지
-        </Navitem>
+
+        {token ? (
+          <>
+            <Space style={{ width: '32%' }} />
+            <Navitem id="mypage" onClick={() => navigate(ROUTE.MY_PAGE.link)}>
+              마이페이지
+            </Navitem>
+          </>
+        ) : (
+          <>
+            <Space style={{ width: '25%' }} />
+            <Navitem id="login" onClick={() => navigate(ROUTE.LOGIN_PAGE.link)}>
+              로그인
+            </Navitem>
+            <Navitem
+              id="signup"
+              onClick={() => navigate(ROUTE.SIGNUP_PAGE.link)}
+            >
+              회원가입
+            </Navitem>
+          </>
+        )}
       </Navbar>
     </Container>
   );
