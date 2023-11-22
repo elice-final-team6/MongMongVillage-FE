@@ -6,5 +6,5 @@ export const Container = styled.div`
   margin: 0 auto;
   font-family: 'GmarketSansMedium', sans-serif;
 
-  max-width: 1280px; /* 추가 */
+  max-width: 1280px;
 `;

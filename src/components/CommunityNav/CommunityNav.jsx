@@ -17,7 +17,7 @@ const CommunityNav = ({ handleNavClick, category }) => {
           }}
           selected={selectedCategory === CommunityCategory.all ? true : false}
         >
-          <span>{CommunityCategory.all}</span>
+          <span>전체글</span>
         </CommunityNavItem>
 
         <CommunityNavItem
@@ -27,7 +27,7 @@ const CommunityNav = ({ handleNavClick, category }) => {
             setSelectedCategory(CommunityCategory.free);
           }}
         >
-          <span>{CommunityCategory.free}</span>
+          <span>자유글</span>
         </CommunityNavItem>
         <CommunityNavItem
           selected={selectedCategory === CommunityCategory.info ? true : false}
@@ -36,7 +36,7 @@ const CommunityNav = ({ handleNavClick, category }) => {
             setSelectedCategory(CommunityCategory.info);
           }}
         >
-          <span> {CommunityCategory.info}</span>
+          <span> 정보글</span>
         </CommunityNavItem>
         <CommunityNavItem
           selected={
@@ -47,7 +47,7 @@ const CommunityNav = ({ handleNavClick, category }) => {
             setSelectedCategory(CommunityCategory.question);
           }}
         >
-          <span> {CommunityCategory.question}</span>
+          <span>질문글</span>
         </CommunityNavItem>
       </CommunityNavContainer>
     </>

@@ -28,4 +28,5 @@ export const Category = styled.span`
 export const Content = styled.div`
   margin: 50px 0;
   font-size: 18px;
+  line-height: 1.5;
 `;
