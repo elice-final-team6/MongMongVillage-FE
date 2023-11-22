@@ -910,7 +910,7 @@ const CommunityDetailPage = () => {
 
   // 페이지네이션 관련 기능 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
   // 페이지네이션 페이지 당 아이템 수
-  const ITEMS_PER_PAGE = 5;
+  const ITEMS_PER_PAGE = 4;
   // 현재 페이지 상태
   const [currentPage, setCurrentPage] = useState(1);
   const { state } = location;

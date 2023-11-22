@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const SearchAndPostContainer = styled.div`
+  margin-top: 40px;
   display: flex;
   flex-direction: row;
   align-items: center;

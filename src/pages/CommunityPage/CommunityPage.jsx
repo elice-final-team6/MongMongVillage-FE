@@ -14,7 +14,7 @@ import { CommunityCategory } from '../../libs';
 // 카테고리 객체
 const CATEGORY_DIC = CommunityCategory;
 // 페이지네이션 페이지 당 아이템 수
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 4;
 
 const CommunityPage = () => {
   // navigate 객체 생성
@@ -870,6 +870,7 @@ const CommunityPage = () => {
   ]);
 
   // 정렬을 위해 list 복사한 state
+  // !!! 초기값으로 서버로부터 받아온 리스트 넣어줘야함
   const [filteredList, setFilteredList] = useState(list);
 
   // 최신순, 인기순 정렬 옵션 state
@@ -982,6 +983,7 @@ const CommunityPage = () => {
   const goToPage = (page) => {
     setCurrentPage(page);
     sortedList();
+    // !!! 서버로부터 현재 CurrentPage 와 일치하는 페이지 요청해서 받아오도록 해야함
   };
 
   // 각 게시글 클릭시 실행 함수

@@ -14,6 +14,7 @@ const CommunityPagination = ({
   const visiblePages = 5; // 한 번에 표시되는 페이지 수
   const halfVisible = Math.floor(visiblePages / 2);
 
+  // 빈 배열 만들어서 5개의 페이지 동적으로 set 해줌
   const newPages = [];
   let startPage = Math.max(currentPage - halfVisible, 1);
   let endPage = Math.min(startPage + visiblePages - 1, totalPages);
