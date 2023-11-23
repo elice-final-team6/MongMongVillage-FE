@@ -19,12 +19,12 @@ const CommunityDetailPage = () => {
   // 현재 페이지 상태
   const { state } = location;
   const stateList = state ? state.list : [];
-  const totalPages = state ? state.totalPages : 0;
 
   // 현재 페이지의 전체 게시글
   const [list, setList] = useState(stateList);
   // 디테일 페이지의 해당 게시글
   const [post, setPost] = useState();
+  const [totalBoards, setTotalBoards] = useState(0);
 
   // 카테고리 filtered state
   const filteredCategory = state ? state.filteredCategory : null;
@@ -60,6 +60,7 @@ const CommunityDetailPage = () => {
   useEffect(() => {
     if (boardsData && boardsData.boards) {
       setList(boardsData.boards);
+      setTotalBoards(boardsData.total_number_of_boards);
     }
   }, [boardsData, currentPage, filteredCategory]);
 
@@ -101,6 +102,7 @@ const CommunityDetailPage = () => {
 
   // 페이지네이션 관련 기능 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
   // 현재 페이지에 표시될 아이템들
+  const totalPages = Math.ceil(totalBoards / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
   // 현재 페이지에 표시될 아이템들
