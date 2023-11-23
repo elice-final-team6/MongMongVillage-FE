@@ -15,10 +15,10 @@ const SearchBar = () => {
   return (
     <SearchContainer>
       <StyledForm onSubmit={handleSubmit}>
-        <SearchInput type="search" placeholder="애견카페 검색" />
+        <SearchInput type="text" placeholder="애견카페 검색" />
         <SearchButton>
           <div>
-            <FaSearch size={'20px'} />
+            <FaSearch size={'23px'} />
           </div>
         </SearchButton>
       </StyledForm>

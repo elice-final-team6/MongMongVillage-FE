@@ -43,6 +43,10 @@ const BestContents = () => {
     return <ErrorContainer>{error}</ErrorContainer>;
   }
 
+  const scollTop = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  };
+
   return (
     <Container>
       <Content>인기글</Content>
@@ -53,11 +57,17 @@ const BestContents = () => {
               <DogCafeListItemImg
                 src={content.images.length > 0 ? content.images[0] : ''}
                 alt={`Content ${index}`}
-                onClick={() => linkToCommunity(content._id)}
+                onClick={() => {
+                  linkToCommunity(content._id);
+                  scollTop();
+                }}
               />
               <DogCafeItemInfo>
                 <DogCafeListItemTitle
-                  onClick={() => linkToCommunity(content._id)}
+                  onClick={() => {
+                    linkToCommunity(content._id);
+                    scollTop();
+                  }}
                 >
                   {content.title}
                 </DogCafeListItemTitle>

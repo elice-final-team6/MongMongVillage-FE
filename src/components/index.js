@@ -30,6 +30,7 @@ export * from './CommunityUnderContent';
 export * from './CommunityComments';
 export * from './CommunityListItem';
 export * from './CommunityPagination';
+export * from './CafeDetail';
 export * from './ReviewItem';
 export * from './ReviewListSort';
 export * from './ReviewPagination';

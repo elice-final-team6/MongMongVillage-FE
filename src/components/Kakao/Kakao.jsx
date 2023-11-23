@@ -4,9 +4,9 @@ import './styles.css';
 
 const Kakao = () => {
   // 입력 폼 변화 감지하여 입력 값 관리
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState('강남 애견카페');
   // 제출한 검색어 관리
-  const [keyword, setKeyword] = useState('');
+  const [keyword, setKeyword] = useState('강남 애견카페');
 
   // 입력 폼 변화 감지하여 입력 값을 state에 담아주는 함수
   const keywordChange = (e) => {
@@ -34,7 +34,6 @@ const Kakao = () => {
             <label htmlFor="place" className="form__label">
               <input
                 type="text"
-                id="movie-title"
                 className="form__input"
                 name="place"
                 onChange={keywordChange}

@@ -25,7 +25,7 @@ const Banner = () => {
           확인하세요!
         </BannerInfo>
 
-        <BannerPhoneNumber>000-000-000</BannerPhoneNumber>
+        <BannerPhoneNumber>mongmongv6@gmail.com</BannerPhoneNumber>
       </BannerBox>
     </Container>
   );
