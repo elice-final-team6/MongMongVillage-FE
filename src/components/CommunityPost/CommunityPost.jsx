@@ -8,16 +8,16 @@ import {
 } from './CommunityPost.styles';
 
 const CommunityPost = ({ selectedPost, post }) => {
-  // console.log('selectedPost : ', selectedPost);
+  console.log('selectedPost : ', selectedPost);
   // console.log('post : ', post);
   return (
     <PostContainer>
       <Title>
         <Category>{selectedPost.category}</Category>
-        {selectedPost.title}
+        <p>{selectedPost.title}</p>
       </Title>
       <MainImg>
-        {selectedPost?.images.lenght > 0 ? (
+        {selectedPost?.images.length > 0 ? (
           <img src={selectedPost?.images[0]} alt="ContentImg" />
         ) : (
           <></>

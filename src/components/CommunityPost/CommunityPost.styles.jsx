@@ -6,14 +6,19 @@ export const PostContainer = styled.div`
 `;
 
 export const MainImg = styled.div`
-  margin-top: 40px;
+  margin-top: 32px;
 `;
 
 export const Title = styled.h2`
   font-size: 24px;
+  display: flex;
   border-bottom: 2px solid lightgray;
   padding-bottom: 30px;
   margin-top: 0px;
+
+  p {
+    padding-top: 6px;
+  }
 `;
 
 export const Category = styled.span`
@@ -26,7 +31,7 @@ export const Category = styled.span`
 `;
 
 export const Content = styled.div`
-  margin: 50px 0;
+  margin: 12px 0;
   font-size: 18px;
   line-height: 1.5;
 `;

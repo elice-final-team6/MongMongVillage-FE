@@ -13,10 +13,16 @@ export const TopContainer = styled.div`
   span {
     font-weight: bold;
   }
+  .TitleAndCategory {
+    display: flex;
+    align-items: center;
+  }
 `;
 
 export const Title = styled.span`
   font-size: 18px;
+  align-items: center;
+  padding-top: 4px;
 `;
 
 export const Category = styled.span`
@@ -25,6 +31,7 @@ export const Category = styled.span`
   border-radius: 20px;
   margin-right: 10px;
   font-size: 12px;
+  align-items: center;
 `;
 
 export const Content = styled.div`

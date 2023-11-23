@@ -31,8 +31,10 @@ const CommunityListItem = ({
             handlePostClick(item._id);
           }}
         >
-          <Category>{item.category}</Category>
-          <Title>{item.title}</Title>
+          <div className="TitleAndCategory">
+            <Category>{item.category}</Category>
+            <Title>{item.title}</Title>
+          </div>
           <Content>{item.content}</Content>
         </TopContainer>
         <BottomContainer>
