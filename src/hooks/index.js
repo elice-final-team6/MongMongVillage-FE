@@ -5,6 +5,8 @@ export const instance = axios.create({
 });
 
 export * from './postSignUp';
+export * from './getBoards';
+export * from './getDetailBoard';
+export * from './getCommunitySearch';
 export * from './getBestContents';
 export * from './postLogin';
-

@@ -7,7 +7,9 @@ import {
   Content,
 } from './CommunityPost.styles';
 
-const CommunityPost = ({ selectedPost }) => {
+const CommunityPost = ({ selectedPost, post }) => {
+  // console.log('selectedPost : ', selectedPost);
+  // console.log('post : ', post);
   return (
     <PostContainer>
       <Title>
@@ -15,7 +17,11 @@ const CommunityPost = ({ selectedPost }) => {
         {selectedPost.title}
       </Title>
       <MainImg>
-        <img src={selectedPost.mainImg} alt="post_image" />
+        {selectedPost?.images.lenght > 0 ? (
+          <img src={selectedPost?.images[0]} alt="ContentImg" />
+        ) : (
+          <></>
+        )}
       </MainImg>
       <Content>{selectedPost.content}</Content>
     </PostContainer>

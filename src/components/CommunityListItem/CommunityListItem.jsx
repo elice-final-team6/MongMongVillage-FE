@@ -19,14 +19,16 @@ import {
 const CommunityListItem = ({
   item,
   handlePostClick,
+  totalPages,
   //  handleUserClick,
 }) => {
+  // console.log('item : ', item);
   return (
-    <Container key={item.id}>
+    <Container key={item._id}>
       <LeftContainer>
         <TopContainer
           onClick={() => {
-            handlePostClick(item.id);
+            handlePostClick(item._id);
           }}
         >
           <Category>{item.category}</Category>
@@ -44,17 +46,17 @@ const CommunityListItem = ({
             ) : (
               <FaCircleUser size={'25px'} color="gray" />
             )}
-            <span>{item.user}</span>
+            <span>{item.user_id.nickname}</span>
           </Writer>
-          <Count>댓글 : {item.comment.length}</Count>
+          <Count>댓글 : {item.comment_id.length}</Count>
           <Count>
-            <FaHeart color="red" size={'20px'} /> {item.like}
+            <FaHeart color="red" size={'20px'} /> {item.like_count}
           </Count>
-          <DateText>{item.time} 작성</DateText>
+          <DateText>{item.createdAt} 작성</DateText>
         </BottomContainer>
       </LeftContainer>
       <RightContainer>
-        <PostImg src={item.mainImg} alt="메인이미지" />
+        <PostImg src={item.images[0]} alt="메인이미지" />
       </RightContainer>
     </Container>
   );

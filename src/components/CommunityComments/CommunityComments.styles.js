@@ -21,15 +21,16 @@ export const CommentsContainer = styled.div`
   width: 100%;
 
   p {
-    margin: 0;
+    margin-top: 10px;
     font-size: 18px;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
   }
 
   div {
     width: 100%;
     display: flex;
     flex-direction: row;
+    margin-bottom: 8px;
 
     input {
       width: 100%;
@@ -63,16 +64,20 @@ export const PostCommentsContainer = styled.div`
     .CommentUser {
       border: none !important;
       display: flex !important;
+      align-items: center;
       flex-direction: row !important;
       align-items: center;
+      margin-bottom: 8px !important;
+    }
+
+    .ComContent {
+      font-size: 12px;
     }
   }
 
-  .ComTitle {
-    font-size: 18px;
-  }
-  .ComText {
-    font-size: 14px;
+  .ComUser {
+    font-size: 12px;
+    margin-right: 16px;
   }
   .ComTime {
     font-size: 12px;

@@ -5,6 +5,7 @@ import { CommunityListItem } from '../CommunityListItem';
 const CommunityList = ({
   currentPageItems,
   handlePostClick,
+  totalPages,
   // handleUserClick,
 }) => {
   const itemsToDisplay = currentPageItems || [];
@@ -14,6 +15,7 @@ const CommunityList = ({
         <CommunityListItem
           key={idx}
           item={item}
+          totalPages={totalPages}
           handlePostClick={handlePostClick}
           // handleUserClick={handleUserClick}
         />

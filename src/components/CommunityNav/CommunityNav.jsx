@@ -21,10 +21,12 @@ const CommunityNav = ({ handleNavClick, category }) => {
         </CommunityNavItem>
 
         <CommunityNavItem
-          selected={selectedCategory === CommunityCategory.free ? true : false}
+          selected={
+            selectedCategory === CommunityCategory.general ? true : false
+          }
           onClick={() => {
-            handleNavClick(CommunityCategory.free);
-            setSelectedCategory(CommunityCategory.free);
+            handleNavClick(CommunityCategory.general);
+            setSelectedCategory(CommunityCategory.general);
           }}
         >
           <span>자유글</span>

@@ -5,32 +5,36 @@ import {
   BTN,
 } from './CommunityComments.styles';
 
-const CommunityComments = ({ selectedPost }) => {
-  return (
-    <>
-      <CommentsContainer>
-        <p>댓글 {selectedPost.comment.length}</p>
-        <div>
-          <input placeholder="댓글을 입력해주세요." />
-          <BTN>등록</BTN>
-        </div>
-        <PostCommentsContainer>
-          {selectedPost.comment.map((com) => (
-            <div key={com.id}>
-              <div className="CommentUser">
-                <p>
-                  <img src={com.userImg} />
-                </p>
-                <p className="ComTitle">{com.writer}</p>
+const CommunityComments = ({ selectedPost, post }) => {
+  if (post) {
+    return (
+      <>
+        <CommentsContainer>
+          <p>댓글 {post.comments.length}</p>
+          <div>
+            <input placeholder="댓글을 입력해주세요." />
+            <BTN>등록</BTN>
+          </div>
+          <PostCommentsContainer>
+            {post.comments.map((com) => (
+              <div key={com._id}>
+                <p className="ComContent">{com.content}</p>
+                <div className="CommentUser">
+                  <p>
+                    <img src={1} alt="user-img" />
+                  </p>
+                  <p className="ComUser">{com.user_id.nickname}</p>
+                  <p className="ComTime"> {com.createdAt}</p>
+                </div>
               </div>
-              <p className="ComText">{com.text}</p>
-              <p className="ComTime">{com.time}</p>
-            </div>
-          ))}
-        </PostCommentsContainer>
-      </CommentsContainer>
-    </>
-  );
+            ))}
+          </PostCommentsContainer>
+        </CommentsContainer>
+      </>
+    );
+  } else {
+    <></>;
+  }
 };
 
 export default CommunityComments;

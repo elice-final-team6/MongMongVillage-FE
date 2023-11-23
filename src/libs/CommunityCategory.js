@@ -2,7 +2,7 @@ const CommunityCategory = {
   all: 'all',
   info: 'info',
   question: 'question',
-  free: 'free',
+  general: 'general',
 };
 
 export { CommunityCategory };
