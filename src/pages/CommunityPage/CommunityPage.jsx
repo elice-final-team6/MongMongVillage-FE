@@ -76,6 +76,7 @@ const CommunityPage = () => {
   // 검색창 input을 입력받는 onChange 핸들러
   const handleSearchInputChange = (searchValue) => {
     if (searchValue) {
+      setCurrentPage(1);
       setSearchTerm(searchValue);
     }
   };
@@ -96,7 +97,6 @@ const CommunityPage = () => {
   // 글작성 클릭시 실행 함수
   const handleNewPostClick = () => {
     navigate(ROUTE.NEW_POST_PAGE.link);
-    // navigate('/community/newpost');
     window.scrollTo(0, 0);
   };
   // 전체 페이지 수 계산

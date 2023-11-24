@@ -24,6 +24,7 @@ export function useGetCommunitySearch(searchTerm, currentPage) {
       console.log('Search Content fetched successfully:', data);
     },
     onError: (error) => {
+      alert('검색된 게시글이 없습니다.');
       console.error('Failed to fetch search Content:', error.message);
     },
   });

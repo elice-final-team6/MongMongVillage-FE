@@ -72,6 +72,9 @@ const CommunityDetailPage = () => {
   const [selectedPost, setSelectedPost] = useState(
     list.find((post) => post._id === id),
   );
+
+  console.log('community Detail selected Post : ', selectedPost);
+
   // id 값을 params로 넘겨줄 함수 - detail 페이지로 정보 넘겨주기
   const handlePostClick = (id) => {
     setSelectedPost(list.find((post) => post._id === id));

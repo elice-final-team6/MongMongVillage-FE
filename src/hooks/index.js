@@ -18,3 +18,4 @@ export * from './postReview';
 export * from './patchBoard';
 export * from './deleteBoard';
 export * from './postComment';
+export * from './postBoard';

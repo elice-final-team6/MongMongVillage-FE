@@ -33,9 +33,12 @@ const CommunityPagination = ({
 
   return (
     <Container>
-      <PageButton onClick={goToPrevPage} disabled={currentPage === 1}>
-        {'<'}
-      </PageButton>
+      {currentPage !== 1 && (
+        <PageButton onClick={goToPrevPage} disabled={currentPage === 1}>
+          {'<'}
+        </PageButton>
+      )}
+
       {pages.map((page) => (
         <PageButton
           key={page}
@@ -45,9 +48,14 @@ const CommunityPagination = ({
           {page}
         </PageButton>
       ))}
-      <PageButton onClick={goToNextPage} disabled={currentPage === totalPages}>
-        {'>'}
-      </PageButton>
+      {currentPage < totalPages && (
+        <PageButton
+          onClick={goToNextPage}
+          disabled={currentPage === totalPages}
+        >
+          {'>'}
+        </PageButton>
+      )}
     </Container>
   );
 };

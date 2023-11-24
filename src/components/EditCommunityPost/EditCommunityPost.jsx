@@ -46,7 +46,7 @@ const EditCommunityPost = () => {
 
   // 글 수정 함수
   const handleEditPost = () => {
-    if (categorySelectRef.current.value === '') {
+    if (categorySelectRef.current.value === null) {
       alert('카테고리를 선택해주세요.');
       categorySelectRef.current.focus();
     } else if (titleInputRef.current.value === '') {
@@ -74,7 +74,7 @@ const EditCommunityPost = () => {
       >
         <option value="">카테고리 선택</option>
         <option value="info">정보글</option>
-        <option value="free">자유글</option>
+        <option value="general">자유글</option>
         <option value="question">질문글</option>
       </CategorySelector>
 
