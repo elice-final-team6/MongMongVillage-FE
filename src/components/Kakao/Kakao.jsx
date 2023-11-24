@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import Map from './Sections/Map';
 import './styles.css';
 
 const Kakao = () => {
+  const location = useLocation();
+
   // 입력 폼 변화 감지하여 입력 값 관리
-  const [value, setValue] = useState('강남 애견카페');
+  const [value, setValue] = useState(
+    new URLSearchParams(location.search).get('keyword') || '강남 애견카페',
+  );
   // 제출한 검색어 관리
-  const [keyword, setKeyword] = useState('강남 애견카페');
+  const [keyword, setKeyword] = useState(
+    new URLSearchParams(location.search).get('keyword') || '강남 애견카페',
+  );
 
   // 입력 폼 변화 감지하여 입력 값을 state에 담아주는 함수
   const keywordChange = (e) => {

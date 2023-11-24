@@ -49,11 +49,21 @@ export const DogCafeListItemTitle = styled.p`
   cursor: pointer;
 `;
 
-export const DogCafeListItemWriter = styled.p`
+export const DogCafeListItemWriter = styled.div`
+  display: flex;
+  align-items: center;
   padding-top: 8px;
   font-size: 20px;
   cursor: pointer;
   padding-right: 20px;
+
+  img {
+    border-radius: 70%;
+    overflow: hidden;
+    width: 25px;
+    height: 25px;
+    padding-right: 7px;
+  }
 `;
 
 export const LoadingContainer = styled.div`

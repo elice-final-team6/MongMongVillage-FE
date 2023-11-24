@@ -72,7 +72,12 @@ const BestContents = () => {
                   {content.title}
                 </DogCafeListItemTitle>
                 <DogCafeListItemWriter onClick={linkToUser}>
-                  {/* {content.user_id.nickname} */}
+                  {content.userImg ? (
+                    <img alt="유저프로필이미지" src={content.userImg} />
+                  ) : (
+                    <img src={'/imges/user.png'} alt="user_img" />
+                  )}
+                  <span>{content.user_id.nickname}</span>
                 </DogCafeListItemWriter>
               </DogCafeItemInfo>
             </DogCafeListItem>
