@@ -17,17 +17,15 @@ const NewPost = () => {
   const contentInputRef = useRef();
   const categorySelectRef = useRef();
 
-  const [title, setTitle] = useState();
-  const [category, setCategory] = useState();
-  const [content, setContent] = useState();
+  const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('');
+  const [content, setContent] = useState('');
   const [imagesFile, setimagesFile] = useState(null);
 
   const onDrop = (acceptedFiles) => {
-    // 이미지 업로드 로직 추가
     const image = acceptedFiles[0];
     setimagesFile(image);
   };
-
   // img dropzone 사용
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
@@ -37,16 +35,6 @@ const NewPost = () => {
     content,
     imagesFile,
   );
-
-  // const currentDate = new Date();
-  // const year = currentDate.getFullYear();
-  // const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-  // const day = String(currentDate.getDate()).padStart(2, '0');
-  // const hours = String(currentDate.getHours()).padStart(2, '0');
-  // const minutes = String(currentDate.getMinutes()).padStart(2, '0');
-  // const seconds = String(currentDate.getSeconds()).padStart(2, '0');
-
-  // const formattedTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 
   // 글 등록 함수
   const handleNewPost = (e) => {

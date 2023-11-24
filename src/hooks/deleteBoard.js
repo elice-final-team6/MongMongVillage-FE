@@ -21,6 +21,7 @@ export function useDeleteBoard(boardId) {
   return useMutation(() => deleteBoard(boardId), {
     onSuccess: (response) => {
       // 삭제 성공 시 실행되는 로직
+      alert('게시글이 삭제되었습니다.');
       navigate(ROUTE.COMMUNITY_PAGE.link);
       window.scrollTo(0, 0);
     },

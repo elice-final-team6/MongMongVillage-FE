@@ -7,10 +7,12 @@ const postBoard = async (category, title, content, imageFile) => {
   const token = sessionStorage.getItem('token');
 
   const formData = new FormData();
-  formData.append('image', imageFile);
+  formData.append('category', category);
   formData.append('title', title);
   formData.append('content', content);
-  formData.append('category', category);
+  if (imageFile) {
+    formData.append('image', imageFile);
+  }
 
   const response = await instance.post(`/boards/`, formData, {
     headers: {
@@ -22,11 +24,11 @@ const postBoard = async (category, title, content, imageFile) => {
   return response;
 };
 
-export function usePostBoard() {
+export function usePostBoard(category, title, content, imageFile) {
   const navigate = useNavigate();
-  return useMutation(() => postBoard(), {
+  return useMutation(() => postBoard(category, title, content, imageFile), {
     onSuccess: (response) => {
-      console.log('response data : ', response.data);
+      console.log(category, title, content, imageFile);
       navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${response.data.board_id}`);
       alert('게시글 작성 완료');
     },

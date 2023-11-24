@@ -19,24 +19,20 @@ import { ROUTE } from '../../routes/Routes.js';
 
 const CommunityDetailPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const ITEMS_PER_PAGE = 4;
-  // 현재 페이지 상태
-  const { state } = location;
-  const stateList = state ? state.list : [];
-  // params를 통해 id 값만 가져옴
-  const { id } = useParams();
 
+  const { id } = useParams();
   // 현재 페이지의 전체 게시글
-  const [list, setList] = useState(stateList);
+  const [list, setList] = useState([]);
   // 디테일 페이지의 해당 게시글
   const [post, setPost] = useState();
   const [totalBoards, setTotalBoards] = useState(0);
+  const [selectedPost, setSelectedPost] = useState({});
 
   // 카테고리 filtered state
-  const filteredCategory = state ? state.filteredCategory : null;
-  const getPage = state ? state.currentPage : 1;
-  const [currentPage, setCurrentPage] = useState(getPage);
+  const [filteredCategory, setFilteredCategory] = useState('all');
+  // const getPage = state ? state.currentPage : 1;
+  const [currentPage, setCurrentPage] = useState(1);
 
   // 서버로부터 해당 작성글 받아오도록 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
   const { mutate: mutatePost, data: postData } = useGetDetailBoards(id);
@@ -48,8 +44,18 @@ const CommunityDetailPage = () => {
   useEffect(() => {
     if (postData) {
       setPost(postData);
+      setFilteredCategory(postData.board.category);
+      setSelectedPost(postData);
     }
   }, [postData, id]);
+
+  // 성공적으로 작성되면 캐시 무효화
+  useEffect(() => {
+    if (mutatePost.isSuccess) {
+      // 성공적으로 작성되면 캐시 무효화
+      mutatePost();
+    }
+  }, [mutatePost.isSuccess, mutatePost]);
 
   // 서버로부터 list 받아옴 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
   const { mutate: mutateBoards, data: boardsData } = useGetBoards(
@@ -65,22 +71,24 @@ const CommunityDetailPage = () => {
     if (boardsData && boardsData.boards) {
       setList(boardsData.boards);
       setTotalBoards(boardsData.total_number_of_boards);
+
+      // const foundPost = boardsData.boards.find((post) => post._id === id);
+      // if (foundPost) {
+      //   setSelectedPost(foundPost);
+      // }
     }
   }, [boardsData, currentPage, filteredCategory]);
 
   // 해당 게시글 정보 저장 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-  const [selectedPost, setSelectedPost] = useState(
-    list.find((post) => post._id === id),
-  );
 
-  console.log('community Detail selected Post : ', selectedPost);
+  // const [selectedPost, setSelectedPost] = useState(
+  //   list.find((post) => post._id === id),
+  // );
 
   // id 값을 params로 넘겨줄 함수 - detail 페이지로 정보 넘겨주기
   const handlePostClick = (id) => {
     setSelectedPost(list.find((post) => post._id === id));
-    navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${id}`, {
-      state: { list: list, filteredCategory: filteredCategory, board: post },
-    });
+    navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${id}`);
     // navigate(`/community/${id}`);
     window.scrollTo(0, 0);
   };
@@ -137,7 +145,7 @@ const CommunityDetailPage = () => {
     window.scrollTo(0, 0);
   };
 
-  const { mutate: mutateDeleteBoard } = useDeleteBoard(selectedPost._id);
+  const { mutate: mutateDeleteBoard } = useDeleteBoard(id);
   // 게시글 삭제 함수
   const handleDelete = () => {
     mutateDeleteBoard();
