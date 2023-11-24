@@ -36,11 +36,13 @@ const BestContents = () => {
   };
 
   if (isLoading) {
-    return <LoadingContainer></LoadingContainer>;
+    return <LoadingContainer>Loading...</LoadingContainer>;
   }
 
   if (error) {
-    return <ErrorContainer>{error}</ErrorContainer>;
+    return (
+      <ErrorContainer>인기글을 불러오는 도중 에러가 생겼습니다.</ErrorContainer>
+    );
   }
 
   const scollTop = () => {
@@ -49,13 +51,24 @@ const BestContents = () => {
 
   return (
     <Container>
-      <Content>인기글</Content>
+      <Content>🎉인기글🎉</Content>
       <DogCafeList>
         {data &&
           data.boards.map((content, index) => (
             <DogCafeListItem key={index}>
               <DogCafeListItemImg
-                src={content.images.length > 0 ? content.images[0] : ''}
+                // src={
+                //   content.images.length > 0
+                //     ? content.images[0]
+                //     : '/imges/default.png'
+                // }
+                style={{
+                  backgroundImage: `url('${
+                    content.images.length > 0
+                      ? content.images[0]
+                      : '/imges/default.png'
+                  }')`,
+                }}
                 alt={`Content ${index}`}
                 onClick={() => {
                   linkToCommunity(content._id);

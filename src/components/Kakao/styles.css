@@ -34,6 +34,8 @@
 .search-form .form__input:focus {
   outline: none;
   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+  width: 450px;
+  transition: 0.5s;
 }
 
 .search-form .btn-box {

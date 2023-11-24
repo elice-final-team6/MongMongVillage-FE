@@ -9,11 +9,12 @@ export const Container = styled.div`
 export const FooterContainer = styled.div`
   width: 90%;
   margin: auto;
+  margin-left: 146px;
 `;
 
 export const LogoListContainer = styled.div`
   display: grid;
-  grid-template-columns: 0.7fr 1.45fr 0.7fr 0.8fr;
+  grid-template-columns: 0.4fr 1fr 0.7fr 1.25fr;
   align-items: center;
 `;
 
@@ -89,10 +90,8 @@ export const Content = styled.p`
 export const SnsContainer = styled.section`
   padding-left: 36px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 0.3fr 0.5fr;
   grid-gap: 23px;
-  justify-content: center;
-  align-content: center;
 `;
 
 export const SnsIcon = styled.article`

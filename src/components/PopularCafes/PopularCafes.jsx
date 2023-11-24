@@ -48,7 +48,7 @@ const PopularCafes = () => {
 
   return (
     <Container>
-      <Content>인기 애견카페</Content>
+      <Content>🐶인기 애견카페🐶</Content>
       <DogCafeList>
         {popularCafes.map((cafe, index) => (
           <DogCafeListItem key={index}>
