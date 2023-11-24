@@ -53,10 +53,15 @@ const NewPost = () => {
       setCategory(categorySelectRef.current.value);
       setTitle(titleInputRef.current.value);
       setContent(contentInputRef.current.value);
-
-      postBoard();
     }
   };
+
+  useEffect(() => {
+    // 상태 업데이트가 완료된 후에 postBoard를 호출
+    if (category && title && content) {
+      postBoard();
+    }
+  }, [category, title, content, postBoard]);
 
   return (
     <form encType="multipart/form-data" onSubmit={handleNewPost}>
