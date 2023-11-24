@@ -71,7 +71,7 @@ const CommunityPage = () => {
       setList(searchData.boards);
       setTotalBoards(searchData.total_number_of_boards);
     }
-  }, [searchData, searchTerm]); // currentPage 뺌
+  }, [searchData, searchTerm, currentPage]); // currentPage 뺌
 
   // 검색창 input을 입력받는 onChange 핸들러
   const handleSearchInputChange = (searchValue) => {
@@ -99,9 +99,6 @@ const CommunityPage = () => {
     // navigate('/community/newpost');
     window.scrollTo(0, 0);
   };
-
-  // 현재 페이지에 표시될 아이템들
-  const currentPageItems = list;
   // 전체 페이지 수 계산
   const totalPages = Math.ceil(totalBoards / ITEMS_PER_PAGE);
 
@@ -116,7 +113,12 @@ const CommunityPage = () => {
   // 해당 페이지로 설정 함수
   const goToPage = (page) => {
     setCurrentPage(page);
-    // sortedList();
+    if (searchTerm) {
+      mutateSearch(page);
+    } else {
+      // 검색어가 없을 경우 전체 게시글 가져오도록 수정
+      mutate(page);
+    }
     // !!! 서버로부터 현재 CurrentPage 와 일치하는 페이지 요청해서 받아오도록 해야함
   };
 
@@ -132,6 +134,9 @@ const CommunityPage = () => {
     });
     window.scrollTo(0, 0);
   };
+
+  // 현재 페이지에 표시될 아이템들
+  const currentPageItems = list;
 
   // 리스트의 작성자 사진을 누르면 해당 유저의 페이지로 이동
   // const handleUserClick = (userId) => {

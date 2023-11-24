@@ -7,6 +7,7 @@ import {
   SearchButton,
   SearchInput,
 } from './CommunitySearchAndPost.styles';
+import { FaSearch } from 'react-icons/fa';
 
 const CommunitySearchAndPost = ({
   handleSearchInputChange,
@@ -30,7 +31,9 @@ const CommunitySearchAndPost = ({
       <SearchAndPostContainer>
         <SearchContainer>
           <SearchInputBox>
-            <SearchButton onClick={handleSearchButtonClick}>🔍</SearchButton>
+            <SearchButton onClick={handleSearchButtonClick}>
+              <FaSearch size={'20px'} />
+            </SearchButton>
             <SearchInput
               type="text"
               placeholder="커뮤니티 게시글 검색"

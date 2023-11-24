@@ -15,3 +15,6 @@ export * from './deleteUser';
 export * from './patchUserInfo';
 export * from './getReviews';
 export * from './postReview';
+export * from './patchBoard';
+export * from './deleteBoard';
+export * from './postComment';

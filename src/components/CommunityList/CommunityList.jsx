@@ -7,7 +7,15 @@ const CommunityList = ({
   handlePostClick,
   totalPages,
   // handleUserClick,
+  // filteredList
 }) => {
+  // const [itemsToDisplay, setItemsToDisplay] = useState([]);
+  // if (filteredList.length === 0) {
+  //   setItemsToDisplay(currentPageItems);
+  // } else {
+  //   setItemsToDisplay(filteredList);
+  // }
+
   const itemsToDisplay = currentPageItems || [];
   return (
     <ListContainer>

@@ -8,8 +8,7 @@ import {
 } from './CommunityPost.styles';
 
 const CommunityPost = ({ selectedPost, post }) => {
-  console.log('selectedPost : ', selectedPost);
-  // console.log('post : ', post);
+  // console.log('selectedPost : ', selectedPost);
   return (
     <PostContainer>
       <Title>

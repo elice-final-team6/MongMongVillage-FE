@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useGetBoards, useGetDetailBoards } from '../../hooks';
+import {
+  useGetBoards,
+  useGetDetailBoards,
+  useDeleteBoard,
+  usePostComment,
+} from '../../hooks';
 import {
   CommunityList,
   CommunityPost,
@@ -19,6 +24,8 @@ const CommunityDetailPage = () => {
   // 현재 페이지 상태
   const { state } = location;
   const stateList = state ? state.list : [];
+  // params를 통해 id 값만 가져옴
+  const { id } = useParams();
 
   // 현재 페이지의 전체 게시글
   const [list, setList] = useState(stateList);
@@ -30,9 +37,6 @@ const CommunityDetailPage = () => {
   const filteredCategory = state ? state.filteredCategory : null;
   const getPage = state ? state.currentPage : 1;
   const [currentPage, setCurrentPage] = useState(getPage);
-
-  // params를 통해 id 값만 가져옴
-  const { id } = useParams();
 
   // 서버로부터 해당 작성글 받아오도록 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
   const { mutate: mutatePost, data: postData } = useGetDetailBoards(id);
@@ -130,14 +134,13 @@ const CommunityDetailPage = () => {
     window.scrollTo(0, 0);
   };
 
+  const { mutate: mutateDeleteBoard } = useDeleteBoard(selectedPost._id);
   // 게시글 삭제 함수
   const handleDelete = () => {
-    // 삭제 관련 작업 수행
-    alert('게시글이 삭제되었습니다.');
-    navigate(ROUTE.COMMUNITY_PAGE.link);
-    window.scrollTo(0, 0);
+    mutateDeleteBoard();
   };
 
+  // 수정, 삭제 버튼은 토큰값의 아이디와 게시글의 아이디가 일치하는 사람에게만 보여주도록 해야함
   return (
     <Container>
       {selectedPost && (
@@ -158,6 +161,7 @@ const CommunityDetailPage = () => {
           <CommunityComments
             selectedPost={selectedPost}
             post={post}
+            // handleCommentPost={handleCommentPost}
           ></CommunityComments>
         </>
       )}

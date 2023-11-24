@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { usePatchBoard } from '../../hooks';
 import { ROUTE } from '../../routes/Routes';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
@@ -26,10 +27,22 @@ const EditCommunityPost = () => {
   const post = state ? state.post : {};
 
   const [selectedPost, setSelectedPost] = useState(post.board);
-  // console.log(post);
+  console.log(selectedPost);
 
   // selectedPost로 editPost 초기 state 저장
-  const [editPost, setEditPost] = useState(post.board);
+  // const [editPost, setEditPost] = useState(post.board);
+  const [boardId, setBoardId] = useState(selectedPost._id);
+  const [title, setTitle] = useState(selectedPost.title);
+  const [content, setContent] = useState(selectedPost.content);
+  const [category, setCategory] = useState(selectedPost.category);
+
+  // usePatchBoard 훅을 사용
+  const { mutate: patchBoard } = usePatchBoard(
+    boardId,
+    title,
+    content,
+    category,
+  );
 
   // 글 수정 함수
   const handleEditPost = () => {
@@ -43,23 +56,11 @@ const EditCommunityPost = () => {
       alert('글 내용을 입력해주세요.');
       contentInputRef.current.focus();
     } else {
-      setEditPost({
-        animal_type: post.board.animal_type,
-        // 카테고리, 타이을, 콘텐츠만 바꿔줌ㅡㅡㅡ
-        category: categorySelectRef.current.value,
-        title: titleInputRef.current.value,
-        content: contentInputRef.current.value,
-        // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-        user_id: post.board.user_id,
-        comment_id: post.board.comment_id,
-        like_count: post.board.like_count,
-        createdAt: post.board.createdAt,
-        images: post.board.images,
-      });
+      setCategory(categorySelectRef.current.value);
+      setTitle(categorySelectRef.current.value);
+      setContent(contentInputRef.current.value);
 
-      // 서버 요청을 통해 게시글 아이디에 맞는 게시글 update 필요 !!!
-      alert('수정이 완료되었습니다.');
-      navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${id}`);
+      patchBoard();
     }
   };
 
@@ -68,8 +69,8 @@ const EditCommunityPost = () => {
       <Title>카테고리 선택</Title>
       <CategorySelector
         ref={categorySelectRef}
-        value={post.board.category}
-        onChange={(e) => setEditPost({ ...editPost, category: e.target.value })}
+        defaultValue={post.board.category}
+        // onChange={(e) => setEditPost({ ...editPost, category: e.target.value })}
       >
         <option value="">카테고리 선택</option>
         <option value="info">정보글</option>
@@ -82,14 +83,14 @@ const EditCommunityPost = () => {
         type="text"
         placeholder="제목을 입력해주세요..."
         defaultValue={post.board.title}
-        onChange={(e) => setEditPost({ ...editPost, title: e.target.value })}
+        // onChange={(e) => setEditPost({ ...editPost, title: e.target.value })}
         ref={titleInputRef}
       />
 
       <TextArea
         placeholder="내용을 입력해주세요..."
         defaultValue={post.board.content}
-        onChange={(e) => setEditPost({ ...editPost, content: e.target.value })}
+        // onChange={(e) => setEditPost({ ...editPost, content: e.target.value })}
         ref={contentInputRef}
       />
 

@@ -19,7 +19,7 @@ export const SearchContainer = styled.div`
 export const SearchInputBox = styled.div`
   display: flex;
   height: 40px;
-  border: 2px solid var(--main-yellow-color);
+  border: 3px solid var(--main-yellow-color);
   border-radius: 40px;
   align-items: center;
   width: 600px;
@@ -36,9 +36,10 @@ export const PostBTN = styled.button`
 export const SearchButton = styled.button`
   margin-top: 4px;
   margin-left: 20px;
-  background: none;
+  background-color: white;
   align-items: center;
   justify-content: center;
+  padding-top: 4px;
 `;
 
 export const SearchInput = styled.input`
@@ -48,4 +49,6 @@ export const SearchInput = styled.input`
   margin-left: 4px;
   height: 24px;
   width: 500px;
+  border-left: 3px solid var(--main-yellow-color);
+  padding-left: 16px;
 `;
