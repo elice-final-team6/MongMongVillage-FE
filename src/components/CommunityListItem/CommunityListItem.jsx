@@ -22,7 +22,7 @@ const CommunityListItem = ({
   totalPages,
   //  handleUserClick,
 }) => {
-  // console.log('item : ', item);
+  console.log('item : ', item);
   return (
     <Container key={item._id}>
       <LeftContainer>

@@ -28,6 +28,7 @@ const CommunityDetailPage = () => {
   const [post, setPost] = useState();
   const [totalBoards, setTotalBoards] = useState(0);
   const [selectedPost, setSelectedPost] = useState({});
+  const [like, setLike] = useState(0);
 
   // 카테고리 filtered state
   const [filteredCategory, setFilteredCategory] = useState('all');
@@ -46,6 +47,7 @@ const CommunityDetailPage = () => {
       setPost(postData);
       setFilteredCategory(postData.board.category);
       setSelectedPost(postData);
+      setLike(postData.board.like_count);
     }
   }, [postData, id]);
 
@@ -151,6 +153,8 @@ const CommunityDetailPage = () => {
     mutateDeleteBoard();
   };
 
+  console.log('여기 !! : ', selectedPost);
+
   // 수정, 삭제 버튼은 토큰값의 아이디와 게시글의 아이디가 일치하는 사람에게만 보여주도록 해야함
   return (
     <Container>
@@ -158,7 +162,7 @@ const CommunityDetailPage = () => {
         <>
           <CommunityPost post={post} selectedPost={selectedPost} />
           <CommunityPostLike
-            like={selectedPost.like_count}
+            like={like}
             likeclick={likeclick}
             onClick={handleLikeclick}
           ></CommunityPostLike>

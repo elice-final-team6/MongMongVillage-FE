@@ -53,12 +53,21 @@ const CommunityPage = () => {
     currentPage,
   );
 
+  // useEffect(() => {
+  //   mutate();
+  // }, [currentPage, filteredCategory, mutate]);
+  // useEffect(() => {
+  //   mutateSearch();
+  // }, [searchTerm, mutateSearch]); // currentPage 뺌
+
   useEffect(() => {
-    mutate();
-  }, [currentPage, filteredCategory, mutate]);
-  useEffect(() => {
-    mutateSearch();
-  }, [searchTerm, mutateSearch]); // currentPage 뺌
+    if (searchTerm) {
+      mutateSearch(currentPage);
+    } else {
+      // 검색어가 없을 경우 전체 게시글 가져오도록 수정
+      mutate(currentPage);
+    }
+  }, [currentPage, filteredCategory, mutate, searchTerm, mutateSearch]);
 
   useEffect(() => {
     if (data && data.boards) {
@@ -124,14 +133,7 @@ const CommunityPage = () => {
 
   // 각 게시글 클릭시 실행 함수
   const handlePostClick = (postId) => {
-    navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${postId}`, {
-      state: {
-        list: list,
-        filteredCategory: filteredCategory,
-        currentPage: currentPage,
-        totalPages: totalPages,
-      },
-    });
+    navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${postId}`);
     window.scrollTo(0, 0);
   };
 
