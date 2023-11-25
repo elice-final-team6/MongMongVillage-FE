@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTE } from '../../routes/Routes';
 import { useGetBestContents } from '../../hooks';
 import { useEffect } from 'react';
+import { GiCurlyWing } from 'react-icons/gi';
 
 const BestContents = () => {
   const navigate = useNavigate();
@@ -51,7 +52,15 @@ const BestContents = () => {
 
   return (
     <Container>
-      <Content>🎉인기글🎉</Content>
+      <Content>
+        <GiCurlyWing size={'43px'} color="rgba(136, 200, 247, 0.94)" />
+        &nbsp;인기글&nbsp;
+        <GiCurlyWing
+          size={'43px'}
+          color="rgba(136, 200, 247, 0.94)"
+          style={{ transform: 'scaleX(-1)' }}
+        />
+      </Content>
       <DogCafeList>
         {data &&
           data.boards.map((content, index) => (

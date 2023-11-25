@@ -54,6 +54,7 @@ export const WriteReviewBtn = styled.button`
   line-height: 1.5;
   background-color: var(--main-yellow-color);
   border-radius: 16px;
+  display: flex;
 
   &:hover {
     background-color: #ffe794;

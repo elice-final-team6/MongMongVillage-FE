@@ -9,6 +9,7 @@ import {
   CafeInfo,
   WriteReviewBtn,
 } from './styles';
+import { BsPencilSquare } from 'react-icons/bs';
 
 const CafeDetail = () => {
   const cafeDetailInfo = [
@@ -62,7 +63,10 @@ const CafeDetail = () => {
                 {'★'.repeat(cafeDetailInfo[0].rating) +
                   '☆'.repeat(5 - cafeDetailInfo[0].rating)}
               </StarRating>
-              <WriteReviewBtn>리뷰 작성하러가기</WriteReviewBtn>
+              <WriteReviewBtn>
+                <p style={{ paddingRight: '5px' }}> 리뷰 작성하러가기 </p>
+                <BsPencilSquare size={'18px'} />
+              </WriteReviewBtn>
             </div>
           </CafeInfoContainer>
         </CafeDetailContainer>

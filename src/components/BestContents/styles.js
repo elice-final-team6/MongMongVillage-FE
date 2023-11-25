@@ -11,7 +11,7 @@ export const Content = styled.h5`
   font-size: 33px;
   text-align: left;
   margin: 35px 0 35px 17px;
-  width: 197px;
+  width: 206px;
   background: linear-gradient(
     to top,
     var(--main-yellow-color) 35%,

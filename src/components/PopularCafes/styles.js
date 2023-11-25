@@ -10,7 +10,7 @@ export const Content = styled.h5`
   font-size: 33px;
   text-align: left;
   margin: 80px 0 35px 17px;
-  width: 314px;
+  width: 290px;
   background: linear-gradient(
     to top,
     var(--main-yellow-color) 35%,

@@ -11,6 +11,7 @@ import {
 
 import { useNavigate } from 'react-router-dom';
 import { ROUTE } from '../../routes/Routes';
+import { GiPartyPopper } from 'react-icons/gi';
 
 const popularCafes = [
   {
@@ -48,7 +49,16 @@ const PopularCafes = () => {
 
   return (
     <Container>
-      <Content>🐶인기 애견카페🐶</Content>
+      <Content>
+        {' '}
+        <GiPartyPopper size={'43px'} color="rgba(255, 77, 77, 0.94)" />
+        인기 애견까페
+        <GiPartyPopper
+          size={'43px'}
+          color="rgba(255, 77, 77, 0.94)"
+          style={{ transform: 'scaleX(-1)' }}
+        />
+      </Content>
       <DogCafeList>
         {popularCafes.map((cafe, index) => (
           <DogCafeListItem key={index}>

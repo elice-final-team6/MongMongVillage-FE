@@ -1,12 +1,12 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Container, Navbar, Navitem, Space } from './styles';
 import Logo from '../Logo/Logo';
 import { ROUTE } from '../../routes/Routes';
 
 const Header = () => {
   const navigate = useNavigate();
-  const token = sessionStorage.getItem('token');
+  const token = localStorage.getItem('token');
   const location = useLocation();
 
   const [activeHeader, setActiveHeader] = useState(location.pathname);
@@ -16,6 +16,10 @@ const Header = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     navigate(route);
   };
+
+  useEffect(() => {
+    setActiveHeader(location.pathname);
+  }, [location.pathname]);
 
   return (
     <Container>
@@ -68,7 +72,7 @@ const Header = () => {
 
         {token ? (
           <>
-            <Space style={{ width: '32%' }} />
+            <Space style={{ width: '26%' }} />
             <Navitem
               id="mypage"
               className={activeHeader === ROUTE.MY_PAGE.link ? 'active' : ''}
@@ -77,6 +81,15 @@ const Header = () => {
               }}
             >
               마이페이지
+            </Navitem>
+            <Navitem
+              id="logout"
+              onClick={() => {
+                localStorage.removeItem('token');
+                window.location.reload();
+              }}
+            >
+              로그아웃
             </Navitem>
           </>
         ) : (
