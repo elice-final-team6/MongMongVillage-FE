@@ -31,11 +31,13 @@ export function usePostBoard(category, title, content, imageFile) {
       console.log(category, title, content, imageFile);
       navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${response.data.board_id}`);
       alert('게시글 작성 완료');
+      window.scrollTo(0, 0);
     },
 
     onError: (error) => {
       console.log(error);
-      alert(error.response.data.message);
+      alert('로그인 후 작성해주세요.');
+      // alert(error.response.data.message);
     },
   });
 }

@@ -33,10 +33,12 @@ const CommunityPagination = ({
 
   return (
     <Container>
-      {currentPage !== 1 && (
+      {currentPage !== 1 ? (
         <PageButton onClick={goToPrevPage} disabled={currentPage === 1}>
           {'<'}
         </PageButton>
+      ) : (
+        <div className="space"></div>
       )}
 
       {pages.map((page) => (
@@ -48,13 +50,15 @@ const CommunityPagination = ({
           {page}
         </PageButton>
       ))}
-      {currentPage < totalPages && (
+      {currentPage < totalPages ? (
         <PageButton
           onClick={goToNextPage}
           disabled={currentPage === totalPages}
         >
           {'>'}
         </PageButton>
+      ) : (
+        <div className="space"></div>
       )}
     </Container>
   );

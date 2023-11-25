@@ -71,7 +71,8 @@ export const PostCommentsContainer = styled.div`
     }
 
     .ComContent {
-      font-size: 12px;
+      margin-top: 20px;
+      font-size: 16px;
     }
   }
 

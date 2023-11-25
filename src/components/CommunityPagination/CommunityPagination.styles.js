@@ -7,6 +7,10 @@ export const Container = styled.div`
   justify-content: center;
   margin-bottom: 60px;
   font-size: 20px;
+
+  .space {
+    width: 44px;
+  }
 `;
 export const PageButton = styled.button`
   font-size: 20px;

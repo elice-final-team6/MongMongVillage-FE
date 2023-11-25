@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { usePatchBoard } from '../../hooks';
 import { ROUTE } from '../../routes/Routes';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
@@ -27,23 +27,35 @@ const EditCommunityPost = () => {
   const post = state ? state.post : {};
 
   const [selectedPost, setSelectedPost] = useState(post.board);
-  console.log(selectedPost);
+  console.log('선택 게시글 : ', selectedPost);
 
   // selectedPost로 editPost 초기 state 저장
   // const [editPost, setEditPost] = useState(post.board);
-  const [boardId, setBoardId] = useState(selectedPost._id);
-  const [title, setTitle] = useState(selectedPost.title);
-  const [content, setContent] = useState(selectedPost.content);
-  const [category, setCategory] = useState(selectedPost.category);
+  const [category, setCategory] = useState('');
+  const [content, setContent] = useState('');
+  const [title, setTitle] = useState('');
+  const [boardId, setBoardId] = useState('');
+
+  const [editStatus, setEditStatus] = useState(false);
+
+  useEffect(() => {
+    setCategory(selectedPost.category);
+    setContent(selectedPost.content);
+    setTitle(selectedPost.title);
+    setBoardId(selectedPost._id);
+  }, [selectedPost]);
+
+  // console.log(
+  //   `아이디 : ${boardId}, 타이틀 : ${title}, 콘텐츠 : ${content}, 카테고리 : ${category}`,
+  // );
 
   // usePatchBoard 훅을 사용
   const { mutate: patchBoard } = usePatchBoard(
-    boardId,
-    title,
-    content,
     category,
+    content,
+    title,
+    boardId,
   );
-
   // 글 수정 함수
   const handleEditPost = () => {
     if (categorySelectRef.current.value === null) {
@@ -56,13 +68,23 @@ const EditCommunityPost = () => {
       alert('글 내용을 입력해주세요.');
       contentInputRef.current.focus();
     } else {
-      setCategory(categorySelectRef.current.value);
-      setTitle(categorySelectRef.current.value);
-      setContent(contentInputRef.current.value);
+      setCategory(selectedPost.category);
+      setContent(selectedPost.content);
+      setTitle(selectedPost.title);
+      setBoardId(selectedPost._id);
+      setEditStatus(true);
 
       patchBoard();
     }
   };
+
+  // const memoizedPatchBoard = useCallback(patchBoard, [patchBoard]);
+
+  // useEffect(() => {
+  //   if (editStatus) {
+  //     memoizedPatchBoard();
+  //   }
+  // }, [editStatus, memoizedPatchBoard]);
 
   return (
     <Container>

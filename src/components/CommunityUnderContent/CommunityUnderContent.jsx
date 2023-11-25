@@ -25,17 +25,24 @@ const CommunityUnderContent = ({ selectedPost, onEdit, onDelete, post }) => {
           {post?.board?.user_id.img ? (
             <img src={post?.board?.user_id.img} alt="UserImg" />
           ) : (
-            <FaCircleUser size={'25px'} color="gray" />
+            <img
+              src={`${`${process.env.PUBLIC_URL}/imges/user.png`}`}
+              alt="user_img"
+            />
           )}
         </div>
         <div>
-          <p>{post?.board?.user_id?.nickname}</p>
-          <p>{post?.board?.createdAt}</p>
+          <p className="nickname">{post?.board?.user_id?.nickname}</p>
+          <p className="createAt">{post?.board?.createdAt}</p>
         </div>
       </ContentInfo>
       <ContentButton>
-        <BTN onClick={handleEditClick}>수정</BTN>
-        <BTN onClick={handleDeleteClick}>삭제</BTN>
+        <BTN onClick={handleEditClick}>
+          <p>수정</p>
+        </BTN>
+        <BTN onClick={handleDeleteClick}>
+          <p>삭제</p>
+        </BTN>
       </ContentButton>
     </UnderContentContainer>
   );

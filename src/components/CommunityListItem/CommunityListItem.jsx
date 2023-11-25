@@ -22,7 +22,6 @@ const CommunityListItem = ({
   totalPages,
   //  handleUserClick,
 }) => {
-  console.log('item : ', item);
   return (
     <Container key={item._id}>
       <LeftContainer>
@@ -46,7 +45,10 @@ const CommunityListItem = ({
             {item.userImg ? (
               <img alt="유저프로필이미지" src={item.userImg} />
             ) : (
-              <FaCircleUser size={'25px'} color="gray" />
+              <img
+                src={`${`${process.env.PUBLIC_URL}/imges/user.png`}`}
+                alt="user_img"
+              />
             )}
             <span>{item.user_id.nickname}</span>
           </Writer>

@@ -53,13 +53,6 @@ const CommunityPage = () => {
     currentPage,
   );
 
-  // useEffect(() => {
-  //   mutate();
-  // }, [currentPage, filteredCategory, mutate]);
-  // useEffect(() => {
-  //   mutateSearch();
-  // }, [searchTerm, mutateSearch]); // currentPage 뺌
-
   useEffect(() => {
     if (searchTerm) {
       mutateSearch(currentPage);
@@ -80,7 +73,7 @@ const CommunityPage = () => {
       setList(searchData.boards);
       setTotalBoards(searchData.total_number_of_boards);
     }
-  }, [searchData, searchTerm, currentPage]); // currentPage 뺌
+  }, [searchData, searchTerm, currentPage]);
 
   // 검색창 input을 입력받는 onChange 핸들러
   const handleSearchInputChange = (searchValue) => {

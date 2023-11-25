@@ -33,6 +33,10 @@ export const ContentInfo = styled.div`
     font-size: 12px;
   }
 
+  .nickname {
+    margin-bottom: 8px;
+  }
+
   img {
     width: 40px;
     height: 40px;
@@ -54,5 +58,9 @@ export const BTN = styled.button`
 
   + button {
     margin-left: 10px;
+  }
+
+  p {
+    margin-top: 4px;
   }
 `;

@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  useGetBoards,
-  useGetDetailBoards,
-  useDeleteBoard,
-  usePostComment,
-} from '../../hooks';
+import { useGetBoards, useGetDetailBoard, useDeleteBoard } from '../../hooks';
 import {
   CommunityList,
   CommunityPost,
@@ -36,10 +31,15 @@ const CommunityDetailPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   // 서버로부터 해당 작성글 받아오도록 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-  const { mutate: mutatePost, data: postData } = useGetDetailBoards(id);
+  const { mutate: mutatePost, data: postData } = useGetDetailBoard(id);
+  console.log('postData:', postData);
+  console.log('mutatePost: ', mutatePost);
 
   useEffect(() => {
-    mutatePost();
+    // 페이지가 처음 로딩될 때는 mutatePost를 호출하지 않습니다.
+    if (id) {
+      mutatePost();
+    }
   }, [id, mutatePost]);
 
   useEffect(() => {
@@ -52,13 +52,12 @@ const CommunityDetailPage = () => {
     }
   }, [postData, id]);
 
-  // 성공적으로 작성되면 캐시 무효화
-  useEffect(() => {
-    if (mutatePost.isSuccess) {
-      // 성공적으로 작성되면 캐시 무효화
-      mutatePost();
-    }
-  }, [mutatePost.isSuccess, mutatePost]);
+  // useEffect(() => {
+  //   if (mutatePost.isSuccess) {
+  //     // 성공적으로 작성되면 캐시 무효화
+  //     mutatePost();
+  //   }
+  // }, [mutatePost.isSuccess, mutatePost]);
 
   // 서버로부터 list 받아옴 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
   const { mutate: mutateBoards, data: boardsData } = useGetBoards(
@@ -74,11 +73,6 @@ const CommunityDetailPage = () => {
     if (boardsData && boardsData.boards) {
       setList(boardsData.boards);
       setTotalBoards(boardsData.total_number_of_boards);
-
-      // const foundPost = boardsData.boards.find((post) => post._id === id);
-      // if (foundPost) {
-      //   setSelectedPost(foundPost);
-      // }
     }
   }, [boardsData, currentPage, filteredCategory]);
 
@@ -142,10 +136,14 @@ const CommunityDetailPage = () => {
 
   // 게시글 수정 함수
   const handleEdit = (post) => {
-    navigate(`${ROUTE.EDIT_POST_PAGE.link}/${post.board._id}`, {
-      state: { post: post },
-    });
-    window.scrollTo(0, 0);
+    if (post && post.board && post.board._id) {
+      navigate(`${ROUTE.EDIT_POST_PAGE.link}/${post.board._id}`, {
+        state: { post: post },
+      });
+      window.scrollTo(0, 0);
+    } else {
+      console.error('Invalid post object:', post);
+    }
   };
 
   const { mutate: mutateDeleteBoard } = useDeleteBoard(id);
@@ -153,8 +151,6 @@ const CommunityDetailPage = () => {
   const handleDelete = () => {
     mutateDeleteBoard();
   };
-
-  console.log('여기 !! : ', selectedPost);
 
   // 수정, 삭제 버튼은 토큰값의 아이디와 게시글의 아이디가 일치하는 사람에게만 보여주도록 해야함
   return (
@@ -177,6 +173,7 @@ const CommunityDetailPage = () => {
           <CommunityComments
             selectedPost={selectedPost}
             post={post}
+            id={id}
             // handleCommentPost={handleCommentPost}
           ></CommunityComments>
         </>
