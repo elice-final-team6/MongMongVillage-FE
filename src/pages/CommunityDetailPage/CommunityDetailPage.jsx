@@ -8,7 +8,7 @@ import {
   CommunityComments,
   CommunityPagination,
 } from '../../components/index.js';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Container } from './CommunityDetailPage.styles.js';
 import { ROUTE } from '../../routes/Routes.js';
 
@@ -25,22 +25,20 @@ const CommunityDetailPage = () => {
   const [selectedPost, setSelectedPost] = useState({});
   const [like, setLike] = useState(0);
 
-  // 카테고리 filtered state
   const [filteredCategory, setFilteredCategory] = useState('all');
-  // const getPage = state ? state.currentPage : 1;
   const [currentPage, setCurrentPage] = useState(1);
+  // 새 댓글이 작성되었는지
+  const [newCommentState, setNewCommentState] = useState(false);
 
   // 서버로부터 해당 작성글 받아오도록 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
   const { mutate: mutatePost, data: postData } = useGetDetailBoard(id);
-  // console.log('postData:', postData);
-  // console.log('mutatePost: ', mutatePost);
 
   useEffect(() => {
-    // 페이지가 처음 로딩될 때는 mutatePost를 호출하지 않습니다.
+    // 페이지가 처음 로딩될 때는 mutatePost를 호출하지 않도록
     if (id) {
       mutatePost();
     }
-  }, [id, mutatePost]);
+  }, [id, mutatePost, newCommentState]);
 
   useEffect(() => {
     if (postData) {
@@ -49,26 +47,22 @@ const CommunityDetailPage = () => {
       setFilteredCategory(postData.board.category);
       setSelectedPost(postData);
       setLike(postData.board.like_count);
+      setNewCommentState(false);
     }
-  }, [postData, id]);
+  }, [postData, id, newCommentState]);
 
-  // useEffect(() => {
-  //   if (mutatePost.isSuccess) {
-  //     // 성공적으로 작성되면 캐시 무효화
-  //     mutatePost();
-  //   }
-  // }, [mutatePost.isSuccess, mutatePost]);
-
-  // 서버로부터 list 받아옴 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+  // 서버로부터 list 받아옴
   const { mutate: mutateBoards, data: boardsData } = useGetBoards(
     currentPage,
     filteredCategory,
   );
 
+  // 게시글
   useEffect(() => {
     mutateBoards();
   }, [currentPage, filteredCategory, mutateBoards]);
 
+  // 하단 리스트
   useEffect(() => {
     if (boardsData && boardsData.boards) {
       setList(boardsData.boards);
@@ -76,21 +70,12 @@ const CommunityDetailPage = () => {
     }
   }, [boardsData, currentPage, filteredCategory]);
 
-  // 해당 게시글 정보 저장 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-
-  // const [selectedPost, setSelectedPost] = useState(
-  //   list.find((post) => post._id === id),
-  // );
-
   // id 값을 params로 넘겨줄 함수 - detail 페이지로 정보 넘겨주기
   const handlePostClick = (id) => {
     setSelectedPost(list.find((post) => post._id === id));
     navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${id}`);
-    // navigate(`/community/${id}`);
     window.scrollTo(0, 0);
   };
-
-  // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
   // 좋아요 눌렸는지 확인 state
   const [likeclick, setlikeclick] = useState(false);
@@ -174,7 +159,7 @@ const CommunityDetailPage = () => {
             selectedPost={selectedPost}
             post={post}
             id={id}
-            // handleCommentPost={handleCommentPost}
+            onCommentPosted={() => setNewCommentState(true)}
           ></CommunityComments>
         </>
       )}

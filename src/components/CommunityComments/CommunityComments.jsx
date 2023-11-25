@@ -8,8 +8,7 @@ import {
   BTN,
 } from './CommunityComments.styles';
 
-const CommunityComments = ({ selectedPost, post, id }) => {
-  const navigate = useNavigate();
+const CommunityComments = ({ selectedPost, post, id, onCommentPosted }) => {
   const [content, setContent] = useState('');
   const [boardId, setBoardId] = useState(id);
 
@@ -25,15 +24,16 @@ const CommunityComments = ({ selectedPost, post, id }) => {
   const handlePostComment = () => {
     if (content === '') {
       alert('내용을 입력 후 작성해주세요.');
+    } else if (content.length > 200) {
+      alert('댓글은 200자를 초과할 수 없습니다.');
     } else {
-      // console.log('선택포스트', selectedPost);
-      // console.log('댓글 내용', content);
-      // console.log('게시글 아이디', boardId);
-
       postComment();
+      onCommentPosted();
+      setContent('');
     }
   };
 
+  // 댓글 새로 작성되면 페이지 다시 띄워주도록
   if (post) {
     return (
       <>

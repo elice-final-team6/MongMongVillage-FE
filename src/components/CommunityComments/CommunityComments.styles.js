@@ -67,7 +67,6 @@ export const PostCommentsContainer = styled.div`
       align-items: center;
       flex-direction: row !important;
       align-items: center;
-      margin-bottom: 8px !important;
     }
 
     .ComContent {
@@ -79,6 +78,7 @@ export const PostCommentsContainer = styled.div`
   .ComUser {
     font-size: 12px;
     margin-right: 16px;
+    margin-top: 6px !important;
   }
   .ComTime {
     font-size: 12px;

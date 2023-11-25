@@ -20,8 +20,6 @@ const postComment = async (content, boardId) => {
 };
 
 export function usePostComment(content, boardId) {
-  //   const navigate = useNavigate();
-
   return useMutation(() => postComment(content, boardId), {
     onSuccess: (response) => {
       alert('댓글 작성 완료');
