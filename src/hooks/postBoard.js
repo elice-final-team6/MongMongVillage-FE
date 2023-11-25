@@ -4,7 +4,7 @@ import { useMutation } from 'react-query';
 import { ROUTE } from '../routes/Routes';
 
 const postBoard = async (category, title, content, imageFile) => {
-  const token = sessionStorage.getItem('token');
+  const token = localStorage.getItem('token');
 
   const formData = new FormData();
   formData.append('category', category);

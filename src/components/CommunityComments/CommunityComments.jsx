@@ -26,12 +26,9 @@ const CommunityComments = ({ selectedPost, post, id }) => {
     if (content === '') {
       alert('내용을 입력 후 작성해주세요.');
     } else {
-      console.log('선택포스트', selectedPost);
-      console.log('댓글 내용', content);
-      console.log('게시글 아이디', boardId);
-      // 선택포스트 {status: 200, board: {…}, comments: Array(0)}
-      // 댓글 내용 ㅇㄹㄹㄴㅇㄹㄴㅇㅁ
-      // 게시글 아이디 selectedPost.board._id
+      // console.log('선택포스트', selectedPost);
+      // console.log('댓글 내용', content);
+      // console.log('게시글 아이디', boardId);
 
       postComment();
     }

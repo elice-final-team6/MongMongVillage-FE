@@ -4,7 +4,7 @@ import { useMutation } from 'react-query';
 import { ROUTE } from '../routes/Routes';
 
 const patchBoard = async (category, content, title, boardId) => {
-  const token = sessionStorage.getItem('token');
+  const token = localStorage.getItem('token');
 
   const response = await instance.patch(
     `/boards/${boardId}`,

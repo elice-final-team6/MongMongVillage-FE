@@ -32,8 +32,8 @@ const CommunityDetailPage = () => {
 
   // 서버로부터 해당 작성글 받아오도록 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
   const { mutate: mutatePost, data: postData } = useGetDetailBoard(id);
-  console.log('postData:', postData);
-  console.log('mutatePost: ', mutatePost);
+  // console.log('postData:', postData);
+  // console.log('mutatePost: ', mutatePost);
 
   useEffect(() => {
     // 페이지가 처음 로딩될 때는 mutatePost를 호출하지 않습니다.

@@ -4,7 +4,7 @@ import { useMutation } from 'react-query';
 // import { ROUTE } from '../routes/Routes';
 
 const postComment = async (content, boardId) => {
-  const token = sessionStorage.getItem('token');
+  const token = localStorage.getItem('token');
 
   const response = await instance.post(
     `/comments/boards/${boardId}`,
@@ -29,7 +29,7 @@ export function usePostComment(content, boardId) {
 
     onError: (error) => {
       console.log(error);
-      alert(error);
+      alert('로그인 후 댓글을 작성해주세요.');
     },
   });
 }
