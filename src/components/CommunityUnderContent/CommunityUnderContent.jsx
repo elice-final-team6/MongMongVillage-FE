@@ -22,8 +22,8 @@ const CommunityUnderContent = ({ selectedPost, onEdit, onDelete, post }) => {
     <UnderContentContainer>
       <ContentInfo>
         <div>
-          {post?.board?.user_id.img ? (
-            <img src={post?.board?.user_id.img} alt="UserImg" />
+          {post?.board?.user_id.profilePicture ? (
+            <img src={post?.board?.user_id.profilePicture} alt="UserImg" />
           ) : (
             <img
               src={`${`${process.env.PUBLIC_URL}/imges/user.png`}`}

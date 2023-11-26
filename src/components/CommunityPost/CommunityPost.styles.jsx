@@ -7,6 +7,12 @@ export const PostContainer = styled.div`
 
 export const MainImg = styled.div`
   margin-top: 32px;
+  margin-bottom: 8px;
+
+  img {
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
 `;
 
 export const Title = styled.h2`

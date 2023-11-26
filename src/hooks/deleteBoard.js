@@ -4,7 +4,7 @@ import { useMutation } from 'react-query';
 import { ROUTE } from '../routes/Routes';
 
 const deleteBoard = async (boardId) => {
-  const token = sessionStorage.getItem('token');
+  const token = localStorage.getItem('token');
 
   const response = await instance.delete(`/boards/${boardId}`, {
     headers: {

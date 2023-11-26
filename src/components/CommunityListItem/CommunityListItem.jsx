@@ -42,8 +42,8 @@ const CommunityListItem = ({
           //   handleUserClick(item.user.id);
           // }}
           >
-            {item.userImg ? (
-              <img alt="유저프로필이미지" src={item.userImg} />
+            {item.profilePicture ? (
+              <img alt="유저프로필이미지" src={item.profilePicture} />
             ) : (
               <img
                 src={`${`${process.env.PUBLIC_URL}/imges/user.png`}`}

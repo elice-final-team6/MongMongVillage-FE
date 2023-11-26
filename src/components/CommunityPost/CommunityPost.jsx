@@ -8,7 +8,7 @@ import {
 } from './CommunityPost.styles';
 
 const CommunityPost = ({ selectedPost, post }) => {
-  console.log('sele', selectedPost, post);
+  console.log('선택 게시글 : ', selectedPost);
   return (
     <PostContainer>
       <Title>
@@ -17,7 +17,9 @@ const CommunityPost = ({ selectedPost, post }) => {
       </Title>
       <MainImg>
         {selectedPost?.board?.images.length > 0 ? (
-          <img src={selectedPost?.board?.images[0]} alt="ContentImg" />
+          selectedPost?.board?.images?.map((image, index) => (
+            <img key={image} src={image} alt={`${index}.img`} />
+          ))
         ) : (
           <></>
         )}

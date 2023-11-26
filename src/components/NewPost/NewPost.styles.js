@@ -8,6 +8,10 @@ export const Container = styled.div`
 
   max-width: 1280px; /* 추가 */
   width: 100%; /* 추가 */
+
+  .InputPhoto {
+    margin-bottom: 100px;
+  }
 `;
 
 export const Title = styled.h3`
@@ -87,4 +91,41 @@ export const PostBTN = styled.button`
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 160px;
+`;
+
+export const InputImg = styled.div`
+  max-width: 1280px; /* 추가 */
+  width: 100%; /* 추가 */
+  box-sizing: border-box;
+  margin: 10px 0;
+  padding: 10px;
+  height: 150px;
+  background-color: #fff5ce;
+  border-radius: 30px;
+  border: 1px dashed #868688;
+  display: flex;
+  img {
+    height: 130px;
+  }
+  svg {
+    padding: 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+`;
+
+export const InputImgButton = styled.label`
+  cursor: pointer;
+  width: 10%;
+  background-color: #f6f6f9;
+  border-radius: 30px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  svg {
+    margin: 0 5px;
+  }
 `;

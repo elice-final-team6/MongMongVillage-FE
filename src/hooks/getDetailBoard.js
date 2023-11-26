@@ -4,8 +4,6 @@ import { useMutation } from 'react-query';
 const getDetailBoard = async (id) => {
   try {
     let url = '/boards';
-    console.log('board id : ', id);
-
     // category가 주어진 경우 카테고리에 따라 경로를 설정
     if (id) {
       url += `/${id}`;
@@ -26,7 +24,6 @@ export function useGetDetailBoard(id) {
       return data;
     },
     onError: (error) => {
-      console.log('dho', error);
       console.error('Failed to fetch Detail Board:', error.message);
     },
   });

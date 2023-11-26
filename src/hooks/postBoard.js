@@ -3,16 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import { ROUTE } from '../routes/Routes';
 
-const postBoard = async (category, title, content, imageFile) => {
+const postBoard = async (category, title, content, images) => {
   const token = localStorage.getItem('token');
+  // 여기까진 제대로 나옴
+  console.log(category, title, content, images);
 
-  const formData = new FormData();
+  let formData = new FormData();
   formData.append('category', category);
+  images.forEach((image) => {
+    formData.append('images', image);
+  });
   formData.append('title', title);
   formData.append('content', content);
-  if (imageFile) {
-    formData.append('image', imageFile);
-  }
 
   const response = await instance.post(`/boards/`, formData, {
     headers: {
@@ -24,11 +26,12 @@ const postBoard = async (category, title, content, imageFile) => {
   return response;
 };
 
-export function usePostBoard(category, title, content, imageFile) {
+export function usePostBoard(category, title, content, images) {
+  // 여기까진 잘 나옴
+  // console.log(category, title, content, images);
   const navigate = useNavigate();
-  return useMutation(() => postBoard(category, title, content, imageFile), {
+  return useMutation(() => postBoard(category, title, content, images), {
     onSuccess: (response) => {
-      console.log(category, title, content, imageFile);
       navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${response.data.board_id}`);
       alert('게시글 작성 완료');
       window.scrollTo(0, 0);
@@ -37,7 +40,7 @@ export function usePostBoard(category, title, content, imageFile) {
     onError: (error) => {
       console.log(error);
       alert('로그인 후 작성해주세요.');
-      // alert(error.response.data.message);
+      alert(error.response.data.message);
     },
   });
 }

@@ -42,7 +42,7 @@ const CommunityDetailPage = () => {
 
   useEffect(() => {
     if (postData) {
-      console.log('post', postData);
+      console.log('post데이터', postData);
       setPost(postData);
       setFilteredCategory(postData.board.category);
       setSelectedPost(postData);
