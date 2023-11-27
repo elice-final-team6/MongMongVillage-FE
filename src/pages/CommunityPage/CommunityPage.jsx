@@ -104,9 +104,6 @@ const CommunityPage = () => {
     }
 
     setSortBy(sort);
-
-    // 정상출력 - '' 이거나 'likes' 이거나
-    // console.log(sortBy);
   };
 
   // id 값을 params로 넘겨줄 함수 - detail 페이지로 정보 넘겨주기

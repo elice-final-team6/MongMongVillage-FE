@@ -5,9 +5,6 @@ import { useMutation } from 'react-query';
 
 const putBoardLike = async (boardId) => {
   const token = localStorage.getItem('token');
-
-  console.log(boardId);
-
   const response = await instance.put(
     `/boards/${boardId}/liked`,
     { boardId },
@@ -23,9 +20,7 @@ const putBoardLike = async (boardId) => {
 
 export function usePutBoardLike(boardId) {
   const navigate = useNavigate();
-  console.log(boardId);
 
-  console.log(boardId);
   return useMutation(() => putBoardLike(boardId), {
     onSuccess: (response) => {
       console.log('좋아요 변경 완료 - ', boardId);

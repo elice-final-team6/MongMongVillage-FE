@@ -5,7 +5,6 @@ const getBoards = async (currentPage, filteredCategory, sortBy) => {
   try {
     let url = '/boards';
 
-    console.log(currentPage, filteredCategory, sortBy);
     // category가 주어진 경우 카테고리에 따라 경로를 설정
     if (filteredCategory === 'all') {
       url += `?currentPage=${currentPage}`;
@@ -13,6 +12,7 @@ const getBoards = async (currentPage, filteredCategory, sortBy) => {
       url += `/category/${filteredCategory}?currentPage=${currentPage}`;
     }
 
+    // sort option에 따라 쿼리스트링으로 붙여줌
     if (sortBy === 'likes') {
       url += `&sortBy=likes`;
     }

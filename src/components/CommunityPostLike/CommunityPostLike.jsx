@@ -3,7 +3,6 @@ import { LikeContainer } from './CommunityPostLike.styles';
 import { usePutBoardLike } from '../../hooks/putBoardLike';
 
 const CommunityPostLike = ({ like, selectedPost }) => {
-  console.log(like);
   const [islikeClick, setIsLikeClick] = useState(false);
   const boardId = selectedPost?.board?._id;
   const [likeCount, setLikeCount] = useState(like);
