@@ -97,11 +97,14 @@ const NewPost = () => {
         <Title>게시글 작성</Title>
         <Input
           type="text"
-          placeholder="제목을 입력해주세요..."
+          placeholder="제목을 입력해주세요...(50자 이내)"
           ref={titleInputRef}
         />
 
-        <TextArea placeholder="내용을 입력해주세요..." ref={contentInputRef} />
+        <TextArea
+          placeholder="내용을 입력해주세요...(1000자 이내)"
+          ref={contentInputRef}
+        />
 
         <Title>사진 업로드</Title>
         <InputImg>

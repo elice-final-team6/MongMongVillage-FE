@@ -77,26 +77,6 @@ const CommunityDetailPage = () => {
     window.scrollTo(0, 0);
   };
 
-  // 좋아요 눌렸는지 확인 state
-  const [likeclick, setlikeclick] = useState(false);
-  // 좋아요 눌렀을 때 실행되는 함수
-  const handleLikeclick = (id) => {
-    const updatePost = selectedPost;
-
-    if (likeclick === false) {
-      // 해당 게시글의 좋아요 + 1
-      updatePost.like_count = selectedPost.like_count + 1;
-      setlikeclick(true);
-      // 여기서 api 를 통해 내가 누른 좋아요 목록에 글을 추가해줘야 함
-    } else {
-      // 해당 게시글의 좋아요 - 1
-      updatePost.like_count = selectedPost.like_count - 1;
-      setlikeclick(false);
-    }
-
-    setSelectedPost(updatePost);
-  };
-
   // 페이지네이션 관련 기능 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
   // 현재 페이지에 표시될 아이템들
   const totalPages = Math.ceil(totalBoards / ITEMS_PER_PAGE);
@@ -145,11 +125,9 @@ const CommunityDetailPage = () => {
           <CommunityPost post={post} selectedPost={selectedPost} />
           <CommunityPostLike
             like={like}
-            likeclick={likeclick}
-            onClick={handleLikeclick}
+            selectedPost={selectedPost}
           ></CommunityPostLike>
           <CommunityUnderContent
-            /* 수정, 삭제 함수 만들어 props로 넘겨주고 기능 구현 필요*/
             selectedPost={selectedPost}
             post={post}
             onEdit={handleEdit}

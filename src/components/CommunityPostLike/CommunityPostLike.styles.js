@@ -10,7 +10,7 @@ export const LikeContainer = styled.div`
   border: 2px solid lightgray;
   border-radius: 40px;
   background-color: ${(props) =>
-    props.likeclick === 'true' ? 'lavender' : 'white'};
+    props.islikeClick ? 'var(--main-yellow-color)' : 'white'};
   width: 80px;
   height: 80px;
   cursor: pointer;

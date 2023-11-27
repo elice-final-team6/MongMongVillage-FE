@@ -22,8 +22,26 @@ const CommunityListItem = ({
   totalPages,
   //  handleUserClick,
 }) => {
+  const originalDate =
+    item.createdAt instanceof Date ? item.createdAt : new Date(item.createdAt);
+
+  const year = originalDate.getFullYear();
+  const month = (originalDate.getMonth() + 1).toString().padStart(2, '0');
+  const day = originalDate.getDate().toString().padStart(2, '0');
+  const hours = originalDate.getHours().toString().padStart(2, '0');
+  const minutes = originalDate.getMinutes().toString().padStart(2, '0');
+  const seconds = originalDate.getSeconds().toString().padStart(2, '0');
+  const ampm = originalDate.getHours() >= 12 ? '오후' : '오전';
+
+  const formattedDate = `${year}. ${month}. ${day}. ${ampm} ${hours}:${minutes}:${seconds}`;
+
   return (
-    <Container key={item._id}>
+    <Container
+      key={item._id}
+      onClick={() => {
+        handlePostClick(item._id);
+      }}
+    >
       <LeftContainer>
         <TopContainer
           onClick={() => {
@@ -56,11 +74,17 @@ const CommunityListItem = ({
           <Count>
             <FaHeart color="red" size={'20px'} /> {item.like_count}
           </Count>
-          <DateText>{item.createdAt} 작성</DateText>
+          <DateText>{formattedDate} 작성</DateText>
         </BottomContainer>
       </LeftContainer>
       <RightContainer>
-        <PostImg src={item.images[0]} alt="메인이미지" />
+        <PostImg
+          onClick={() => {
+            handlePostClick(item._id);
+          }}
+          src={item.images[0]}
+          alt="메인이미지"
+        />
       </RightContainer>
     </Container>
   );

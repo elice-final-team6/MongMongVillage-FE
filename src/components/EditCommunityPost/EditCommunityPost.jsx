@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { usePatchBoard } from '../../hooks';
 import { ROUTE } from '../../routes/Routes';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
@@ -53,6 +53,7 @@ const EditCommunityPost = () => {
     setBoardId(selectedPost._id);
     setPrevBoard(selectedPost);
     setImages(selectedPost.images);
+    setPhotos(selectedPost.images);
   }, [selectedPost]);
 
   // usePatchBoard 훅을 사용
@@ -85,14 +86,20 @@ const EditCommunityPost = () => {
   const handleEditPost = (e) => {
     e.preventDefault();
 
-    if (categorySelectRef.current.value === null) {
+    if (categorySelectRef.current.value === '') {
       alert('카테고리를 선택해주세요.');
       categorySelectRef.current.focus();
     } else if (titleInputRef.current.value === '') {
       alert('글 제목을 입력해주세요');
       titleInputRef.current.focus();
+    } else if (titleInputRef.current.value.length > 50) {
+      alert('글 제목은 50자 이하로 작성해주세요.');
+      titleInputRef.current.focus();
     } else if (contentInputRef.current.value === '') {
       alert('글 내용을 입력해주세요.');
+      contentInputRef.current.focus();
+    } else if (contentInputRef.current.value.length > 1000) {
+      alert('글 내용은 500자 이하로 작성해주세요.');
       contentInputRef.current.focus();
     } else {
       setCategory(categorySelectRef.current.value);
@@ -128,14 +135,14 @@ const EditCommunityPost = () => {
         <Title>게시글 작성</Title>
         <Input
           type="text"
-          placeholder="제목을 입력해주세요..."
+          placeholder="제목을 입력해주세요...(50자 이내)"
           defaultValue={selectedPost?.title}
           // onChange={(e) => setEditPost({ ...editPost, title: e.target.value })}
           ref={titleInputRef}
         />
 
         <TextArea
-          placeholder="내용을 입력해주세요..."
+          placeholder="내용을 입력해주세요...(1000자 이내)"
           defaultValue={selectedPost?.content}
           // onChange={(e) => setEditPost({ ...editPost, content: e.target.value })}
           ref={contentInputRef}

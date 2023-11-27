@@ -18,6 +18,22 @@ const CommunityUnderContent = ({ selectedPost, onEdit, onDelete, post }) => {
     onDelete(post._id);
   };
 
+  // 시간 포멧 바꿔줌
+  const originalDate =
+    post?.board?.createdAt instanceof Date
+      ? post?.board?.createdAt
+      : new Date(post?.board?.createdAt);
+
+  const year = originalDate.getFullYear();
+  const month = (originalDate.getMonth() + 1).toString().padStart(2, '0');
+  const day = originalDate.getDate().toString().padStart(2, '0');
+  const hours = originalDate.getHours().toString().padStart(2, '0');
+  const minutes = originalDate.getMinutes().toString().padStart(2, '0');
+  const seconds = originalDate.getSeconds().toString().padStart(2, '0');
+  const ampm = originalDate.getHours() >= 12 ? '오후' : '오전';
+
+  const formattedDate = `${year}. ${month}. ${day}. ${ampm} ${hours}:${minutes}:${seconds}`;
+
   return (
     <UnderContentContainer>
       <ContentInfo>
@@ -33,7 +49,7 @@ const CommunityUnderContent = ({ selectedPost, onEdit, onDelete, post }) => {
         </div>
         <div>
           <p className="nickname">{post?.board?.user_id?.nickname}</p>
-          <p className="createAt">{post?.board?.createdAt}</p>
+          <p className="createAt">{formattedDate}</p>
         </div>
       </ContentInfo>
       <ContentButton>

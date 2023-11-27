@@ -21,3 +21,4 @@ export * from './patchBoard';
 export * from './deleteBoard';
 export * from './postComment';
 export * from './postBoard';
+export * from './putBoardLike';

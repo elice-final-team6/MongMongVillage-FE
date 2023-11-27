@@ -8,7 +8,6 @@ import {
 } from './CommunityPost.styles';
 
 const CommunityPost = ({ selectedPost, post }) => {
-  console.log('선택 게시글 : ', selectedPost);
   return (
     <PostContainer>
       <Title>
