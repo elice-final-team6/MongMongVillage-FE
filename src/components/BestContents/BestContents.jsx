@@ -14,19 +14,12 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { ROUTE } from '../../routes/Routes';
 import { useGetBestContents } from '../../hooks';
-import { useEffect } from 'react';
 import { GiCurlyWing } from 'react-icons/gi';
 
 const BestContents = () => {
   const navigate = useNavigate();
 
-  const { mutate, data, isLoading, error } = useGetBestContents();
-  useEffect(() => {
-    mutate();
-    // if (data) {
-    //   console.log(data);
-    // }
-  }, []);
+  const { data, isLoading, error } = useGetBestContents();
 
   const linkToCommunity = (postId) => {
     navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${postId}`);
@@ -66,11 +59,6 @@ const BestContents = () => {
           data.boards.map((content, index) => (
             <DogCafeListItem key={index}>
               <DogCafeListItemImg
-                // src={
-                //   content.images.length > 0
-                //     ? content.images[0]
-                //     : '/imges/default.png'
-                // }
                 style={{
                   backgroundImage: `url('${
                     content.images.length > 0

@@ -7,23 +7,21 @@ export const Container = styled.div`
 `;
 
 export const CafeDetailContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  display: grid;
   margin: 0 auto;
-  max-width: 1000px;
-  height: 880px;
+  max-width: 890px;
 `;
 
-export const CafeName = styled.p`
+export const CafeName = styled.h2`
   margin: 69px 30px 26px 26px;
-  font-size: 32px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 55px;
 `;
 
 export const CafeImgContainer = styled.div`
   width: 100%;
   height: 500px;
-  background-color: gray;
   border-radius: 50px;
 `;
 
@@ -31,14 +29,12 @@ export const CafeImg = styled.img`
   width: 100%;
   height: 100%;
   border-radius: 50px;
+  box-shadow: 0px 0px 17px -6px;
 `;
 
 export const CafeInfoContainer = styled.article`
-  margin-top: 27px;
-  margin-left: 26px;
-  border-left: 2px solid black;
-  padding-left: 22px;
-  width: 100%;
+  justify-self: center;
+  width: 90%;
 `;
 
 export const CafeInfo = styled.article`
@@ -70,4 +66,16 @@ export const StarRating = styled.div`
   color: var(--main-yellow-color);
   font-size: 20px;
   padding-top: 15px;
+`;
+
+export const CafeMiniTitle = styled.h3`
+  font-size: 20px;
+`;
+
+export const InfoMiniContainer = styled.article`
+  box-shadow: 0px 0px 17px -6px;
+  padding: 20px;
+  margin-top: 15px;
+  background: #fef9ea;
+  border-radius: 16px;
 `;

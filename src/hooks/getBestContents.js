@@ -1,5 +1,5 @@
 import { instance } from '.';
-import { useMutation } from 'react-query';
+import { useQuery } from 'react-query';
 
 const getBestContents = async () => {
   try {
@@ -11,7 +11,7 @@ const getBestContents = async () => {
 };
 
 export function useGetBestContents() {
-  return useMutation(getBestContents, {
+  return useQuery('bestContents', getBestContents, {
     onSuccess: (data) => {
       console.log('Best contents fetched successfully:', data);
     },

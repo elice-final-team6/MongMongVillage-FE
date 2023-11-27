@@ -24,12 +24,12 @@ export const DogCafeList = styled.article`
   grid-gap: 50px;
   grid-row-gap: 120px;
   border-radius: 50px;
-  background: white;
+  background: #ffe7bd;
   position: absolute;
   padding: 86px;
   padding-bottom: 124px;
   width: 1300px;
-  left: -68px;
+  left: -100px;
 `;
 
 export const DogCafeListItem = styled.section`
@@ -65,4 +65,22 @@ export const DogCafeListItemRating = styled.p`
   padding: 3px 25px 0 8px;
   font-size: 18px;
   color: var(--main-yellow-color);
+`;
+
+export const LoadingContainer = styled.div`
+  width: 90%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+`;
+
+export const ErrorContainer = styled.div`
+  width: 90%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
 `;

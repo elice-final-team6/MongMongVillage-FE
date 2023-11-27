@@ -36,7 +36,7 @@ export const ROUTE = {
   },
 
   CAFE_DETAIL_PAGE: {
-    path: '/cafedetail',
+    path: '/cafedetail/:id',
     link: '/cafedetail',
     element: <CafeDetailPage />,
   },

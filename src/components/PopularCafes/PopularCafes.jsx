@@ -7,45 +7,58 @@ import {
   DogCafeListItemTitle,
   DogCafeListItemRating,
   DogCafeInfoContainer,
+  LoadingContainer,
+  ErrorContainer,
 } from './styles';
 
 import { useNavigate } from 'react-router-dom';
 import { ROUTE } from '../../routes/Routes';
+import { instance } from '../../hooks';
+import { useQuery } from 'react-query';
 import { GiPartyPopper } from 'react-icons/gi';
-
-const popularCafes = [
-  {
-    cafe: '0000 애견카페',
-    photo:
-      'https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201612/27/htm_2016122716183896136.jpg',
-    rating: 3,
-  },
-  {
-    cafe: '0000 애견카페',
-    photo:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVKvhmjE3ic-JmgviTo5GRFs6u3k9FiS3pOw&usqp=CAU',
-    rating: 3,
-  },
-  {
-    cafe: '0000 애견카페',
-    photo:
-      'https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201612/27/htm_2016122716183896136.jpg',
-    rating: 3,
-  },
-  {
-    cafe: '0000 애견카페',
-    photo:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVKvhmjE3ic-JmgviTo5GRFs6u3k9FiS3pOw&usqp=CAU',
-    rating: 3,
-  },
-];
 
 const PopularCafes = () => {
   const navigate = useNavigate();
 
-  const linkToCafe = () => {
-    navigate(ROUTE.CAFE_DETAIL_PAGE.link);
+  const linkToCafe = (id) => {
+    navigate(`${ROUTE.CAFE_DETAIL_PAGE.link}/${id}`);
   };
+
+  const scollTop = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  };
+
+  const getPopularCafes = async () => {
+    try {
+      const response = await instance.get(`/cafes/rating`);
+      return response.data;
+    } catch (error) {
+      throw new Error(`Failed to fetch best contents: ${error.message}`);
+    }
+  };
+
+  function useGetPolularCafes() {
+    return useQuery('popularCafes', getPopularCafes, {
+      onSuccess: (data) => {
+        console.log('Best contents fetched successfully:', data);
+      },
+      onError: (error) => {
+        console.error('Failed to fetch best contents:', error.message);
+      },
+    });
+  }
+
+  const { data, isLoading, error } = useGetPolularCafes();
+
+  if (isLoading) {
+    return <LoadingContainer>Loading...</LoadingContainer>;
+  }
+
+  if (error) {
+    return (
+      <ErrorContainer>인기글을 불러오는 도중 에러가 생겼습니다.</ErrorContainer>
+    );
+  }
 
   return (
     <Container>
@@ -60,26 +73,42 @@ const PopularCafes = () => {
         />
       </Content>
       <DogCafeList>
-        {popularCafes.map((cafe, index) => (
-          <DogCafeListItem key={index}>
-            <DogCafeListItemImg
-              src={cafe.photo}
-              alt={`카페사진 ${index}`}
-              onClick={linkToCafe}
-            />
-            <DogCafeInfoContainer>
-              <DogCafeListItemTitle onClick={linkToCafe}>
-                {cafe.cafe}
-              </DogCafeListItemTitle>
-              <DogCafeListItemRating>
-                <span style={{ color: 'black', display: 'inline' }}>
-                  평균 별점:
-                </span>
-                {'★'.repeat(cafe.rating) + '☆'.repeat(5 - cafe.rating)}
-              </DogCafeListItemRating>
-            </DogCafeInfoContainer>
-          </DogCafeListItem>
-        ))}
+        {data &&
+          data.cafes.map((content, index) => (
+            <DogCafeListItem key={index}>
+              <DogCafeListItemImg
+                style={{
+                  backgroundImage: `url('${
+                    // content.images.length > 0
+                    //   ? content.images[0]
+                    //   :
+                    '/imges/default.png'
+                  }')`,
+                }}
+                alt={`카페사진 ${index}`}
+                onClick={() => {
+                  linkToCafe(content._id);
+                  scollTop();
+                }}
+              />
+              <DogCafeInfoContainer>
+                <DogCafeListItemTitle
+                  onClick={() => {
+                    linkToCafe(content._id);
+                    scollTop();
+                  }}
+                >
+                  {content.name}
+                </DogCafeListItemTitle>
+                <DogCafeListItemRating>
+                  <span style={{ color: 'black', display: 'inline' }}>
+                    평균 별점:
+                  </span>
+                  {'★'.repeat(content.rating) + '☆'.repeat(5 - content.rating)}
+                </DogCafeListItemRating>
+              </DogCafeInfoContainer>
+            </DogCafeListItem>
+          ))}
       </DogCafeList>
     </Container>
   );

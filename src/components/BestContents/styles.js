@@ -25,12 +25,12 @@ export const DogCafeList = styled.article`
   grid-gap: 50px;
   grid-row-gap: 120px;
   border-radius: 50px;
-  background: white;
+  background: #ffe7bd;
   position: absolute;
   padding: 86px;
   padding-bottom: 124px;
   width: 1300px;
-  left: -68px;
+  left: -100px;
 `;
 
 export const DogCafeListItem = styled.section`

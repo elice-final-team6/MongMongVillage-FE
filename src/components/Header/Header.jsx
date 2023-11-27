@@ -17,6 +17,53 @@ const Header = () => {
     navigate(route);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    window.location.reload();
+  };
+
+  const checkTokenValid = async (token) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_DB_API_ENDPOINT}/users/check-token`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          `토큰 검증에 실패했습니다.  응답 코드: ${response.status}`,
+        );
+      } else {
+        console.log('검사 성공');
+      }
+
+      const data = await response.json();
+      return data.valid; // 유효성 여부를 반환
+    } catch (error) {
+      console.error('토큰 검증 중 오류 발생:', error.message);
+      return false; // 오류가 발생하면 유효하지 않은 것으로 처리
+    }
+  };
+
+  useEffect(() => {
+    const checkAndHandleLogout = async () => {
+      if (token) {
+        const isValid = await checkTokenValid(token);
+
+        if (!isValid) {
+          // 토큰이 유효하지 않은 경우 로그아웃 처리
+        }
+      }
+    };
+
+    checkAndHandleLogout();
+  }, [token]);
+
   useEffect(() => {
     setActiveHeader(`/${location.pathname.split('/')[1]}`);
   }, [location.pathname]);
@@ -85,8 +132,7 @@ const Header = () => {
             <Navitem
               id="logout"
               onClick={() => {
-                localStorage.removeItem('token');
-                window.location.reload();
+                handleLogout();
               }}
             >
               로그아웃
