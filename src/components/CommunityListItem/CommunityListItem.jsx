@@ -1,5 +1,6 @@
 import { CommunityCategory } from '../../libs/index.js';
 import { FaCircleUser } from 'react-icons/fa6';
+import { useEffect } from 'react';
 import { FaHeart } from 'react-icons/fa';
 import {
   Container,
@@ -22,19 +23,6 @@ const CommunityListItem = ({
   totalPages,
   //  handleUserClick,
 }) => {
-  const originalDate =
-    item.createdAt instanceof Date ? item.createdAt : new Date(item.createdAt);
-
-  const year = originalDate.getFullYear();
-  const month = (originalDate.getMonth() + 1).toString().padStart(2, '0');
-  const day = originalDate.getDate().toString().padStart(2, '0');
-  const hours = originalDate.getHours().toString().padStart(2, '0');
-  const minutes = originalDate.getMinutes().toString().padStart(2, '0');
-  const seconds = originalDate.getSeconds().toString().padStart(2, '0');
-  const ampm = originalDate.getHours() >= 12 ? '오후' : '오전';
-
-  const formattedDate = `${year}. ${month}. ${day}. ${ampm} ${hours}:${minutes}:${seconds}`;
-
   return (
     <Container
       key={item._id}
@@ -74,7 +62,7 @@ const CommunityListItem = ({
           <Count>
             <FaHeart color="red" size={'20px'} /> {item.like_count}
           </Count>
-          <DateText>{formattedDate} 작성</DateText>
+          <DateText>{new Date(item.createdAt).toLocaleString()} 작성</DateText>
         </BottomContainer>
       </LeftContainer>
       <RightContainer>

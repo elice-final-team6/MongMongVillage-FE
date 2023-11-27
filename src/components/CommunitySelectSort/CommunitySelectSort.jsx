@@ -15,13 +15,13 @@ const CommunitySelectSort = ({ sortOption, handleSortChange }) => {
         />
         <p>최신순</p>
       </label>
-      <label htmlFor="popular">
+      <label htmlFor="likes">
         <input
           type="radio"
-          id="popular"
+          id="likes"
           name="sort"
-          value="popular"
-          checked={sortOption === 'popular'}
+          value="likes"
+          checked={sortOption === 'likes'}
           onChange={handleSortChange}
         />
         <p>인기순</p>

@@ -25,12 +25,10 @@ const CommunityPage = () => {
   const [list, setList] = useState([]);
   // 총 게시글 수
   const [totalBoards, setTotalBoards] = useState(0);
-  // 정렬을 위해 list 복사한 state
-  // // !!! 초기값으로 서버로부터 받아온 리스트 넣어줘야함
-  // const [filteredList, setFilteredList] = useState(list);
 
   // 최신순, 인기순 정렬 옵션 state
   const [sortOption, setSortOption] = useState('latest');
+  const [sortBy, setSortBy] = useState('');
 
   // 카테고리 filtered state
   const [filteredCategory, setFilteredCategory] = useState(CATEGORY_DIC.all);
@@ -46,7 +44,7 @@ const CommunityPage = () => {
   const endIndex = startIndex + ITEMS_PER_PAGE;
 
   // 서버로부터 list 받아옴
-  const { mutate, data } = useGetBoards(currentPage, filteredCategory);
+  const { mutate, data } = useGetBoards(currentPage, filteredCategory, sortBy);
   // search 결과 서버로부터 받아옴
   const { mutate: mutateSearch, data: searchData } = useGetCommunitySearch(
     searchTerm,
@@ -58,22 +56,22 @@ const CommunityPage = () => {
       mutateSearch(currentPage);
     } else {
       // 검색어가 없을 경우 전체 게시글 가져오도록 수정
-      mutate(currentPage);
+      mutate(currentPage, filteredCategory, sortBy);
     }
-  }, [currentPage, filteredCategory, mutate, searchTerm, mutateSearch]);
+  }, [currentPage, filteredCategory, mutate, searchTerm, mutateSearch, sortBy]);
 
   useEffect(() => {
     if (data && data.boards) {
       setList(data.boards);
       setTotalBoards(data.total_number_of_boards);
     }
-  }, [data, currentPage, filteredCategory]);
+  }, [data, currentPage, filteredCategory, sortBy]);
   useEffect(() => {
     if (searchData && searchData.boards) {
       setList(searchData.boards);
       setTotalBoards(searchData.total_number_of_boards);
     }
-  }, [searchData, searchTerm, currentPage]);
+  }, [searchData, searchTerm, currentPage, sortBy]);
 
   // 검색창 input을 입력받는 onChange 핸들러
   const handleSearchInputChange = (searchValue) => {
@@ -93,6 +91,22 @@ const CommunityPage = () => {
   // 정렬 onChange 핸들러
   const handleSortChange = (e) => {
     setSortOption(e.target.value);
+    sortOptionChange(e.target.value);
+  };
+
+  // 정렬 sortBy set 함수
+  const sortOptionChange = (option) => {
+    let sort;
+    if (option === 'latest') {
+      sort = '';
+    } else {
+      sort = 'likes';
+    }
+
+    setSortBy(sort);
+
+    // 정상출력 - '' 이거나 'likes' 이거나
+    // console.log(sortBy);
   };
 
   // id 값을 params로 넘겨줄 함수 - detail 페이지로 정보 넘겨주기
