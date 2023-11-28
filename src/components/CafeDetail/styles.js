@@ -79,3 +79,17 @@ export const InfoMiniContainer = styled.article`
   background: #fef9ea;
   border-radius: 16px;
 `;
+
+export const ReviewContainer = styled.article`
+  margin-bottom: 50px;
+`;
+
+export const ProfileImg = styled.div``;
+
+export const Nickname = styled.p``;
+
+export const ReviewTitle = styled.h3``;
+
+export const ReviewContent = styled.p``;
+
+export const ReviewImg = styled.div``;

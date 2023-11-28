@@ -13,7 +13,8 @@ import {
 
 import { useNavigate } from 'react-router-dom';
 import { ROUTE } from '../../routes/Routes';
-import { useGetBestContents } from '../../hooks';
+import { useGetBestContents } from '../../hooks/getBestContents';
+
 import { GiCurlyWing } from 'react-icons/gi';
 
 const BestContents = () => {

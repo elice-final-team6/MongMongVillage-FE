@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 const getBestContents = async () => {
   try {
     const response = await instance.get(`/boards/best`);
-    return response.data;
+    if (response?.data) return response.data;
   } catch (error) {
     throw new Error(`Failed to fetch best contents: ${error.message}`);
   }
