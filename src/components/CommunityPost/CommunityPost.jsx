@@ -8,6 +8,8 @@ import {
 } from './CommunityPost.styles';
 
 const CommunityPost = ({ selectedPost, post }) => {
+  const formattedContent = selectedPost?.board?.content.replace(/\n/g, '<br>');
+
   return (
     <PostContainer>
       <Title>
@@ -23,7 +25,7 @@ const CommunityPost = ({ selectedPost, post }) => {
           <></>
         )}
       </MainImg>
-      <Content>{selectedPost?.board?.content}</Content>
+      <Content dangerouslySetInnerHTML={{ __html: formattedContent }} />
     </PostContainer>
   );
 };

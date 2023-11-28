@@ -70,7 +70,7 @@ const NewPost = () => {
     } else {
       setCategory(categorySelectRef.current.value);
       setTitle(titleInputRef.current.value);
-      setContent(contentInputRef.current.value);
+      setContent(contentInputRef.current.value.replace(/\n/g, '<br>'));
     }
   };
 

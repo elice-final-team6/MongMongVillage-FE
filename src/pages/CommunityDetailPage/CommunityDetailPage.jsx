@@ -17,7 +17,7 @@ import { ROUTE } from '../../routes/Routes.js';
 
 const CommunityDetailPage = () => {
   const navigate = useNavigate();
-  const ITEMS_PER_PAGE = 4;
+  const ITEMS_PER_PAGE = 10;
 
   const { id } = useParams();
   // 현재 페이지의 전체 게시글

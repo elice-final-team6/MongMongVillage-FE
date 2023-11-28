@@ -48,6 +48,9 @@ export const TextArea = styled.textarea`
   font-size: 16px;
   border-radius: 4px;
   border: 3px solid lightgrey;
+  overflowwrap: break-word;
+  wordwrap: break-word;
+  whitespace: pre-wrap;
 `;
 
 export const ImageUploadContainer = styled.div`

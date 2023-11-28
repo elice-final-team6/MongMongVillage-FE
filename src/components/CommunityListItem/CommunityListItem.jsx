@@ -23,6 +23,8 @@ const CommunityListItem = ({
   totalPages,
   //  handleUserClick,
 }) => {
+  const formattedContent = item.content.replace(/\n/g, '<br>');
+
   return (
     <Container
       key={item._id}
@@ -40,7 +42,7 @@ const CommunityListItem = ({
             <Category>{item.category}</Category>
             <Title>{item.title}</Title>
           </div>
-          <Content>{item.content}</Content>
+          <Content dangerouslySetInnerHTML={{ __html: formattedContent }} />
         </TopContainer>
         <BottomContainer>
           <Writer
@@ -66,13 +68,17 @@ const CommunityListItem = ({
         </BottomContainer>
       </LeftContainer>
       <RightContainer>
-        <PostImg
-          onClick={() => {
-            handlePostClick(item._id);
-          }}
-          src={item.images[0] ? item.images[0] : '../imges/default.png'}
-          alt="메인이미지"
-        />
+        {item.images[0] ? (
+          <PostImg
+            onClick={() => {
+              handlePostClick(item._id);
+            }}
+            src={item.images[0]}
+            alt="메인이미지"
+          />
+        ) : (
+          <></>
+        )}
       </RightContainer>
     </Container>
   );

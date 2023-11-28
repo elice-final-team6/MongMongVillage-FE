@@ -18,7 +18,7 @@ import { Title } from '../../commonStyles';
 // 카테고리 객체
 const CATEGORY_DIC = CommunityCategory;
 // 페이지네이션 페이지 당 아이템 수
-const ITEMS_PER_PAGE = 4;
+const ITEMS_PER_PAGE = 10;
 
 const CommunityPage = () => {
   const [user, setUser] = useState(null);

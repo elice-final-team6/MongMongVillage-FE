@@ -104,7 +104,7 @@ const EditCommunityPost = () => {
       contentInputRef.current.focus();
     } else {
       setCategory(categorySelectRef.current.value);
-      setContent(contentInputRef.current.value);
+      setContent(contentInputRef.current.value.replace(/\n/g, '<br>'));
       setTitle(titleInputRef.current.value);
       setBoardId(selectedPost._id);
       setEditStatus(true);
