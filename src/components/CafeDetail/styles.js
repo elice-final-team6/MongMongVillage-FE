@@ -58,15 +58,21 @@ export const WriteReviewBtn = styled.button`
   }
 `;
 
-export const StarRating = styled.div`
+export const StarRatingBox = styled.div`
   gap: 3px;
   align-items: center;
   display: flex;
   font-size: 13px;
-  color: var(--main-yellow-color);
   font-size: 20px;
   padding-top: 15px;
 `;
+
+export const StarRating = styled.div`
+  color: black;
+  display: inline;
+  padding-right: 3px;
+`;
+export const ReviewNum = styled.h2``;
 
 export const CafeMiniTitle = styled.h3`
   font-size: 20px;
@@ -84,12 +90,10 @@ export const ReviewContainer = styled.article`
   margin-bottom: 50px;
 `;
 
-export const ProfileImg = styled.div``;
-
-export const Nickname = styled.p``;
-
-export const ReviewTitle = styled.h3``;
-
-export const ReviewContent = styled.p``;
-
-export const ReviewImg = styled.div``;
+export const ReviewStarRatingContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0px 13px 11px;
+  border-bottom: 1px solid lightgrey;
+`;

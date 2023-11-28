@@ -1,5 +1,6 @@
 import {
   Container,
+  StarRatingBox,
   StarRating,
   CafeDetailContainer,
   CafeName,
@@ -10,12 +11,7 @@ import {
   WriteReviewBtn,
   CafeMiniTitle,
   InfoMiniContainer,
-  ReviewContainer,
-  ProfileImg,
-  Nickname,
-  ReviewTitle,
-  ReviewContent,
-  ReviewImg,
+  ReviewStarRatingContainer,
 } from './styles';
 import { BsPencilSquare } from 'react-icons/bs';
 import { useState, useEffect } from 'react';
@@ -83,20 +79,19 @@ const CafeDetail = () => {
         <CafeDetailContainer>
           <CafeName>{cafeDetailInfo.info.name}</CafeName>
 
-          <CafeImgContainer>
-            <CafeImg
-              style={{
-                backgroundImage: `url('${
-                  // cafeDetailInfo.info.images.length > 0
-                  //   ? cafeDetailInfo.info.images[0]
-                  //   :
-                  '/imges/defaultCafeDetail.png'
-                }')`,
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover',
-              }}
-            ></CafeImg>
-          </CafeImgContainer>
+          {cafeDetailInfo.info.image.length > 0 ? (
+            <CafeImgContainer>
+              <CafeImg
+                style={{
+                  backgroundImage: `url('${cafeDetailInfo.info.image}')`,
+                  backgroundRepeat: 'no-repeat',
+                  backgroundSize: 'cover',
+                }}
+              ></CafeImg>
+            </CafeImgContainer>
+          ) : (
+            <></>
+          )}
           <div
             style={{
               display: 'flex',
@@ -156,124 +151,33 @@ const CafeDetail = () => {
                 <CafeInfo>가게 소개 정보가 없습니다.</CafeInfo>
               )}
             </InfoMiniContainer>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginTop: '50px',
-              }}
-            >
-              <StarRating>
-                <p
-                  style={{
-                    color: 'black',
-                    display: 'inline',
-                    paddingRight: '3px',
+
+            <InfoMiniContainer style={{ marginBottom: '103px' }}>
+              <CafeMiniTitle>
+                전체 리뷰 ( {cafeDetailInfo.totalReviews} )
+              </CafeMiniTitle>
+              <ReviewStarRatingContainer>
+                <StarRatingBox>
+                  <StarRating>평균 별점: </StarRating>
+                  {cafeDetailInfo.info.rating}점
+                </StarRatingBox>
+                <WriteReviewBtn
+                  onClick={() => {
+                    handleClick(ROUTE.REVIEW_WRITE_PAGE.link);
                   }}
                 >
-                  평균 별점:{' '}
-                </p>
-                {'★'.repeat(cafeDetailInfo.info.rating) +
-                  '☆'.repeat(5 - cafeDetailInfo.info.rating)}
-                <p
-                  style={{
-                    color: 'black',
-                    display: 'inline',
-                    paddingRight: '3px',
-                  }}
-                >
-                  ({cafeDetailInfo.totalReviews})
-                </p>
-              </StarRating>
-              <WriteReviewBtn
-                onClick={() => {
-                  handleClick(`${ROUTE.REVIEW_WRITE_PAGE.link}/${id}`);
-                }}
-              >
-                <p style={{ paddingRight: '5px' }}> 리뷰 작성하러가기 </p>
-                <BsPencilSquare size={'18px'} />
-              </WriteReviewBtn>
-            </div>
+                  <p style={{ paddingRight: '5px' }}> 리뷰 작성하러가기 </p>
+                  <BsPencilSquare size={'18px'} />
+                </WriteReviewBtn>
+              </ReviewStarRatingContainer>
+              <div style={{ marginRight: '20px' }}>
+                {cafeDetailInfo.reviews.map((review) => (
+                  <ReviewItem key={review._id} item={review} />
+                ))}
+              </div>
+            </InfoMiniContainer>
           </CafeInfoContainer>
         </CafeDetailContainer>
-
-        {cafeDetailInfo.reviews.map((review) => (
-          <ReviewItem key={review._id} item={review} id={review._id} />
-        ))}
-        <div
-          style={{
-            width: '1000px',
-            height: '1000px',
-            border: '1px solid black',
-            margin: '100px auto',
-          }}
-        >
-          {cafeDetailInfo.reviews.map((review) => (
-            <ReviewContainer key={review._id} style={{ marginBottom: '20px' }}>
-              <ReviewTitle>{review.title}</ReviewTitle>
-              <StarRating>
-                <p
-                  style={{
-                    color: 'black',
-                    display: 'inline',
-                    paddingRight: '3px',
-                  }}
-                >
-                  평균 별점:{' '}
-                </p>
-                {'★'.repeat(review.rating) + '☆'.repeat(5 - review.rating)}
-                <p
-                  style={{
-                    color: 'black',
-                    display: 'inline',
-                    paddingRight: '3px',
-                  }}
-                ></p>
-              </StarRating>
-              <ProfileImg
-                style={{
-                  width: '50px',
-                  height: '50px',
-                  borderRadius: '50%',
-                  backgroundImage: `url('${
-                    // review.user_id.profilePicture.length > 0
-                    //   ? review.user_id.profilePicture[0]
-                    //   :
-                    '/imges/defaultCafeDetail.png'
-                  }')`,
-                  backgroundRepeat: 'no-repeat',
-                  backgroundSize: 'cover',
-                }}
-              />
-              <Nickname>{review.user_id.nickname}</Nickname>
-
-              <ReviewContent>{review.content}</ReviewContent>
-              {review.images.length > 0 && (
-                <div style={{ display: 'flex', marginTop: '10px' }}>
-                  {review.images.map((image, index) => (
-                    <ReviewImg
-                      key={index}
-                      style={{
-                        width: '100px',
-                        height: '100px',
-                        marginRight: '10px',
-                        backgroundImage: `url('${
-                          // review.user_id.profilePicture.length > 0
-                          //   ? review.user_id.profilePicture[0]
-                          //   :
-                          '/imges/defaultCafeDetail.png'
-                        }')`,
-                        backgroundRepeat: 'no-repeat',
-                        backgroundSize: 'cover',
-                      }}
-                    />
-                  ))}
-                </div>
-              )}
-            </ReviewContainer>
-          ))}
-        </div>
       </div>
     </Container>
   );

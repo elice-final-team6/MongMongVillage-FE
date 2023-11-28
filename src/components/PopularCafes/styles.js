@@ -37,11 +37,13 @@ export const DogCafeListItem = styled.section`
   background-color: none;
 `;
 
-export const DogCafeListItemImg = styled.img`
+export const DogCafeListItemImg = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 50px;
   cursor: pointer;
+  background-size: cover;
+  background-repeat: no-repeat;
 
   &:hover {
     transition: all 0.2s linear;
@@ -53,6 +55,7 @@ export const DogCafeInfoContainer = styled.section`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-top: 10px;
 `;
 
 export const DogCafeListItemTitle = styled.p`

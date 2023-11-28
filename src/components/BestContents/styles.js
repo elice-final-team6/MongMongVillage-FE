@@ -42,7 +42,6 @@ export const DogCafeListItemImg = styled.div`
   width: 100%;
   height: 100%;
   background-size: cover;
-  background-position: -8px -134px;
   background-repeat: no-repeat;
   border-radius: 50px;
   cursor: pointer;
@@ -58,7 +57,7 @@ export const DogCafeItemInfo = styled.article`
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  padding-top: 19px;
+  padding-top: 10px;
 `;
 
 export const DogCafeListItemTitle = styled.p`
