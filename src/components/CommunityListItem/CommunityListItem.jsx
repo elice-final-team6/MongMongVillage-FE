@@ -1,6 +1,6 @@
 import { CommunityCategory } from '../../libs/CommunityCategory.js';
 import { FaCircleUser } from 'react-icons/fa6';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { FaHeart } from 'react-icons/fa';
 import {
   Container,
@@ -24,6 +24,17 @@ const CommunityListItem = ({
   //  handleUserClick,
 }) => {
   const formattedContent = item.content.replace(/\n/g, '<br>');
+  const [categoryKor, setCategoryKor] = useState('');
+
+  useEffect(() => {
+    if (item.category === 'info') {
+      setCategoryKor('정보글');
+    } else if (item.category === 'general') {
+      setCategoryKor('자유글');
+    } else {
+      setCategoryKor('질문글');
+    }
+  }, [item.category]);
 
   return (
     <Container
@@ -39,7 +50,9 @@ const CommunityListItem = ({
           }}
         >
           <div className="TitleAndCategory">
-            <Category>{item.category}</Category>
+            <Category>
+              <p>{categoryKor}</p>
+            </Category>
             <Title>{item.title}</Title>
           </div>
           <Content dangerouslySetInnerHTML={{ __html: formattedContent }} />

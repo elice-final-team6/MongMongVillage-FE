@@ -32,6 +32,10 @@ export const Category = styled.span`
   margin-right: 10px;
   font-size: 12px;
   align-items: center;
+
+  p {
+    margin-top: 2px;
+  }
 `;
 
 export const Content = styled.div`

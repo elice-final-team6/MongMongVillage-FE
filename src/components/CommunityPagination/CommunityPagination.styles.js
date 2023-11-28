@@ -9,7 +9,7 @@ export const Container = styled.div`
   font-size: 20px;
 
   .space {
-    width: 44px;
+    width: 60px;
   }
 `;
 export const PageButton = styled.button`
@@ -19,13 +19,17 @@ export const PageButton = styled.button`
   padding: none;
   border-radius: 50%;
   padding-top: 6px;
+  width: 40px;
+  height: 40px;
+  background-color: white !important;
 
-  background-color: ${(props) =>
-    props.active ? 'var(--main-yellow-color)' : 'white'};
+  border: 3px solid
+    ${(props) => (props.active ? 'var(--main-yellow-color)' : 'white')};
+
   color: ${(props) => (props.active ? 'black' : '#333')};
 
   &:hover {
-    background-color: ${(props) => (props.active ? '#0056b3' : '#ddd')};
-    color: ${(props) => (props.active ? '#fff' : '#333')};
+    background-color: ${(props) =>
+      props.active ? 'white' : 'var(--main-yellow-color)'} !important;
   }
 `;

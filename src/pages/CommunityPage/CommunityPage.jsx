@@ -39,6 +39,10 @@ const CommunityPage = () => {
   // 검색 기능을 위한 state
   const [searchTerm, setSearchTerm] = useState('');
 
+  // 검색 후 필요한 정보 (검색된 총 게시글, 검색어)
+  const [searchWord, setSearchWord] = useState();
+  const [searchTotal, setSearchTotal] = useState();
+
   useEffect(() => {
     const storedUserId = localStorage.getItem('userId');
     setUser(storedUserId);
@@ -79,8 +83,13 @@ const CommunityPage = () => {
     if (searchData && searchData.boards) {
       setList(searchData.boards);
       setTotalBoards(searchData.total_number_of_boards);
+      setSearchWord(searchTerm);
+      setSearchTotal(searchData.total_number_of_boards);
     }
   }, [searchData, searchTerm, currentPage, sortBy]);
+
+  console.log(searchWord);
+  console.log(searchTotal);
 
   // 검색창 input을 입력받는 onChange 핸들러
   const handleSearchInputChange = (searchValue) => {
@@ -170,6 +179,12 @@ const CommunityPage = () => {
         sortOption={sortOption}
         handleSortChange={handleSortChange}
       ></CommunitySelectSort>
+
+      {searchWord && searchTotal !== undefined && (
+        <p className="SearchResult">
+          '{searchWord}' 검색 결과 {searchTotal}개의 게시글이 있습니다.
+        </p>
+      )}
 
       <CommunityList
         currentPageItems={currentPageItems}

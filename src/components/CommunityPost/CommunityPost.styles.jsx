@@ -25,6 +25,10 @@ export const Title = styled.h2`
   p {
     padding-top: 6px;
   }
+
+  .Title {
+    margin-top: 4px;
+  }
 `;
 
 export const Category = styled.span`
@@ -34,6 +38,10 @@ export const Category = styled.span`
   margin-right: 10px;
   font-size: 12px;
   font-weight: 500;
+
+  p {
+    margin-top: 0px;
+  }
 `;
 
 export const Content = styled.div`

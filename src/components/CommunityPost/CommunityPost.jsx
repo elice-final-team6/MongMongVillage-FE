@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   PostContainer,
   Category,
@@ -9,12 +9,25 @@ import {
 
 const CommunityPost = ({ selectedPost, post }) => {
   const formattedContent = selectedPost?.board?.content.replace(/\n/g, '<br>');
+  const [categoryKor, setCategoryKor] = useState('');
+
+  useEffect(() => {
+    if (selectedPost?.board?.category === 'info') {
+      setCategoryKor('정보글');
+    } else if (selectedPost?.board?.category === 'general') {
+      setCategoryKor('자유글');
+    } else {
+      setCategoryKor('질문글');
+    }
+  }, [selectedPost]);
 
   return (
     <PostContainer>
       <Title>
-        <Category>{selectedPost?.board?.category}</Category>
-        <p>{selectedPost?.board?.title}</p>
+        <Category>
+          <p>{categoryKor}</p>
+        </Category>
+        <p className="Title">{selectedPost?.board?.title}</p>
       </Title>
       <MainImg>
         {selectedPost?.board?.images.length > 0 ? (

@@ -10,6 +10,11 @@ export const SelectSortContainer = styled.div`
     margin-right: 15px;
     text-align: center;
     align-items: center;
+
+    p {
+      margin-top: 4px;
+      margin-left: 1px;
+    }
   }
 
   input[type='radio'] {
