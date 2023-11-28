@@ -27,7 +27,8 @@ export function usePutBoardLike(boardId) {
     },
 
     onError: (error) => {
-      alert(error.response.data.message);
+      // alert(error.response.data.message);
+      alert('로그인 후 좋아요 기능을 이용해주세요.');
     },
   });
 }
