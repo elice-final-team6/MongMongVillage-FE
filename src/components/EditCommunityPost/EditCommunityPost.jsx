@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { usePatchBoard } from '../../hooks';
+// import { usePatchBoard } from '../../hooks';
+import { usePatchBoard } from '../../hooks/patchBoard';
 import { ROUTE } from '../../routes/Routes';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { FaCamera } from 'react-icons/fa';

@@ -12,6 +12,7 @@ import { FaSearch } from 'react-icons/fa';
 const CommunitySearchAndPost = ({
   handleSearchInputChange,
   handleNewPostClick,
+  user,
 }) => {
   const searchInputRef = useRef(null);
 
@@ -42,7 +43,7 @@ const CommunitySearchAndPost = ({
             />
           </SearchInputBox>
         </SearchContainer>
-        <PostBTN onClick={handleNewPostClick}>글작성</PostBTN>
+        {user ? <PostBTN onClick={handleNewPostClick}>글작성</PostBTN> : null}
       </SearchAndPostContainer>
     </>
   );

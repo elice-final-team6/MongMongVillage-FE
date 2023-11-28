@@ -5,8 +5,6 @@ import { ROUTE } from '../routes/Routes';
 
 const postBoard = async (category, title, content, images) => {
   const token = localStorage.getItem('token');
-  // 여기까진 제대로 나옴
-  console.log(category, title, content, images);
 
   let formData = new FormData();
   formData.append('category', category);

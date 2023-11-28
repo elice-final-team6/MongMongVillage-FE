@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useGetBoards, useGetDetailBoard, useDeleteBoard } from '../../hooks';
+// import { useGetBoards, useGetDetailBoard, useDeleteBoard } from '../../hooks';
+import { useGetBoards } from '../../hooks/getBoards';
+import { useGetDetailBoard } from '../../hooks/getDetailBoard';
+import { useDeleteBoard } from '../../hooks/deleteBoard';
 import {
   CommunityList,
   CommunityPost,
@@ -42,7 +45,6 @@ const CommunityDetailPage = () => {
 
   useEffect(() => {
     if (postData) {
-      console.log('post데이터', postData);
       setPost(postData);
       setFilteredCategory(postData.board.category);
       setSelectedPost(postData);

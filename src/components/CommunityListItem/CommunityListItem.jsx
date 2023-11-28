@@ -70,7 +70,7 @@ const CommunityListItem = ({
           onClick={() => {
             handlePostClick(item._id);
           }}
-          src={item.images[0]}
+          src={item.images[0] ? item.images[0] : '../imges/default.png'}
           alt="메인이미지"
         />
       </RightContainer>

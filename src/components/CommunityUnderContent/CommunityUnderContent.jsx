@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaCircleUser } from 'react-icons/fa6';
 import {
   UnderContentContainer,
@@ -8,6 +8,13 @@ import {
 } from './CommunityUnderContent.styles';
 
 const CommunityUnderContent = ({ selectedPost, onEdit, onDelete, post }) => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const storedUserId = localStorage.getItem('userId');
+    setUser(storedUserId);
+  }, []);
+
   const handleEditClick = () => {
     // 수정 모달을 띄우거나 수정폼을 보여줄 수 있는 작업
     onEdit(post);
@@ -17,22 +24,6 @@ const CommunityUnderContent = ({ selectedPost, onEdit, onDelete, post }) => {
     // 삭제 확인 모달을 띄우고 사용자가 확인하면 삭제 진행
     onDelete(post._id);
   };
-
-  // // 시간 포멧 바꿔줌
-  // const originalDate =
-  //   post?.board?.createdAt instanceof Date
-  //     ? post?.board?.createdAt
-  //     : new Date(post?.board?.createdAt);
-
-  // const year = originalDate.getFullYear();
-  // const month = (originalDate.getMonth() + 1).toString().padStart(2, '0');
-  // const day = originalDate.getDate().toString().padStart(2, '0');
-  // const hours = originalDate.getHours().toString().padStart(2, '0');
-  // const minutes = originalDate.getMinutes().toString().padStart(2, '0');
-  // const seconds = originalDate.getSeconds().toString().padStart(2, '0');
-  // const ampm = originalDate.getHours() >= 12 ? '오후' : '오전';
-
-  // const formattedDate = `${year}. ${month}. ${day}. ${ampm} ${hours}:${minutes}:${seconds}`;
 
   return (
     <UnderContentContainer>
@@ -55,12 +46,22 @@ const CommunityUnderContent = ({ selectedPost, onEdit, onDelete, post }) => {
         </div>
       </ContentInfo>
       <ContentButton>
-        <BTN onClick={handleEditClick}>
+        {/* <BTN onClick={handleEditClick}>
           <p>수정</p>
         </BTN>
         <BTN onClick={handleDeleteClick}>
           <p>삭제</p>
-        </BTN>
+        </BTN> */}
+        {user === post?.board?.user_id?._id && (
+          <>
+            <BTN onClick={handleEditClick}>
+              <p>수정</p>
+            </BTN>
+            <BTN onClick={handleDeleteClick}>
+              <p>삭제</p>
+            </BTN>
+          </>
+        )}
       </ContentButton>
     </UnderContentContainer>
   );

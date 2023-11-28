@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { usePostComment } from '../../hooks';
+import { usePostComment } from '../../hooks/postComment';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE } from '../../routes/Routes';
 import {
