@@ -9,12 +9,3 @@ instance.interceptors.request.use(function (config) {
   config.headers.Authorization = token ? `Bearer ${token}` : '';
   return config;
 });
-
-export * from './getBoards';
-export * from './getDetailBoard';
-export * from './getCommunitySearch';
-export * from './patchBoard';
-export * from './deleteBoard';
-export * from './postComment';
-export * from './postBoard';
-export * from './putBoardLike';

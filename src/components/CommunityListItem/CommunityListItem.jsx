@@ -36,6 +36,8 @@ const CommunityListItem = ({
     }
   }, [item.category]);
 
+  console.log(item);
+
   return (
     <Container
       key={item._id}
@@ -63,8 +65,8 @@ const CommunityListItem = ({
           //   handleUserClick(item.user.id);
           // }}
           >
-            {item.profilePicture ? (
-              <img alt="유저프로필이미지" src={item.profilePicture} />
+            {item.user_id.profilePicture ? (
+              <img src={item.user_id.profilePicture} alt="UserImg" />
             ) : (
               <img
                 src={`${`${process.env.PUBLIC_URL}/imges/user.png`}`}

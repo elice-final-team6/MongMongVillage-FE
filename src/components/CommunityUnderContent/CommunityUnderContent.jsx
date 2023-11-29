@@ -25,6 +25,8 @@ const CommunityUnderContent = ({ selectedPost, onEdit, onDelete, post }) => {
     onDelete(post._id);
   };
 
+  console.log(post?.board);
+
   return (
     <UnderContentContainer>
       <ContentInfo>

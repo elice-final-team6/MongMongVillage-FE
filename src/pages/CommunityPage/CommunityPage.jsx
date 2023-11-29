@@ -46,7 +46,6 @@ const CommunityPage = () => {
   useEffect(() => {
     const storedUserId = localStorage.getItem('userId');
     setUser(storedUserId);
-    console.log(storedUserId);
   }, []);
 
   // 페이지네이션 관련 기능 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
@@ -87,9 +86,6 @@ const CommunityPage = () => {
       setSearchTotal(searchData.total_number_of_boards);
     }
   }, [searchData, searchTerm, currentPage, sortBy]);
-
-  console.log(searchWord);
-  console.log(searchTotal);
 
   // 검색창 input을 입력받는 onChange 핸들러
   const handleSearchInputChange = (searchValue) => {
