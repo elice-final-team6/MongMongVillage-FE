@@ -94,7 +94,7 @@ const CafeDetail = () => {
             <CafeMiniTitle className="bottomTitle">영업시간</CafeMiniTitle>
             {cafeDetailInfo.info.operating_time ? (
               cafeDetailInfo.info.operating_time
-                .split('\n')
+                .split('/')
                 .map((item, index) => <CafeInfo key={index}>{item}</CafeInfo>)
             ) : (
               <CafeInfo>영업시간 정보가 없습니다.</CafeInfo>

@@ -2,6 +2,25 @@ import React, { useEffect } from 'react';
 
 // head에 작성한 Kakao API 불러오기
 const { kakao } = window;
+let cafeData;
+let keyword;
+
+const fetchData = async () => {
+  try {
+    const response = await fetch(
+      `${process.env.REACT_APP_DB_API_ENDPOINT}/cafes`,
+    );
+    if (!response.ok) {
+      throw new Error('데이터를 불러오지 못했습니다.');
+    }
+
+    cafeData = await response.json();
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+fetchData();
 
 const Map = (props) => {
   // 마커를 담는 배열
@@ -29,7 +48,7 @@ const Map = (props) => {
 
     // 키워드 검색을 요청하는 함수
     function searchPlaces() {
-      let keyword = props.searchKeyword;
+      keyword = props.searchKeyword;
 
       if (!keyword.replace(/^\s+|\s+$/g, '')) {
         console.log('키워드를 입력해주세요!');
@@ -45,7 +64,20 @@ const Map = (props) => {
       if (status === kakao.maps.services.Status.OK) {
         // 정상적으로 검색이 완료됐으면
         // 검색 목록과 마커를 표출
-        displayPlaces(data);
+
+        // const filterdCafes = cafeData.cafes.filter(
+        //   (placeFromDB) => placeFromDB.name === keyword,
+        // );
+        const filterdCafes = data.filter(
+          (placeFromKakao) =>
+            placeFromKakao.place_name === cafeData.cafes[2].name,
+        );
+        console.log('db데이터: ', cafeData.cafes);
+        console.log('kakao데이터: ', data);
+        console.log('filter데이터: ', filterdCafes);
+        console.log('검색 키워드: ', keyword);
+
+        displayPlaces(filterdCafes);
 
         // 페이지 번호를 표출
         displayPagination(pagination);
