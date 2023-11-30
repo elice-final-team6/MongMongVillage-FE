@@ -28,9 +28,11 @@ const ReviewItem = ({ id }) => {
     });
   };
 
-  const { data: review } = useGetReview(id);
+  const { data: review, isLoading } = useGetReview(id);
 
-  return (
+  return isLoading ? (
+    <Container>로딩 중 </Container>
+  ) : (
     review && (
       <Container>
         <CafeName
@@ -44,7 +46,7 @@ const ReviewItem = ({ id }) => {
         <MainContainer onClick={linkToDetailPage}>
           <RightContainer>
             <ReviewTitle>{review.title}</ReviewTitle>
-            <Content>{review.content}</Content>
+            <Content>{review.content.replace(/<br>/g, '\n')}</Content>
             <BottomContainer>
               <Writer>
                 <img

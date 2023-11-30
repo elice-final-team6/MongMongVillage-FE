@@ -25,14 +25,13 @@ export const StarContainer = styled.fieldset`
     margin: 0 2px;
 
     color: transparent; /* 기존 이모지 컬러 제거 */
-    text-shadow: 0 0 0 #f0f0f0;
 
     font-size: 1.5rem;
   }
 
-  label:hover,
-  label:hover ~ label {
-    text-shadow: 0 0 0 var(--main-yellow-color);
+  label:hover ~ label,
+  label:hover {
+    text-shadow: 0 0 0 var(--main-yellow-color) !important;
   }
 `;
 

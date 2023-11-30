@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { FaCamera, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaCamera } from 'react-icons/fa';
 import { FaXmark } from 'react-icons/fa6';
 import { usePostBoard } from '../../hooks/postBoard';
 import {

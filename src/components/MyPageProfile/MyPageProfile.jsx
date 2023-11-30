@@ -17,7 +17,7 @@ import {
 import { useGetUserInfo } from '../../hooks/getUserInfo';
 import { useDeleteUser } from '../../hooks/deleteUser';
 import { usePatchUserInfo } from '../../hooks/patchUserInfo';
-import { useGetCheckNickname } from '../../hooks/getCheckNickname';
+import { getCheckNickname } from '../../hooks/getCheckNickname';
 
 import { MyProfileImg } from '../MyProfileImg';
 import { FaPencil } from 'react-icons/fa6';
@@ -102,7 +102,7 @@ const MyPageProfile = ({ edit }) => {
   const NickNameDuplicateCheck = async (e) => {
     e.preventDefault();
 
-    const isDuplicate = await useGetCheckNickname(myInfo.nickname);
+    const isDuplicate = await getCheckNickname(myInfo.nickname);
 
     if (!isDuplicate) {
       alert('사용 가능한 닉네임입니다.');
@@ -168,7 +168,7 @@ const MyPageProfile = ({ edit }) => {
         <MyInfoContainer>
           <MyName>{myInfo.nickname}</MyName>
           <MyEmail>{myInfo.email}</MyEmail>
-          {myInfo.introduction.length > 0 ? (
+          {myInfo?.introduction?.length > 0 ? (
             <MyIntroduction>{myInfo.introduction}</MyIntroduction>
           ) : (
             <MyIntroduction className="no-introduction">

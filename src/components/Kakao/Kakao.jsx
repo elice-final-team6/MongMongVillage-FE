@@ -8,11 +8,11 @@ const Kakao = () => {
 
   // 입력 폼 변화 감지하여 입력 값 관리
   const [value, setValue] = useState(
-    new URLSearchParams(location.search).get('keyword') || '강남 애견카페',
+    new URLSearchParams(location.search).get('keyword') || '강서구 애견카페',
   );
   // 제출한 검색어 관리
   const [keyword, setKeyword] = useState(
-    new URLSearchParams(location.search).get('keyword') || '강남 애견카페',
+    new URLSearchParams(location.search).get('keyword') || '강서구 애견카페',
   );
 
   // 입력 폼 변화 감지하여 입력 값을 state에 담아주는 함수
@@ -44,7 +44,7 @@ const Kakao = () => {
                 className="form__input"
                 name="place"
                 onChange={keywordChange}
-                placeholder="검색어를 입력해주세요. (ex: 강남 애견카페)"
+                placeholder="검색어를 입력해주세요. (ex: 강서구 애견카페)"
                 required
               />
               <div className="btn-box">

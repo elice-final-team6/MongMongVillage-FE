@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   Container,
   ReviewWriteContainer,
@@ -19,14 +19,16 @@ import { ReviewWriteRating } from '../../components';
 import { usePostReview } from '../../hooks/postReview';
 import { usePatchReview } from '../../hooks/patchReview';
 import { useGetCafe } from '../../hooks/getCafe';
+import { ROUTE } from '../../routes/Routes';
 
 const ReviewWritePage = () => {
+  const navigate = useNavigate();
+
   const [currentReview, setCurrentReview] = useState({
     title: '',
     content: '',
     images: [],
     rating: 0,
-    cafeName: '엘리스 애견카페',
   });
 
   const [photos, setPhotos] = useState([]); // 사진 미리보기 이미지 배열
@@ -39,13 +41,20 @@ const ReviewWritePage = () => {
   const { state } = location;
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('로그인이 필요합니다.');
+      navigate(ROUTE.LOGIN_PAGE.link);
+    }
+  }, []);
+
+  useEffect(() => {
     if (state) {
       const { prevReview } = state;
       setCurrentReview({
-        cafeName: '엘리스 애견카페',
         title: prevReview.title,
         content: prevReview.content,
-        images: prevReview.images.map(),
+        images: prevReview.images,
         rating: prevReview.rating,
       });
       setPhotos(prevReview.images);
@@ -55,7 +64,7 @@ const ReviewWritePage = () => {
   /* 리뷰 작성 */
   const { mutate: postReview } = usePostReview(
     currentReview.title,
-    currentReview.content,
+    currentReview.content.replace(/\n/g, '<br>'),
     currentReview.rating,
     currentReview.images,
     cafe_id,
@@ -69,7 +78,7 @@ const ReviewWritePage = () => {
   const { mutate: patchReview } = usePatchReview(
     state ? state.prevReview._id : '',
     currentReview.title,
-    currentReview.content,
+    currentReview.content.replace(/\n/g, '<br>'),
     currentReview.rating,
     currentReview.images,
   );

@@ -79,14 +79,14 @@ export const ReviewText = styled.textarea`
 
 export const InputImgButton = styled.label`
   cursor: pointer;
-  width: 10%;
-  background-color: #f6f6f9;
+  width: 15%;
+  background-color: #e4e4e6;
   border-radius: 30px;
   font-size: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 15px;
+  padding: 10px;
   svg {
     margin: 0 5px;
   }
@@ -94,11 +94,10 @@ export const InputImgButton = styled.label`
 
 export const SubmitButton = styled.button`
   width: 300px;
-  height: 60px;
-  background-color: #e4e4e6;
-  border-radius: 23px;
-  border: none;
+  padding: 15px;
+  background-color: var(--main-yellow-color);
+  border-radius: 30px;
   font-size: 20px;
   font-weight: 700;
-  margin: 0 auto;
+  margin: 50px auto;
 `;

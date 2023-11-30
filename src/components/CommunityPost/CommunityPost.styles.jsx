@@ -6,42 +6,35 @@ export const PostContainer = styled.div`
 `;
 
 export const MainImg = styled.div`
-  margin-top: 32px;
-  margin-bottom: 8px;
+  display: flex;
+  margin: 0 auto;
+  padding: 20px;
 
   img {
-    margin-top: 8px;
-    margin-bottom: 8px;
+    height: 300px;
+    margin: 10px;
   }
+
+  display: flex;
+  justify-content: center;
 `;
 
 export const Title = styled.h2`
   font-size: 24px;
   display: flex;
+  align-items: center;
   border-bottom: 2px solid lightgray;
-  padding-bottom: 30px;
-  margin-top: 0px;
-
-  p {
-    padding-top: 6px;
-  }
-
-  .Title {
-    margin-top: 4px;
-  }
+  padding-bottom: 20px;
 `;
 
 export const Category = styled.span`
   background-color: var(--main-yellow-color);
+  align-self: center;
   padding: 10px;
   border-radius: 20px;
-  margin-right: 10px;
   font-size: 12px;
-  font-weight: 500;
-
-  p {
-    margin-top: 0px;
-  }
+  font-weight: bold;
+  margin-right: 20px;
 `;
 
 export const Content = styled.div`

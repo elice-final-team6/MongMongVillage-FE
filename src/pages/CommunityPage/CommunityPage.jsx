@@ -46,7 +46,6 @@ const CommunityPage = () => {
   useEffect(() => {
     const storedUserId = localStorage.getItem('userId');
     setUser(storedUserId);
-    console.log(storedUserId);
   }, []);
 
   // 페이지네이션 관련 기능 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
@@ -88,9 +87,6 @@ const CommunityPage = () => {
     }
   }, [searchData, searchTerm, currentPage, sortBy]);
 
-  console.log(searchWord);
-  console.log(searchTotal);
-
   // 검색창 input을 입력받는 onChange 핸들러
   const handleSearchInputChange = (searchValue) => {
     if (searchValue) {
@@ -128,7 +124,7 @@ const CommunityPage = () => {
   // 글작성 클릭시 실행 함수
   const handleNewPostClick = () => {
     navigate(ROUTE.NEW_POST_PAGE.link);
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   };
   // 전체 페이지 수 계산
   const totalPages = Math.ceil(totalBoards / ITEMS_PER_PAGE);
@@ -136,13 +132,16 @@ const CommunityPage = () => {
   // 이전 페이지로 이동하는 함수
   const goToPrevPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   };
   // 다음 페이지로 이동하는 함수
   const goToNextPage = () => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   };
   // 해당 페이지로 설정 함수
   const goToPage = (page) => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     setCurrentPage(page);
     if (searchTerm) {
       mutateSearch(page);

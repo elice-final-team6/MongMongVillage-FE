@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import { useGetBoards, useGetDetailBoard, useDeleteBoard } from '../../hooks';
 import { useGetBoards } from '../../hooks/getBoards';
 import { useGetDetailBoard } from '../../hooks/getDetailBoard';
 import { useDeleteBoard } from '../../hooks/deleteBoard';
@@ -10,7 +9,7 @@ import {
   CommunityUnderContent,
   CommunityComments,
   CommunityPagination,
-} from '../../components/index.js';
+} from '../../components';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Container } from './CommunityDetailPage.styles.js';
 import { ROUTE } from '../../routes/Routes.js';
@@ -26,7 +25,7 @@ const CommunityDetailPage = () => {
   const [post, setPost] = useState();
   const [totalBoards, setTotalBoards] = useState(0);
   const [selectedPost, setSelectedPost] = useState({});
-  const [like, setLike] = useState(0);
+  const [likeCount, setLikeCount] = useState(0);
 
   const [filteredCategory, setFilteredCategory] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
@@ -48,7 +47,7 @@ const CommunityDetailPage = () => {
       setPost(postData);
       setFilteredCategory(postData.board.category);
       setSelectedPost(postData);
-      setLike(postData.board.like_count);
+      setLikeCount(postData.board.like_count);
       setNewCommentState(false);
     }
   }, [postData, id, newCommentState]);
@@ -126,11 +125,11 @@ const CommunityDetailPage = () => {
         <>
           <CommunityPost post={post} selectedPost={selectedPost} />
           <CommunityPostLike
-            like={like}
-            selectedPost={selectedPost}
+            likeCount={likeCount}
+            setLikeCount={setLikeCount}
+            boardId={selectedPost?.board?._id}
           ></CommunityPostLike>
           <CommunityUnderContent
-            selectedPost={selectedPost}
             post={post}
             onEdit={handleEdit}
             onDelete={handleDelete}

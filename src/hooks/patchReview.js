@@ -24,16 +24,19 @@ export function usePatchReview(id, title, content, rating, images) {
   return useMutation(() => patchReview(id, title, content, rating, images), {
     onSuccess: () => {
       alert('리뷰가 수정되었습니다.');
+      queryClient.invalidateQueries(
+        ['getReviews', 'latest', 1],
+        ['getReview' + id],
+        ['myReviews'],
+      );
+
+      navigate(ROUTE.REVIEW_DETAIL_PAGE.link + `/${id}`);
+      window.scrollTo({ top: 0, left: 0 });
     },
 
     onError: (error) => {
       console.error(error);
       alert(error.response.data.message);
-    },
-
-    onSettled: () => {
-      queryClient.invalidateQueries(['getReviews', 'getReview' + id]);
-      navigate(ROUTE.REVIEW_LIST_PAGE.link);
     },
   });
 }

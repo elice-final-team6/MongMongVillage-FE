@@ -16,14 +16,15 @@ export function useDeleteBoard(boardId) {
   return useMutation(() => deleteBoard(boardId), {
     onSuccess: () => {
       alert('게시글이 삭제되었습니다.');
+
+      queryClient.invalidateQueries(['myBoards']);
       navigate(ROUTE.COMMUNITY_PAGE.link);
-      window.scrollTo(0, 0);
+
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     },
+
     onError: (error) => {
       alert(error.response.data.error + '게시글을 삭제할 수 없습니다.');
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries(['myBoards']);
     },
   });
 }

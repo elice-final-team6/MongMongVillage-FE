@@ -24,9 +24,7 @@ const CommunityPost = ({ selectedPost, post }) => {
   return (
     <PostContainer>
       <Title>
-        <Category>
-          <p>{categoryKor}</p>
-        </Category>
+        <Category>{categoryKor}</Category>
         <p className="Title">{selectedPost?.board?.title}</p>
       </Title>
       <MainImg>

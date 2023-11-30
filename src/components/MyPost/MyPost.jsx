@@ -5,7 +5,7 @@ import { useGetMyBoards } from '../../hooks/getMyBoards';
 const MyPost = () => {
   const { data: posts } = useGetMyBoards();
 
-  return posts ? (
+  return posts?.length > 0 ? (
     <Container>
       {posts.map((item, idx) => {
         return <MyPostItem post={item} key={idx} />;

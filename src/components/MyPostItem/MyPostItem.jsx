@@ -22,7 +22,7 @@ const MyPostItem = ({ post }) => {
       <TopContainer>
         <div>
           <Title>{post.title}</Title>
-          <Content>{post.content}</Content>
+          <Content>{post.content.replace(/<br>/g, '\n')}</Content>
         </div>
       </TopContainer>
       <BottomContainer>

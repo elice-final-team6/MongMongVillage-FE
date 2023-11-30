@@ -19,10 +19,6 @@ const getDetailBoard = async (id) => {
 
 export function useGetDetailBoard(id) {
   return useMutation(() => getDetailBoard(id), {
-    onSuccess: (data) => {
-      console.log('Detail Boards fetched successfully:', data);
-      return data;
-    },
     onError: (error) => {
       console.error('Failed to fetch Detail Board:', error.message);
     },

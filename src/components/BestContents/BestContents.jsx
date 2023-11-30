@@ -7,7 +7,6 @@ import {
   DogCafeListItemTitle,
   DogCafeListItemWriter,
   DogCafeItemInfo,
-  LoadingContainer,
   ErrorContainer,
 } from './styles';
 
@@ -30,21 +29,15 @@ const BestContents = () => {
     navigate(ROUTE.MY_PAGE.link);
   };
 
-  if (isLoading) {
-    return <LoadingContainer>Loading...</LoadingContainer>;
-  }
-
-  if (error) {
-    return (
-      <ErrorContainer>인기글을 불러오는 도중 에러가 생겼습니다.</ErrorContainer>
-    );
-  }
-
   const scollTop = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   };
 
-  return (
+  return isLoading ? (
+    <ErrorContainer>Loading...</ErrorContainer>
+  ) : error ? (
+    <ErrorContainer>인기글을 불러오는 도중 에러가 생겼습니다.</ErrorContainer>
+  ) : (
     <Container>
       <Content>
         <GiCurlyWing size={'43px'} color="rgba(136, 200, 247, 0.94)" />
@@ -58,7 +51,13 @@ const BestContents = () => {
       <DogCafeList>
         {data &&
           data.boards.map((content, index) => (
-            <DogCafeListItem key={index}>
+            <DogCafeListItem
+              key={index}
+              onClick={() => {
+                linkToCommunity(content._id);
+                scollTop();
+              }}
+            >
               <DogCafeListItemImg
                 style={{
                   backgroundImage: `url('${
@@ -68,20 +67,9 @@ const BestContents = () => {
                   }')`,
                 }}
                 alt={`Content ${index}`}
-                onClick={() => {
-                  linkToCommunity(content._id);
-                  scollTop();
-                }}
               />
               <DogCafeItemInfo>
-                <DogCafeListItemTitle
-                  onClick={() => {
-                    linkToCommunity(content._id);
-                    scollTop();
-                  }}
-                >
-                  {content.title}
-                </DogCafeListItemTitle>
+                <DogCafeListItemTitle>{content.title}</DogCafeListItemTitle>
                 <DogCafeListItemWriter onClick={linkToUser}>
                   {content.userImg ? (
                     <img alt="유저프로필이미지" src={content.userImg} />

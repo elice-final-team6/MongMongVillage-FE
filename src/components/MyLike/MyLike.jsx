@@ -3,12 +3,12 @@ import { MyLikeItem } from '../index';
 import { useGetMyLike } from '../../hooks/getMyLike';
 
 const MyLike = () => {
-  const { data: myLikePosts } = useGetMyLike();
+  const { data: myLikePosts, isLoading } = useGetMyLike();
 
-  return myLikePosts ? (
+  return myLikePosts?.length > 0 && !isLoading ? (
     <Container>
       {myLikePosts.map((item, idx) => {
-        return <MyLikeItem post={item} key={idx} />;
+        return <MyLikeItem post={item?.board_id} key={idx} />;
       })}
     </Container>
   ) : (

@@ -14,12 +14,12 @@
   font-style: normal;
 }
 
-.page-content {
-  padding-top: 100px;
+.page-content-container {
+  padding: 100px 0 12px 0;
 }
 
 body {
-  margin: 0;
+  display: flex;
   height: 100%;
   max-width: 1920px;
   font-family: 'GmarketSansMedium', -apple-system, BlinkMacSystemFont,
@@ -165,6 +165,10 @@ button {
 input,
 textarea {
   outline: none;
+}
+
+body {
+  margin: 0 auto;
 }
 
 * {

@@ -5,7 +5,7 @@ import { useGetMyComments } from '../../hooks/getMyComments';
 const MyComment = () => {
   const { data: comments } = useGetMyComments();
 
-  return comments ? (
+  return comments?.length > 0 ? (
     <Container>
       {comments.map((item, idx) => {
         return <MyCommentItem comment={item} key={idx} />;

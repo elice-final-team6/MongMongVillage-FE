@@ -1,5 +1,3 @@
-import { CommunityCategory } from '../../libs/CommunityCategory.js';
-import { FaCircleUser } from 'react-icons/fa6';
 import { useState, useEffect } from 'react';
 import { FaHeart } from 'react-icons/fa';
 import {
@@ -63,8 +61,8 @@ const CommunityListItem = ({
           //   handleUserClick(item.user.id);
           // }}
           >
-            {item.profilePicture ? (
-              <img alt="유저프로필이미지" src={item.profilePicture} />
+            {item.user_id.profilePicture ? (
+              <img src={item.user_id.profilePicture} alt="UserImg" />
             ) : (
               <img
                 src={`${`${process.env.PUBLIC_URL}/imges/user.png`}`}

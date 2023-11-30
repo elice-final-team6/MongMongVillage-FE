@@ -25,13 +25,13 @@ export function usePatchUserInfo(nickname, introduction, profilePicture) {
     {
       onSuccess: () => {
         alert('회원 정보가 수정되었습니다.');
+        queryClient.invalidateQueries(['userInfo' + userId]);
         navigate(ROUTE.MY_PAGE.link);
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
       },
+
       onError: (error) => {
         alert(error.response.data.error + '회원정보 수정을 할 수 없습니다.');
-      },
-      onSettled: () => {
-        queryClient.invalidateQueries(['userInfo' + userId]);
       },
     },
   );

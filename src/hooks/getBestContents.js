@@ -11,10 +11,7 @@ const getBestContents = async () => {
 };
 
 export function useGetBestContents() {
-  return useQuery('bestContents', getBestContents, {
-    onSuccess: (data) => {
-      console.log('Best contents fetched successfully:', data);
-    },
+  return useQuery(['bestContents'], getBestContents, {
     onError: (error) => {
       console.error('Failed to fetch best contents:', error.message);
     },

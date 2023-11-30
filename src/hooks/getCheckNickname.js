@@ -1,6 +1,6 @@
 import { instance } from '.';
 
-export const useGetCheckNickname = async (nickname) => {
+export const getCheckNickname = async (nickname) => {
   try {
     const response = await instance.get(`/users/check-nickname/${nickname}`);
     if (response?.data?.data) return response.data.data.isDuplicate;

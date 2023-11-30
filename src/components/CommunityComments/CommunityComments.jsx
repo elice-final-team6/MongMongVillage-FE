@@ -71,8 +71,11 @@ const CommunityComments = ({ selectedPost, post, id, onCommentPosted }) => {
                 <p className="ComContent">{com.content}</p>
                 <div className="CommentUser">
                   <p>
-                    {com.profilePicture ? (
-                      <img alt="유저프로필이미지" src={com.profilePicture} />
+                    {com.user_id.profilePicture ? (
+                      <img
+                        alt="유저프로필이미지"
+                        src={com.user_id.profilePicture}
+                      />
                     ) : (
                       <img
                         src={`${`${process.env.PUBLIC_URL}/imges/user.png`}`}

@@ -1,20 +1,13 @@
-import { useState } from 'react';
 import { Container, CountContainer, CountItem, Line, Title } from './styles';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE } from '../../routes/Routes';
 import { useGetMyBoards } from '../../hooks/getMyBoards';
 import { useGetMyLike } from '../../hooks/getMyLike';
 import { useGetMyComments } from '../../hooks/getMyComments';
+import { useGetMyReviews } from '../../hooks/getMyReviews';
 
 const MyActivity = () => {
   const navigate = useNavigate();
-
-  const [myactivityCount] = useState({
-    post: 10,
-    comment: 20,
-    like: 30,
-    review: 0,
-  });
 
   const gotoActivityPage = () => {
     navigate(ROUTE.MY_ACTIVITY_PAGE.link);
@@ -23,6 +16,7 @@ const MyActivity = () => {
   const { data: myposts } = useGetMyBoards();
   const { data: myLikes } = useGetMyLike();
   const { data: myComments } = useGetMyComments();
+  const { data: myReviews } = useGetMyReviews();
 
   return (
     <Container>
@@ -43,7 +37,7 @@ const MyActivity = () => {
         </CountItem>
         <CountItem>
           <p>작성리뷰</p>
-          <p>{myactivityCount.review}개</p>
+          <p>{myReviews ? myReviews.length : 0}개</p>
         </CountItem>
       </CountContainer>
     </Container>

@@ -16,14 +16,14 @@ import {
   NickNameValidCheck,
   PasswordValidCheck,
   ConfirmPasswordValidCheck,
-  EmailDuplicateCheck,
 } from '../../libs/AuthValidCheck';
 
 import { InputStatus, SetMessage } from '../../libs/AuthMessage';
 import { usePostSignUp } from '../../hooks/postSignUp';
 
 import { PiEyeBold, PiEyeClosedBold } from 'react-icons/pi';
-import { useGetCheckNickname } from '../../hooks/getCheckNickname';
+import { getCheckNickname } from '../../hooks/getCheckNickname';
+import { getCheckEmail } from '../../hooks/getCheckEmail';
 
 const SignUpPage = () => {
   const [signUpInfo, setSignUpInfo] = useState({
@@ -71,7 +71,7 @@ const SignUpPage = () => {
   // 닉네임 중복체크 api
   const NickNameDuplicateCheck = async (e) => {
     e.preventDefault();
-    const isDuplicate = await useGetCheckNickname(signUpInfo.nickName);
+    const isDuplicate = await getCheckNickname(signUpInfo.nickName);
 
     if (!isDuplicate) {
       setSignUpStatus({
@@ -82,6 +82,24 @@ const SignUpPage = () => {
       setSignUpStatus({
         ...signUpStatus,
         nicknameInputStatus: InputStatus.DUPLICATE,
+      });
+    }
+  };
+
+  // 이메일 중복체크 api
+  const EmailDuplicateCheck = async (e) => {
+    e.preventDefault();
+    const isDuplicate = await getCheckEmail(signUpInfo.email);
+
+    if (!isDuplicate) {
+      setSignUpStatus({
+        ...signUpStatus,
+        emailInputStatus: InputStatus.SUCCESS,
+      });
+    } else {
+      setSignUpStatus({
+        ...signUpStatus,
+        emailInputStatus: InputStatus.DUPLICATE,
       });
     }
   };
@@ -144,17 +162,12 @@ const SignUpPage = () => {
             }}
           ></AuthInput>
           <CheckButton
-            onClick={(e) =>
-              setSignUpStatus({
-                ...signUpStatus,
-                emailInputStatus: EmailDuplicateCheck(signUpInfo.email),
-              })
-            }
+            onClick={(e) => EmailDuplicateCheck(e)}
             disabled={
               signUpStatus.emailInputStatus !== InputStatus.CHECK_REQUIRED
             }
           >
-            중복체크
+            중복확인
           </CheckButton>
         </AuthInputContainer>
         <Text
@@ -180,7 +193,7 @@ const SignUpPage = () => {
               signUpStatus.nicknameInputStatus !== InputStatus.CHECK_REQUIRED
             }
           >
-            중복체크
+            중복확인
           </CheckButton>
         </AuthInputContainer>
         <Text

@@ -1,26 +1,28 @@
 import { Button, Container } from './styles';
-const ReviewPagintaion = ({ page, setPage }) => {
-  const pageNumbs = 5;
+const ReviewPagintaion = ({ page, navigatePage, totalNum = 40 }) => {
+  const reviewsPerPage = 10;
+  const pageNum = parseInt(totalNum / reviewsPerPage) + 1;
+  const currentPage = parseInt(page);
 
   return (
     <Container>
-      <Button onClick={() => setPage(page - 1)} disabled={page === 1}>
-        &lt;
-      </Button>
-      {Array(pageNumbs)
+      {currentPage > 1 && (
+        <Button onClick={() => navigatePage(currentPage - 1)}>&lt;</Button>
+      )}
+      {Array(pageNum)
         .fill()
         .map((_, i) => (
           <Button
             key={i + 1}
-            onClick={() => setPage(i + 1)}
-            aria-current={page === i + 1 ? 'page' : undefined}
+            onClick={() => navigatePage(i + 1)}
+            aria-current={currentPage === i + 1 ? 'page' : undefined}
           >
             {i + 1}
           </Button>
         ))}
-      <Button onClick={() => setPage(page + 1)} disabled={page === pageNumbs}>
-        &gt;
-      </Button>
+      {currentPage !== pageNum && (
+        <Button onClick={() => navigatePage(currentPage + 1)}>&gt;</Button>
+      )}
     </Container>
   );
 };

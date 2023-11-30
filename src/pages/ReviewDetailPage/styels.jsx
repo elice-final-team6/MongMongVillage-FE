@@ -24,7 +24,7 @@ export const ReviewMainSection = styled.div`
   width: 100%;
   flex-direction: column;
   padding: 100px 0 100px 0;
-  align-items: center;
+  white-space: pre-wrap;
 `;
 
 export const TitleStarRaiting = styled.div`
@@ -107,8 +107,10 @@ export const ReviewImg = styled.img`
 `;
 
 export const MainText = styled.p`
+  width: 80%;
+  margin: 0 auto;
   font-size: 18px;
-  line-height: 170%;
+  line-height: 150%;
   word-spacing: 2px;
   padding: 20px;
 `;

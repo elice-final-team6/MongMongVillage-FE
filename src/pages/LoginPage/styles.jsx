@@ -66,13 +66,18 @@ export const AuthInput = styled.input`
 
 export const TextButtonContainer = styled.div`
   display: flex;
-  width: 100%;
-  margin: 10px 0 20px 0;
+  margin: 20px 0;
   justify-content: center;
+  align-items: center;
+  span {
+    font-size: 12px;
+  }
   button {
-    width: 40%;
     background: none;
     text-align: center;
+    font-size: 16px;
+    padding: 0 10px;
+    text-decoration: underline;
     &:hover {
       color: var(--main-yellow-color);
     }

@@ -1,42 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { LikeContainer } from './CommunityPostLike.styles';
 import { usePutBoardLike } from '../../hooks/putBoardLike';
+import { FaHeart } from 'react-icons/fa';
+import { useGetMyLike } from '../../hooks/getMyLike';
+import { redirect } from 'react-router-dom';
 
-const CommunityPostLike = ({ like, selectedPost }) => {
+const CommunityPostLike = ({ likeCount, setLikeCount, boardId }) => {
+  const userId = localStorage.getItem('userId');
   const [islikeClick, setIsLikeClick] = useState(false);
-  const boardId = selectedPost?.board?._id;
-  const [likeCount, setLikeCount] = useState(like);
-  const [userId, setUserId] = useState(null);
+  const { data: myLikes } = useGetMyLike();
 
-  const handleLikeClick = () => {
-    if (userId) {
-      setIsLikeClick(!islikeClick);
-    } else {
-      alert('로그인 후 좋아요 기능을 이용해주세요.');
-    }
-  };
+  /* 내가 좋아요 한 리스트 불러와서 해당 글을 좋아요 한 글인지 비교 */
+  useEffect(() => {
+    myLikes?.forEach((item) => {
+      if (item?.board_id?._id === boardId) {
+        setIsLikeClick(true);
+      }
+    });
+  }, [myLikes, boardId]);
 
   const { mutate: putBoardLike } = usePutBoardLike(boardId);
 
-  useEffect(() => {
-    setUserId(localStorage.getItem('userId'));
-
-    if (boardId) {
-      putBoardLike(boardId);
-      setLikeCount((prevLikeCount) =>
-        islikeClick ? prevLikeCount + 1 : prevLikeCount - 1,
-      );
-    }
-  }, [islikeClick]);
+  const handleLikeClick = () => {
+    putBoardLike();
+    setLikeCount(islikeClick ? likeCount - 1 : likeCount + 1);
+    setIsLikeClick(!islikeClick);
+  };
 
   return (
     <LikeContainer
-      selectedPost={selectedPost}
       onClick={handleLikeClick}
-      islikeClick={islikeClick}
+      islikeclick={islikeClick ? 'true' : 'false'}
     >
-      <div style={{ marginBottom: '14px' }}>❤️</div>
-      {userId !== null ? <p>{islikeClick ? like + 1 : like}</p> : <>{like}</>}
+      <FaHeart color="red" />
+      {likeCount}
     </LikeContainer>
   );
 };

@@ -15,7 +15,6 @@ export function useGetReview(id) {
     //  성공 처리 필요하면 onSuccess 추가
 
     onError: (error) => {
-      console.error(error);
       alert('해당 리뷰 데이터가 존재하지 않습니다.');
       navigate(ROUTE.REVIEW_LIST_PAGE.link);
     },

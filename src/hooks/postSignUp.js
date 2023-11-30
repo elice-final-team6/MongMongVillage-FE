@@ -19,6 +19,7 @@ export function usePostSignUp(email, password, nickname) {
     onSuccess: () => {
       alert('회원가입 성공');
       navigate(ROUTE.LOGIN_PAGE.link);
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     },
     onError: (error) => {
       alert(error + '회원가입 실패');

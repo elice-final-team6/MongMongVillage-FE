@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  padding: 15px;
+  padding: 20px;
   margin: 15px 0;
   border-bottom: 1px gray solid;
   display: flex;
@@ -10,14 +10,15 @@ export const Container = styled.div`
   cursor: pointer;
 `;
 
-export const LeftContainer = styled.div`
-  display: flex;
-`;
-
 export const Title = styled.p`
-  font-weight: bold;
+  display: flex;
   width: 200px;
+  font-weight: bold;
   text-align: center;
+
+  svg {
+    margin: 0 10px;
+  }
 `;
 
 export const Content = styled.p`

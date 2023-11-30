@@ -1,6 +1,6 @@
 import { Container } from './styles';
 
-const ReviewListSort = ({ sortType, handleSorting }) => {
+const ReviewListSort = ({ handleSorting }) => {
   return (
     <Container>
       <label>
@@ -20,7 +20,7 @@ const ReviewListSort = ({ sortType, handleSorting }) => {
           value="popular"
           onChange={() => handleSorting('popular')}
         />
-        <span>인기순</span>
+        <span>별점높은순</span>
       </label>
     </Container>
   );

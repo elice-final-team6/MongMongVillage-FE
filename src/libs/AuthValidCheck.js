@@ -1,6 +1,4 @@
 import { InputStatus } from './AuthMessage';
-import axios from 'axios';
-import { useQuery } from 'react-query';
 
 export const EmailValidCheck = (value, status) => {
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/; // 이메일 정규표현식

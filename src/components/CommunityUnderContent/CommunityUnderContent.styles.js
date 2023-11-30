@@ -50,11 +50,11 @@ export const ContentButton = styled.div`
 `;
 
 export const BTN = styled.button`
+  width: 70px;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 16px;
   background-color: var(--main-yellow-color);
-  width: 60px;
-  height: 30px;
-  border-radius: 8px;
-  border: 0.5px solid lightgrey;
 
   + button {
     margin-left: 10px;

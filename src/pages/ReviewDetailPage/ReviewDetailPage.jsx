@@ -20,31 +20,34 @@ import {
 } from './styels';
 import { useGetReview } from '../../hooks/getReview';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Kakao, ReviewItem } from '../../components';
+import { ReviewItem } from '../../components';
 
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { Title } from '../../commonStyles';
 import { ROUTE } from '../../routes/Routes';
 import { useDeleteReview } from '../../hooks/deleteReview';
+import { useGetCafe } from '../../hooks/getCafe';
 
 const ReviewDetailPage = () => {
   const navigate = useNavigate();
   const userId = localStorage.getItem('userId');
+  const role = localStorage.getItem('role');
 
   const { id } = useParams();
 
-  const { isLoading: reviewLoading, data: review } = useGetReview(id);
-
-  const linkToReviewEditPage = () => {
-    navigate(`${ROUTE.REVIEW_WRITE_PAGE.link}/${review?.cafe_id?._id}`, {
-      state: { prevReview: review },
-    });
-  };
-
+  const { isLoading: reviewLoading, data: review } = useGetReview(id); // 리뷰 상세 불러오기
+  const { data: cafe } = useGetCafe(review?.cafe_id?._id); // 카페 상세 불러오기
   const { mutate } = useDeleteReview(id); // 리뷰 삭제
 
   const deleteReview = () => {
     mutate();
+  };
+
+  /* 리뷰 수정 페이지로 이동 */
+  const linkToReviewEditPage = () => {
+    navigate(`${ROUTE.REVIEW_WRITE_PAGE.link}/${review?.cafe_id?._id}`, {
+      state: { prevReview: review },
+    });
   };
 
   return !reviewLoading && review ? (
@@ -78,7 +81,6 @@ const ReviewDetailPage = () => {
             <FaMapMarkerAlt size={'24px'} />
             {review?.cafe_id?.name}
           </CafeName>
-          지도 불러올 자리
         </MapContainer>
         <ReviewMainSection>
           <ReviewImgContainer>
@@ -87,21 +89,27 @@ const ReviewDetailPage = () => {
                 <ReviewImg src={item} alt="" key={item} />
               ))}
           </ReviewImgContainer>
-          <MainText>{review.content}</MainText>
+          <MainText>{review.content.replace(/<br>/g, '\n')}</MainText>
         </ReviewMainSection>
-        {review?.user_id?._id === userId && (
+        {
           <ButtonContainer>
-            <Button onClick={linkToReviewEditPage}>수정</Button>
-            <Button onClick={deleteReview}>삭제</Button>
+            {review?.user_id?._id === userId && (
+              <Button onClick={linkToReviewEditPage}>수정</Button>
+            )}
+            {role === 'ADMIN' || review?.user_id?._id === userId ? (
+              <Button onClick={deleteReview}>삭제</Button>
+            ) : (
+              <></>
+            )}
           </ButtonContainer>
-        )}
+        }
       </ReviewDetailContainer>
       <AnotherReviewsContainer>
         <Title>"{review?.cafe_id?.name}"의 리뷰 리스트</Title>
-        {/* <ReviewItem />
-        <ReviewItem />
-        <ReviewItem />
-        <ReviewItem /> */}
+        {cafe &&
+          cafe?.reviews.map((item) => (
+            <ReviewItem id={item._id} key={item._id} />
+          ))}
       </AnotherReviewsContainer>
     </>
   ) : (

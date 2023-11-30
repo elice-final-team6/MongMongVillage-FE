@@ -2,14 +2,12 @@ import styled from 'styled-components';
 
 export const Container = styled.main`
   padding-top: 54px;
-  width: 1280px;
-  height: 1146px;
-  position: relative;
+  width: 90%;
+  height: 1150px;
 `;
 
 export const Content = styled.h5`
   font-size: 33px;
-  text-align: left;
   margin: 35px 0 35px 17px;
   width: 206px;
   background: linear-gradient(
@@ -26,11 +24,8 @@ export const DogCafeList = styled.article`
   grid-row-gap: 120px;
   border-radius: 50px;
   background: #ffe7bd;
-  position: absolute;
   padding: 86px;
   padding-bottom: 124px;
-  width: 1300px;
-  left: -100px;
 `;
 
 export const DogCafeListItem = styled.section`
@@ -48,7 +43,7 @@ export const DogCafeListItemImg = styled.div`
 
   &:hover {
     transition: all 0.2s linear;
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
 `;
 
@@ -81,15 +76,6 @@ export const DogCafeListItemWriter = styled.div`
     height: 25px;
     padding-right: 7px;
   }
-`;
-
-export const LoadingContainer = styled.div`
-  width: 90%;
-  height: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f0f0f0;
 `;
 
 export const ErrorContainer = styled.div`

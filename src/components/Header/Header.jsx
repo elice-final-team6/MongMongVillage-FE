@@ -21,6 +21,7 @@ const Header = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
     window.location.reload();
+    alert('로그아웃되었습니다.');
   };
 
   const checkTokenValid = async (token) => {

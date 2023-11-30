@@ -120,8 +120,8 @@ export const InputImg = styled.div`
 
 export const InputImgButton = styled.label`
   cursor: pointer;
-  width: 10%;
-  background-color: #f6f6f9;
+  width: 15%;
+  background-color: #e4e4e6;
   border-radius: 30px;
   font-size: 15px;
   display: flex;

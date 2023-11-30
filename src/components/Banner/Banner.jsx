@@ -11,7 +11,7 @@ import {
 const Banner = () => {
   return (
     <Container>
-      <BannerBox>
+      {/* <BannerBox>
         <BannerImg src="/banner.png" />
         <BannerName>
           멍멍 <br />{' '}
@@ -26,9 +26,9 @@ const Banner = () => {
         </BannerInfo>
 
         <BannerPhoneNumber>mongmongv6@gmail.com</BannerPhoneNumber>
-      </BannerBox>
+      </BannerBox> */}
 
-      <BannerBox>
+      {/* <BannerBox>
         <BannerImg src="/banner.png" />
         <BannerName>
           멍멍 <br />{' '}
@@ -43,7 +43,7 @@ const Banner = () => {
         </BannerInfo>
 
         <BannerPhoneNumber>mongmongv6@gmail.com</BannerPhoneNumber>
-      </BannerBox>
+      </BannerBox> */}
 
       <BannerBox>
         <BannerImg src="/banner.png" />

@@ -15,7 +15,9 @@ const postReview = async (title, content, rating, images, cafe_id) => {
 
   const response = await instance.post(`/reviews/`, formData);
 
-  return response;
+  if (response?.data?.data) {
+    return response?.data?.data;
+  }
 };
 
 export function usePostReview(title, content, rating, images, cafe_id) {
@@ -25,18 +27,19 @@ export function usePostReview(title, content, rating, images, cafe_id) {
   return useMutation(
     () => postReview(title, content, rating, images, cafe_id),
     {
-      onSuccess: () => {
+      onSuccess: (response) => {
         alert('리뷰가 정상적으로 등록되었습니다.');
-        navigate(ROUTE.REVIEW_LIST_PAGE.link);
+        queryClient.invalidateQueries(
+          ['getReviews', 'latest', 1],
+          ['myReviews'],
+        );
+        navigate(ROUTE.REVIEW_DETAIL_PAGE.link + `/${response?._id}`);
+        window.scrollTo({ top: 0, left: 0 });
       },
 
       onError: (error) => {
         console.error(error);
         alert(error.response.data.message);
-      },
-
-      onSettled: () => {
-        queryClient.invalidateQueries(['getReviews']);
       },
     },
   );

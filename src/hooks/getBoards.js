@@ -27,9 +27,6 @@ const getBoards = async (currentPage, filteredCategory, sortBy) => {
 
 export function useGetBoards(currentPage, filteredCategory, sortBy) {
   return useMutation(() => getBoards(currentPage, filteredCategory, sortBy), {
-    onSuccess: (data) => {
-      console.log('Boards fetched successfully:', data);
-    },
     onError: (error) => {
       console.error('Failed to fetch Boards:', error.message);
     },
