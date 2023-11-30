@@ -47,7 +47,6 @@ const Header = () => {
       const data = await response.json();
       return data.valid; // 유효성 여부를 반환
     } catch (error) {
-      console.error(error);
       console.error('토큰 검증 중 오류 발생:', error.message);
       return false; // 오류가 발생하면 유효하지 않은 것으로 처리
     }

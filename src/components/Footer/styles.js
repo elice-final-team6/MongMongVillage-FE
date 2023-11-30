@@ -2,9 +2,8 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
-  height: 224px;
+  height: 188px;
   display: flex;
-  padding-top: 20px;
 `;
 
 export const FooterContainer = styled.div`

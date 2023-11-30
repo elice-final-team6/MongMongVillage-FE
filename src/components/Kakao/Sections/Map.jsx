@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { ROUTE } from '../../../routes/Routes';
 
 // head에 작성한 Kakao API 불러오기
 const { kakao } = window;
@@ -40,6 +41,9 @@ const Map = (props) => {
     // 장소 검색 객체를 생성
     const ps = new kakao.maps.services.Places();
 
+    //검색범위 한정
+    const seoulCenter = new kakao.maps.LatLng(37.5665, 126.978);
+
     // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성
     const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
@@ -56,7 +60,10 @@ const Map = (props) => {
       }
 
       // 장소검색 객체를 통해 키워드로 장소검색을 요청
-      ps.keywordSearch(keyword, placesSearchCB);
+      ps.keywordSearch(keyword, placesSearchCB, {
+        location: seoulCenter,
+        radius: 17000,
+      });
     }
 
     // 장소검색이 완료됐을 때 호출되는 콜백함수
@@ -64,23 +71,33 @@ const Map = (props) => {
       if (status === kakao.maps.services.Status.OK) {
         // 정상적으로 검색이 완료됐으면
         // 검색 목록과 마커를 표출
-
-        // const filterdCafes = cafeData.cafes.filter(
-        //   (placeFromDB) => placeFromDB.name === keyword,
-        // );
         const filteredCafes = data.filter((placeFromKakao) =>
           cafeData.cafes.some((placeFromDB) =>
             placeFromKakao.place_name.includes(placeFromDB.name),
           ),
         );
+
+        // cafeData.cafes 배열을 필터링하여 filteredDBcafes 배열 생성
+        const filteredDBcafes = cafeData.cafes.filter((placeFromDB) =>
+          filteredCafes.some((placeFromKakao) =>
+            placeFromKakao.place_name.includes(placeFromDB.name),
+          ),
+        );
+
+        // filteredDBcafes 출력
+        console.log('filteredDBcafes: ', filteredDBcafes);
+
+        if (filteredCafes.length === 0) {
+          alert('검색 결과가 존재하지 않습니다.');
+          return;
+        }
+
         console.log('db데이터: ', cafeData.cafes);
         console.log('kakao데이터: ', data);
         console.log('filter데이터: ', filteredCafes);
         console.log('검색 키워드: ', keyword);
 
-        data = filteredCafes;
-
-        displayPlaces(data);
+        displayPlaces(filteredCafes, filteredDBcafes);
 
         // 페이지 번호를 표출
         displayPagination(pagination);
@@ -94,7 +111,7 @@ const Map = (props) => {
     }
 
     // 검색 결과 목록과 마커를 표출하는 함수
-    function displayPlaces(places) {
+    function displayPlaces(places, filteredDBcafes) {
       const listEl = document.getElementById('places-list'),
         resultEl = document.getElementById('search-result'),
         fragment = document.createDocumentFragment(),
@@ -110,7 +127,7 @@ const Map = (props) => {
         // 마커를 생성하고 지도에 표시
         let placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
           marker = addMarker(placePosition, i, undefined),
-          itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성
+          itemEl = getListItem(i, places[i], filteredDBcafes[i]); // 검색 결과 항목 Element를 생성
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가
@@ -151,14 +168,14 @@ const Map = (props) => {
     }
 
     // 검색결과 항목을 Element로 반환하는 함수
-    function getListItem(index, places) {
+    function getListItem(index, places, filteredDBcafes) {
       const el = document.createElement('li');
       let itemStr = `
         <div class="info">
           <span class="marker marker_${index + 1}">
             ${index + 1}
           </span>
-          <a href="${places.place_url}">
+          <a href="${ROUTE.CAFE_DETAIL_PAGE.link}/${filteredDBcafes._id}">
             <h5 class="info-item place-name">${places.place_name}</h5>
             ${
               places.road_address_name

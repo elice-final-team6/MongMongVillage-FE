@@ -15,6 +15,7 @@ export const Container = styled.div`
 `;
 
 export const Navbar = styled.div`
+  max-width: 1920px;
   width: 90%;
   display: flex;
   align-items: center;
