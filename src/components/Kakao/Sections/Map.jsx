@@ -121,7 +121,7 @@ export default function Map(props) {
         <div
           id="map"
           className="map"
-          style={{ width: '76%', maxHeight: '600px', float: 'left' }}
+          style={{ width: '76%', maxHeight: '600px !important', float: 'left' }}
         ></div>
         <CafeList
           className="cafe-list"
