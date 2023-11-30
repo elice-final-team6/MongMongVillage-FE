@@ -9,7 +9,7 @@ export const MapContainer = styled.div`
 `;
 
 export const CafeList = styled.div`
-  height: 560px !important;
+  height: 600px !important;
   ul {
     list-style: none;
     padding: 0;

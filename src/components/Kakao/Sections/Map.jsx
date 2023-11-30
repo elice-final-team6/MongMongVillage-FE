@@ -18,7 +18,6 @@ export default function Map(props) {
   useEffect(() => {
     if (keyword) {
       mutateAllCafes();
-      console.log(allCafesData);
     } else {
       alert('검색어를 입력해주세요.');
     }
@@ -46,6 +45,15 @@ export default function Map(props) {
     // setLat(resultCafe[0].latitude);
     // 정상 출력
     let container = document.getElementById('map');
+    if (resultCafe.length === 0) {
+      let options = {
+        center: new kakao.maps.LatLng(37.516826, 126.9786567),
+        level: 7,
+      };
+
+      //map
+      const map = new kakao.maps.Map(container, options);
+    }
     if (resultCafe.length > 0) {
       let options = {
         center: new kakao.maps.LatLng(
