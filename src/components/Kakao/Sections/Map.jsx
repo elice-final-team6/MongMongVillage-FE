@@ -1,346 +1,157 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useGetAllCafes } from '../../../hooks/getAllCafes';
 import { ROUTE } from '../../../routes/Routes';
-
-// head에 작성한 Kakao API 불러오기
+import { useNavigate } from 'react-router-dom';
+import { MapContainer, CafeList } from './Map.style';
 const { kakao } = window;
-let cafeData;
-let keyword;
 
-const fetchData = async () => {
-  try {
-    const response = await fetch(
-      `${process.env.REACT_APP_DB_API_ENDPOINT}/cafes`,
-    );
-    if (!response.ok) {
-      throw new Error('데이터를 불러오지 못했습니다.');
-    }
+export default function Map(props) {
+  const keyword = props.searchKeyword;
+  const { mutate: mutateAllCafes, data: allCafesData } = useGetAllCafes();
+  const [resultCafe, setResultCafe] = useState([]);
+  const [long, setLong] = useState();
+  const [lat, setLat] = useState();
+  const [selectedCafe, setSelectedCafe] = useState(null);
 
-    cafeData = await response.json();
-  } catch (e) {
-    console.log(e.message);
-  }
-};
+  const navigate = useNavigate();
 
-fetchData();
-
-const Map = (props) => {
-  // 마커를 담는 배열
-  let markers = [];
-
-  // 검색어가 바뀔 때마다 재렌더링되도록 useEffect 사용
   useEffect(() => {
-    const mapContainer = document.getElementById('map');
-    const mapOption = {
-      center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-      level: 3, // 지도의 확대 레벨
-    };
+    if (keyword) {
+      mutateAllCafes();
+      console.log(allCafesData);
+    } else {
+      alert('검색어를 입력해주세요.');
+    }
+  }, [keyword]);
 
-    // 지도를 생성
-    const map = new kakao.maps.Map(mapContainer, mapOption);
+  useEffect(() => {
+    if (allCafesData && allCafesData.cafes) {
+      const nameResults =
+        allCafesData?.cafes.filter((cafe) => cafe.name.includes(keyword)) || [];
+      const addressResults =
+        allCafesData?.cafes.filter((cafe) =>
+          cafe.road_addr.includes(keyword),
+        ) || [];
+      const mergedResults =
+        nameResults.length > 0 ? nameResults : addressResults;
 
-    // 장소 검색 객체를 생성
-    const ps = new kakao.maps.services.Places();
+      setResultCafe(mergedResults);
+      console.log('검색결과 카페 : ', resultCafe);
+    }
+  }, [allCafesData]);
 
-    //검색범위 한정
-    const seoulCenter = new kakao.maps.LatLng(37.5665, 126.978);
+  useEffect(() => {
+    console.log('검색결과 카페 2 : ', resultCafe);
+    // setLong(resultCafe[0].longitude);
+    // setLat(resultCafe[0].latitude);
+    // 정상 출력
+    let container = document.getElementById('map');
+    if (resultCafe.length > 0) {
+      let options = {
+        center: new kakao.maps.LatLng(
+          resultCafe[0].longitude,
+          resultCafe[0].latitude,
+        ),
+        level: 7,
+      };
 
-    // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성
-    const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+      //map
+      const map = new kakao.maps.Map(container, options);
 
-    // 키워드로 장소를 검색합니다
-    searchPlaces();
+      resultCafe.forEach((el) => {
+        // 마커를 생성합니다
+        const marker = new kakao.maps.Marker({
+          map: map,
+          position: new kakao.maps.LatLng(el.longitude, el.latitude),
+          title: el.name,
+        });
 
-    // 키워드 검색을 요청하는 함수
-    function searchPlaces() {
-      keyword = props.searchKeyword;
+        const content = `
+          <div style="padding: 10px; background-color: #fff; border-radius: 10px;">
+            <h3 style="margin-bottom: 5px;">${el.name}</h3>
+            <p>${el.road_addr}</p>
+            <p>${el.phone_number}</p>
+          </div>
+        `;
 
-      if (!keyword.replace(/^\s+|\s+$/g, '')) {
-        console.log('키워드를 입력해주세요!');
-        return false;
-      }
+        // 마커에 표시할 인포윈도우를 생성합니다
+        var infowindow = new kakao.maps.InfoWindow({
+          content: content, // 인포윈도우에 표시할 내용
+        });
 
-      // 장소검색 객체를 통해 키워드로 장소검색을 요청
-      ps.keywordSearch(keyword, placesSearchCB, {
-        location: seoulCenter,
-        radius: 17000,
+        // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+        // 이벤트 리스너로는 클로저를 만들어 등록합니다
+        // 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+        kakao.maps.event.addListener(
+          marker,
+          'mouseover',
+          makeOverListener(map, marker, infowindow),
+        );
+        kakao.maps.event.addListener(
+          marker,
+          'mouseout',
+          makeOutListener(infowindow),
+        );
+
+        // Add a click event to each marker to update the selectedCafe state
+        kakao.maps.event.addListener(marker, 'click', () => {
+          setSelectedCafe(el);
+        });
       });
     }
+  }, [resultCafe]);
 
-    // 장소검색이 완료됐을 때 호출되는 콜백함수
-    function placesSearchCB(data, status, pagination) {
-      if (status === kakao.maps.services.Status.OK) {
-        // 정상적으로 검색이 완료됐으면
-        // 검색 목록과 마커를 표출
-        let filteredCafes = data.filter((placeFromKakao) =>
-          cafeData.cafes.some((placeFromDB) =>
-            placeFromKakao.place_name.includes(placeFromDB.name),
-          ),
-        );
-
-        // cafeData.cafes 배열을 필터링하여 filteredDBcafes 배열 생성
-        let filteredDBcafes = cafeData.cafes.filter((placeFromDB) =>
-          filteredCafes.some((placeFromKakao) =>
-            placeFromKakao.place_name.includes(placeFromDB.name),
-          ),
-        );
-
-        // filteredDBcafes 출력
-        console.log('filteredDBcafes: ', filteredDBcafes);
-
-        if (filteredCafes.length === 0) {
-          alert('검색 결과가 존재하지 않습니다.');
-          return;
-        }
-
-        console.log('db데이터: ', cafeData.cafes);
-        console.log('kakao데이터: ', data);
-        console.log('filter데이터: ', filteredCafes);
-        console.log('검색 키워드: ', keyword);
-
-        if (filteredDBcafes.length !== filteredCafes.length) {
-          filteredCafes = data.filter((placeFromKakao) =>
-            cafeData.cafes.some(
-              (placeFromDB) =>
-                placeFromKakao.place_name.includes(placeFromDB.name) &&
-                placeFromKakao.road_address_name === placeFromDB.road_addr,
-            ),
-          );
-
-          // cafeData.cafes 배열을 필터링하여 filteredDBcafes 배열 생성
-          filteredDBcafes = cafeData.cafes.filter((placeFromDB) =>
-            filteredCafes.some(
-              (placeFromKakao) =>
-                placeFromKakao.place_name.includes(placeFromDB.name) &&
-                placeFromKakao.road_address_name === placeFromDB.road_addr,
-            ),
-          );
-        }
-
-        // filteredDBcafes를 filteredCafes의 이름에 따라 정렬
-        let sortedFilteredDBcafes = filteredDBcafes.sort((a, b) => {
-          const nameA = a.name.toLowerCase();
-          const nameB = b.name.toLowerCase();
-          return (
-            filteredCafes.findIndex((place) =>
-              place.place_name.toLowerCase().includes(nameA),
-            ) -
-            filteredCafes.findIndex((place) =>
-              place.place_name.toLowerCase().includes(nameB),
-            )
-          );
-        });
-
-        // sortedFilteredDBcafes 출력
-        console.log('sortedFilteredDBcafes:', sortedFilteredDBcafes);
-
-        displayPlaces(filteredCafes, sortedFilteredDBcafes);
-
-        // 페이지 번호를 표출
-        displayPagination(pagination);
-      } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-        alert('검색 결과가 존재하지 않습니다.');
-        return;
-      } else if (status === kakao.maps.services.Status.ERROR) {
-        alert('검색 결과 중 오류가 발생했습니다.');
-        return;
-      }
-    }
-
-    // 검색 결과 목록과 마커를 표출하는 함수
-    function displayPlaces(places, filteredDBcafes) {
-      const listEl = document.getElementById('places-list'),
-        resultEl = document.getElementById('search-result'),
-        fragment = document.createDocumentFragment(),
-        bounds = new kakao.maps.LatLngBounds();
-
-      // 검색 결과 목록에 추가된 항목들을 제거
-      listEl && removeAllChildNods(listEl);
-
-      // 지도에 표시되고 있는 마커를 제거
-      removeMarker();
-
-      for (var i = 0; i < places.length; i++) {
-        // 마커를 생성하고 지도에 표시
-        let placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
-          marker = addMarker(placePosition, i, undefined),
-          itemEl = getListItem(i, places[i], filteredDBcafes[i]); // 검색 결과 항목 Element를 생성
-
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-        // LatLngBounds 객체에 좌표를 추가
-        bounds.extend(placePosition);
-
-        // 마커와 검색결과 항목에 mouseover 했을때
-        // 해당 장소에 인포윈도우에 장소명을 표시
-        // mouseout 했을 때는 인포윈도우를 닫기
-        (function (marker, title) {
-          kakao.maps.event.addListener(marker, 'mouseover', function () {
-            displayInfowindow(marker, title);
-          });
-
-          kakao.maps.event.addListener(marker, 'mouseout', function () {
-            infowindow.close();
-          });
-
-          itemEl.onmouseover = function () {
-            displayInfowindow(marker, title);
-          };
-
-          itemEl.onmouseout = function () {
-            infowindow.close();
-          };
-        })(marker, places[i].place_name);
-
-        fragment.appendChild(itemEl);
-      }
-
-      // 검색결과 항목들을 검색결과 목록 Element에 추가
-      listEl && listEl.appendChild(fragment);
-      if (resultEl) {
-        resultEl.scrollTop = 0;
-      }
-
-      // 검색된 장소 위치를 기준으로 지도 범위를 재설정
-      map.setBounds(bounds);
-    }
-
-    // 검색결과 항목을 Element로 반환하는 함수
-    function getListItem(index, places, filteredDBcafes) {
-      const el = document.createElement('li');
-      let itemStr = `
-        <div class="info">
-          <span class="marker marker_${index + 1}">
-            ${index + 1}
-          </span>
-          <a href="${ROUTE.CAFE_DETAIL_PAGE.link}/${filteredDBcafes._id}">
-            <h5 class="info-item place-name">${places.place_name}</h5>
-            ${
-              places.road_address_name
-                ? `
-                  <span class="info-item road-address-name">
-                    ${places.road_address_name}
-                  </span>
-                  <span class="info-item address-name">
-                    ${places.address_name}
-                  </span>`
-                : `
-                  <span class="info-item address-name">
-                    ${places.address_name}
-                  </span>`
-            }
-            <span class="info-item tel">
-              ${places.phone}
-            </span>
-          </a>
-        </div>
-      `;
-
-      el.innerHTML = itemStr;
-      el.className = 'item';
-
-      return el;
-    }
-
-    // 마커를 생성하고 지도 위에 마커를 표시하는 함수
-    function addMarker(position, idx, title) {
-      var imageSrc =
-          'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지
-        imageSize = new kakao.maps.Size(36, 37), // 마커 이미지의 크기
-        imgOptions = {
-          spriteSize: new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
-          spriteOrigin: new kakao.maps.Point(0, idx * 46 + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-          offset: new kakao.maps.Point(13, 37), // 마커 좌표에 일치시킬 이미지 내에서의 좌표
-        },
-        markerImage = new kakao.maps.MarkerImage(
-          imageSrc,
-          imageSize,
-          imgOptions,
-        ),
-        marker = new kakao.maps.Marker({
-          position: position, // 마커의 위치
-          image: markerImage,
-        });
-
-      marker.setMap(map); // 지도 위에 마커를 표출
-      markers.push(marker); // 배열에 생성된 마커를 추가
-
-      return marker;
-    }
-
-    // 지도 위에 표시되고 있는 마커를 모두 제거합니다
-    function removeMarker() {
-      for (var i = 0; i < markers.length; i++) {
-        markers[i].setMap(null);
-      }
-      markers = [];
-    }
-
-    // 검색결과 목록 하단에 페이지번호를 표시는 함수
-    function displayPagination(pagination) {
-      const paginationEl = document.getElementById('pagination');
-      let fragment = document.createDocumentFragment();
-      let i;
-
-      // 기존에 추가된 페이지번호를 삭제
-      while (paginationEl.hasChildNodes()) {
-        paginationEl.lastChild &&
-          paginationEl.removeChild(paginationEl.lastChild);
-      }
-
-      for (i = 1; i <= pagination.last; i++) {
-        const el = document.createElement('a');
-        el.href = '#';
-        el.innerHTML = i.toString();
-
-        if (i === pagination.current) {
-          el.className = 'on';
-        } else {
-          el.onclick = (function (i) {
-            return function () {
-              pagination.gotoPage(i);
-            };
-          })(i);
-        }
-
-        fragment.appendChild(el);
-      }
-      paginationEl.appendChild(fragment);
-    }
-
-    // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수
-    // 인포윈도우에 장소명을 표시
-    function displayInfowindow(marker, title) {
-      const content =
-        '<div style="padding:5px;z-index:1;" class="marker-title">' +
-        title +
-        '</div>';
-
-      infowindow.setContent(content);
+  // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
+  function makeOverListener(map, marker, infowindow) {
+    return function () {
       infowindow.open(map, marker);
-    }
+    };
+  }
 
-    // 검색결과 목록의 자식 Element를 제거하는 함수
-    function removeAllChildNods(el) {
-      while (el.hasChildNodes()) {
-        el.lastChild && el.removeChild(el.lastChild);
-      }
-    }
-  }, [props.searchKeyword]);
+  // 인포윈도우를 닫는 클로저를 만드는 함수입니다
+  function makeOutListener(infowindow) {
+    return function () {
+      infowindow.close();
+    };
+  }
 
   return (
-    <div className="map-container">
-      <div id="map" className="map"></div>
-      <div id="search-result">
-        <p className="result-text">
-          <span className="result-keyword">{props.searchKeyword}</span>
-          검색 결과
-        </p>
-        <div className="scroll-wrapper">
-          <ul id="places-list" className="places-list"></ul>
-        </div>
-        <div id="pagination" className="pagination"></div>
+    <MapContainer>
+      <div className="map-container">
+        <div
+          id="map"
+          className="map"
+          style={{ width: '76%', maxHeight: '600px', float: 'left' }}
+        ></div>
+        <CafeList
+          className="cafe-list"
+          style={{
+            width: '24%',
+            float: 'left',
+            padding: '20px',
+            border: '1px solid black',
+            overflowY: 'auto',
+            maxHeight: '600px',
+          }}
+        >
+          <h2>카페 목록</h2>
+          <ul>
+            {resultCafe.map((cafe) => (
+              <li
+                key={cafe.id}
+                style={{ cursor: 'pointer', marginBottom: '10px' }}
+                onClick={() =>
+                  navigate(`${ROUTE.CAFE_DETAIL_PAGE.link}/${cafe._id}`)
+                }
+              >
+                <p className="cafename">{cafe.name}</p>
+                <p>{cafe.road_addr}</p>
+                <p>{cafe.phone_number}</p>
+              </li>
+            ))}
+          </ul>
+        </CafeList>
       </div>
-    </div>
+    </MapContainer>
   );
-};
-
-export default Map;
+}
