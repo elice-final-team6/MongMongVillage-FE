@@ -68,16 +68,19 @@ const Map = (props) => {
         // const filterdCafes = cafeData.cafes.filter(
         //   (placeFromDB) => placeFromDB.name === keyword,
         // );
-        const filterdCafes = data.filter(
-          (placeFromKakao) =>
-            placeFromKakao.place_name === cafeData.cafes[2].name,
+        const filteredCafes = data.filter((placeFromKakao) =>
+          cafeData.cafes.some((placeFromDB) =>
+            placeFromKakao.place_name.includes(placeFromDB.name),
+          ),
         );
         console.log('db데이터: ', cafeData.cafes);
         console.log('kakao데이터: ', data);
-        console.log('filter데이터: ', filterdCafes);
+        console.log('filter데이터: ', filteredCafes);
         console.log('검색 키워드: ', keyword);
 
-        displayPlaces(filterdCafes);
+        data = filteredCafes;
+
+        displayPlaces(data);
 
         // 페이지 번호를 표출
         displayPagination(pagination);
