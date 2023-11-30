@@ -7,11 +7,16 @@ export const PostContainer = styled.div`
 
 export const MainImg = styled.div`
   margin-top: 32px;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
+
+  display: flex;
+  justify-content: center;
 
   img {
     margin-top: 8px;
     margin-bottom: 8px;
+    min-width: 500px;
+    border-radius: 4px;
   }
 `;
 

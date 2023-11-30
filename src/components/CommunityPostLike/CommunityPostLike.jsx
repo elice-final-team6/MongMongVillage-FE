@@ -8,12 +8,13 @@ const CommunityPostLike = ({ like, selectedPost }) => {
   const boardId = selectedPost?.board?._id;
   const [likeCount, setLikeCount] = useState(like);
   const [userId, setUserId] = useState(null);
+  const [showLoginAlert, setShowLoginAlert] = useState(false);
 
   const handleLikeClick = () => {
     if (userId) {
       setIsLikeClick(!islikeClick);
     } else {
-      alert('로그인 후 좋아요 기능을 이용해주세요.');
+      setShowLoginAlert(true);
     }
   };
 
@@ -22,13 +23,20 @@ const CommunityPostLike = ({ like, selectedPost }) => {
   useEffect(() => {
     setUserId(localStorage.getItem('userId'));
 
-    if (boardId) {
-      putBoardLike(boardId);
-      setLikeCount((prevLikeCount) =>
-        islikeClick ? prevLikeCount + 1 : prevLikeCount - 1,
-      );
+    if (boardId && showLoginAlert) {
+      alert('로그인 후 좋아요 기능을 이용해주세요.');
+      setShowLoginAlert(false);
     }
-  }, [boardId, islikeClick, putBoardLike]);
+
+    if (boardId && islikeClick) {
+      putBoardLike(boardId);
+      setLikeCount((prevLikeCount) => prevLikeCount + 1);
+    }
+
+    if (boardId && !islikeClick) {
+      setLikeCount((prevLikeCount) => prevLikeCount - 1);
+    }
+  }, [boardId, islikeClick, putBoardLike, showLoginAlert]);
 
   return (
     <LikeContainer onClick={handleLikeClick} islikeclick={islikeClick}>
