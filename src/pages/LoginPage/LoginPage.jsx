@@ -4,15 +4,11 @@ import {
   AuthInput,
   Container,
   Img,
-  SNSButton,
   TextButtonContainer,
   SubmitButton,
-  SNSButtonContainer,
   AuthInputContainer,
 } from './styles';
 import { Title } from '../../commonStyles';
-import { FcGoogle } from 'react-icons/fc';
-import { SiNaver } from 'react-icons/si';
 import { ROUTE } from '../../routes/Routes';
 import { usePostLogin } from '../../hooks/postLogin';
 import { PiEyeBold, PiEyeClosedBold } from 'react-icons/pi';
@@ -28,6 +24,12 @@ const LoginPage = () => {
 
   const submitLogin = () => {
     mutateLogin();
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      submitLogin();
+    }
   };
 
   /* 회원가입 버튼 클릭 시 회원가입 페이지로 이동 */
@@ -55,6 +57,7 @@ const LoginPage = () => {
           value={password}
           type={hidePassword ? 'password' : 'text'}
           onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
         {hidePassword ? (
           <PiEyeBold onClick={() => setHidePassword(false)} />
@@ -69,18 +72,6 @@ const LoginPage = () => {
         <span>아직 회원이 아니신가요?</span>
         <button onClick={linkToSignup}>회원가입하기</button>
       </TextButtonContainer>
-      {/* <SNSButtonContainer>
-        <SNSButton className="google-login-button">
-          <FcGoogle />
-          <span>구글로 로그인</span>
-          <span></span>
-        </SNSButton>
-        <SNSButton className="naver-login-button">
-          <SiNaver />
-          <span>네이버로 로그인</span>
-          <span></span>
-        </SNSButton>
-      </SNSButtonContainer> */}
     </Container>
   );
 };

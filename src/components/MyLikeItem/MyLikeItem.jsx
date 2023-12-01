@@ -16,9 +16,10 @@ const MyLikeItem = ({ post }) => {
   console.log(post);
   return (
     <Container
-      onClick={() =>
-        navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${post?._id}`)
-      }
+      onClick={() => {
+        navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${post?._id}`);
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      }}
     >
       <TopContainer>
         <div>

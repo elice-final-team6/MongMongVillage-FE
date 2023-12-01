@@ -23,7 +23,7 @@ export const ReviewMainSection = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
-  padding: 100px 0 100px 0;
+  padding: 100px 0;
   white-space: pre-wrap;
 `;
 
@@ -78,6 +78,7 @@ export const ReviewDate = styled.p`
 `;
 
 export const CafeName = styled.p`
+  cursor: pointer;
   display: flex;
   padding: 10px;
   align-items: center;
@@ -85,6 +86,9 @@ export const CafeName = styled.p`
   font-weight: bold;
   svg {
     margin: 0 5px;
+  }
+  &:hover {
+    opacity: 0.5;
   }
 `;
 
@@ -103,11 +107,11 @@ export const ReviewImgContainer = styled.div`
 `;
 
 export const ReviewImg = styled.img`
-  height: 300px;
+  height: 400px;
 `;
 
 export const MainText = styled.p`
-  width: 80%;
+  text-align: center;
   margin: 0 auto;
   font-size: 18px;
   line-height: 150%;

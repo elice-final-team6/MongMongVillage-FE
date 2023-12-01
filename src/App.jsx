@@ -6,13 +6,17 @@ import Layout from './Layout';
 function App() {
   return (
     <Routes>
-      {ROUTE_ARR.map((el) => (
-        <Route
-          path={el.path}
-          key={el.path}
-          element={<Layout>{el.element}</Layout>}
-        />
-      ))}
+      {ROUTE_ARR.map((el) =>
+        el.path === '/*' ? (
+          <Route path={el.path} key={el.path} element={el.element} />
+        ) : (
+          <Route
+            path={el.path}
+            key={el.path}
+            element={<Layout>{el.element}</Layout>}
+          />
+        ),
+      )}
     </Routes>
   );
 }

@@ -6,7 +6,7 @@ import { ROUTE } from '../routes/Routes';
 const deleteUser = async () => {
   const response = await instance.delete(`/users/:userId`);
 
-  return response;
+  if (response) return response;
 };
 
 export function useDeleteUser() {
@@ -14,8 +14,7 @@ export function useDeleteUser() {
 
   return useMutation(() => deleteUser(), {
     onSuccess: () => {
-      localStorage.removeItem('token');
-      localStorage.removeItem('userId');
+      localStorage.clear();
       alert('회원 탈퇴 되었습니다.');
       navigate(ROUTE.MAIN_PAGE.link);
     },

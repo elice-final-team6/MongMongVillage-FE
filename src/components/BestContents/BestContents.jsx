@@ -1,37 +1,10 @@
-import {
-  Container,
-  Content,
-  DogCafeList,
-  DogCafeListItem,
-  DogCafeListItemImg,
-  DogCafeListItemTitle,
-  DogCafeListItemWriter,
-  DogCafeItemInfo,
-  ErrorContainer,
-} from './styles';
-
-import { useNavigate } from 'react-router-dom';
-import { ROUTE } from '../../routes/Routes';
+import { Container, Content, DogCafeList, ErrorContainer } from './styles';
 import { useGetBestContents } from '../../hooks/getBestContents';
-
 import { GiCurlyWing } from 'react-icons/gi';
+import { BestContentItem } from '../BestContentItem';
 
 const BestContents = () => {
-  const navigate = useNavigate();
-
-  const { data, isLoading, error } = useGetBestContents();
-
-  const linkToCommunity = (postId) => {
-    navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${postId}`);
-  };
-
-  const linkToUser = () => {
-    navigate(ROUTE.MY_PAGE.link);
-  };
-
-  const scollTop = () => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  };
+  const { data: bestContents, isLoading, error } = useGetBestContents();
 
   return isLoading ? (
     <ErrorContainer>Loading...</ErrorContainer>
@@ -49,37 +22,9 @@ const BestContents = () => {
         />
       </Content>
       <DogCafeList>
-        {data &&
-          data.boards.map((content, index) => (
-            <DogCafeListItem
-              key={index}
-              onClick={() => {
-                linkToCommunity(content._id);
-                scollTop();
-              }}
-            >
-              <DogCafeListItemImg
-                style={{
-                  backgroundImage: `url('${
-                    content.images.length > 0
-                      ? content.images[0]
-                      : '/imges/default.png'
-                  }')`,
-                }}
-                alt={`Content ${index}`}
-              />
-              <DogCafeItemInfo>
-                <DogCafeListItemTitle>{content.title}</DogCafeListItemTitle>
-                <DogCafeListItemWriter onClick={linkToUser}>
-                  {content.userImg ? (
-                    <img alt="유저프로필이미지" src={content.userImg} />
-                  ) : (
-                    <img src={'/imges/user.png'} alt="user_img" />
-                  )}
-                  <span>{content.user_id.nickname}</span>
-                </DogCafeListItemWriter>
-              </DogCafeItemInfo>
-            </DogCafeListItem>
+        {bestContents &&
+          bestContents.map((item, index) => (
+            <BestContentItem item={item} key={index} />
           ))}
       </DogCafeList>
     </Container>

@@ -9,10 +9,10 @@ export const Container = styled.div`
 `;
 
 export const NameContainer = styled.div`
-  margin: 10px;
+  margin: 20px;
   width: 20%;
   text-align: center;
-  background-color: lightgray;
+  background-color: #fce786;
   border-radius: 10px;
   padding: 15px;
   span {

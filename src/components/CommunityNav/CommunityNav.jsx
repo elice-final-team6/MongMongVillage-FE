@@ -4,9 +4,8 @@ import { CommunityCategory } from '../../libs/CommunityCategory';
 import { useState } from 'react';
 
 const CommunityNav = ({ handleNavClick, category }) => {
-  const [selectedCategory, setSelectedCategory] = useState(
-    CommunityCategory.all,
-  );
+  const [selectedCategory, setSelectedCategory] = useState(category);
+
   return (
     <CommunityNavContainer category={category}>
       <CommunityNavItem

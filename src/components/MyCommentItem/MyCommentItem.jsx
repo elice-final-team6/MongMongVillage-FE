@@ -8,9 +8,10 @@ const MyCommentItem = ({ comment }) => {
 
   return (
     <Container
-      onClick={() =>
-        navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${comment.board_id}`)
-      }
+      onClick={() => {
+        navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${comment.board_id}`);
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      }}
     >
       <Content>
         <FaExternalLinkAlt />

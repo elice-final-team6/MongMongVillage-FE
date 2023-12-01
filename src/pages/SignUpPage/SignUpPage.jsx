@@ -236,7 +236,7 @@ const SignUpPage = () => {
         <AuthInputContainer>
           <AuthInput
             placeholder="비밀번호 확인"
-            type="password"
+            type={hideConfirmPassword ? 'password' : 'text'}
             value={signUpInfo.confirmPassword}
             onChange={(e) => {
               setSignUpInfo({

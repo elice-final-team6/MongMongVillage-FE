@@ -49,19 +49,17 @@ const PopularCafes = () => {
               }}
             >
               <DogCafeListItemImg
-                style={{
-                  backgroundImage: `url('${
-                    content.image.length > 0
-                      ? content.image
-                      : '/imges/default.png'
-                  }')`,
-                }}
-                alt={`카페사진 ${index}`}
+                src={
+                  content.image.length > 0
+                    ? content.image
+                    : '/imges/default.png'
+                }
+                alt={`cafe ${index}`}
               />
               <DogCafeInfoContainer>
                 <DogCafeListItemTitle>{content.name}</DogCafeListItemTitle>
                 <DogCafeListItemRating>
-                  평균 별점:
+                  평균 별점
                   <span>
                     {'★'.repeat(content.rating) +
                       '☆'.repeat(5 - content.rating)}

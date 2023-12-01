@@ -5,6 +5,7 @@ import {
   MyProfileImg,
   MyLike,
   MyComment,
+  Loading,
 } from '../../components';
 import { Container, NameContainer } from './styles';
 import { MyActivityMenus } from '../../libs/MyActivityMenuBar';
@@ -17,7 +18,7 @@ const MyActivityPage = () => {
   const { isLoading, data: userInfo } = useGetUserInfo(userId);
 
   return isLoading ? (
-    <div>로딩중 . . .</div>
+    <Loading />
   ) : (
     <Container>
       <MyProfileImg imgSrc={userInfo?.profilePicture} />

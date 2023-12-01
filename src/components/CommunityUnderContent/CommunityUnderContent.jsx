@@ -33,10 +33,10 @@ const CommunityUnderContent = ({ onEdit, onDelete, post }) => {
           )}
         </div>
         <div>
-          <p className="nickname">{post?.board?.user_id?.nickname}</p>
-          <p className="createAt">
-            {new Date(post?.board?.createdAt).toLocaleString()}
-          </p>
+          <span className="nickname">{post?.board?.user_id?.nickname}</span>
+          <span className="createAt">
+            {new Date(post?.board?.createdAt).toLocaleString()} 작성
+          </span>
         </div>
       </ContentInfo>
       <ContentButton>

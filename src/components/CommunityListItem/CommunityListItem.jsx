@@ -14,6 +14,7 @@ import {
   Category,
   Content,
 } from './CommunityListItem.styles.js';
+import { getRelativeTime } from '../../libs/getRelativeTime.js';
 
 const CommunityListItem = ({
   item,
@@ -49,7 +50,7 @@ const CommunityListItem = ({
         >
           <div className="TitleAndCategory">
             <Category>
-              <p>{categoryKor}</p>
+              <span>{categoryKor}</span>
             </Category>
             <Title>{item.title}</Title>
           </div>
@@ -75,7 +76,7 @@ const CommunityListItem = ({
           <Count>
             <FaHeart color="red" size={'20px'} /> {item.like_count}
           </Count>
-          <DateText>{new Date(item.createdAt).toLocaleString()} 작성</DateText>
+          <DateText>{getRelativeTime(item?.createdAt)} 작성</DateText>
         </BottomContainer>
       </LeftContainer>
       <RightContainer>

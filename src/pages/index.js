@@ -13,3 +13,4 @@ export * from './MyInfoEditPage';
 export * from './CommunityDetailPage';
 export * from './NewPostPage';
 export * from './EditPostPage';
+export * from './NotFoundPage';

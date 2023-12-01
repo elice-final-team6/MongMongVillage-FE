@@ -35,7 +35,7 @@ const SearchBar = () => {
       <StyledForm onSubmit={handleSubmit}>
         <SearchInput
           type="text"
-          placeholder="애견카페 검색"
+          placeholder="지역별 애견카페를 검색해보세요... ex) 성동구"
           onChange={handleChange}
           required
         />

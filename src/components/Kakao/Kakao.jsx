@@ -44,8 +44,9 @@ const Kakao = () => {
                 className="form__input"
                 name="place"
                 onChange={keywordChange}
-                placeholder="검색어를 입력해주세요. (ex: 강서구 애견카페)"
+                placeholder="서울의 '구' 명 이나 업체의 상호명을 입력해주세요... ex) 강서구"
                 required
+                style={{ width: '500px' }}
               />
               <div className="btn-box">
                 <input

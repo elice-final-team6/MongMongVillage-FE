@@ -11,6 +11,7 @@ const MyActivity = () => {
 
   const gotoActivityPage = () => {
     navigate(ROUTE.MY_ACTIVITY_PAGE.link);
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   };
 
   const { data: myposts } = useGetMyBoards();

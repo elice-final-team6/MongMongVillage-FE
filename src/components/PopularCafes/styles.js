@@ -34,12 +34,11 @@ export const DogCafeListItem = styled.section`
   cursor: pointer;
 `;
 
-export const DogCafeListItemImg = styled.div`
+export const DogCafeListItemImg = styled.img`
   width: 100%;
   height: 100%;
   border-radius: 50px;
-  background-size: cover;
-  background-repeat: no-repeat;
+  object-fit: cover;
 
   &:hover {
     transition: all 0.2s linear;

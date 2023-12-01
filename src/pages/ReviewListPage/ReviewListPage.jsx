@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Container, ReviewListContainer } from './styels';
 import { Title } from '../../commonStyles';
-import { ReviewItem, ReviewListSort, ReviewPagintaion } from '../../components';
+import {
+  ReviewItem,
+  ReviewListSort,
+  ReviewPagintaion,
+  Loading,
+} from '../../components';
 import { useGetReviews } from '../../hooks/getReviews';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ROUTE } from '../../routes/Routes';
@@ -39,16 +44,15 @@ const ReviewListPage = () => {
     window.scroll({ top: 0, behavior: 'smooth' });
   };
 
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <Container>
       <Title>리뷰 모아보기</Title>
       <ReviewListContainer>
         <ReviewListSort handleSorting={handleSorting} />
-        {isLoading || !list ? (
-          <div>로딩중</div>
-        ) : (
-          list.map((item) => <ReviewItem key={item._id} id={item._id} />)
-        )}
+        {list &&
+          list.map((item) => <ReviewItem key={item._id} id={item._id} />)}
       </ReviewListContainer>
       <ReviewPagintaion
         page={page}

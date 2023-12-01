@@ -9,6 +9,7 @@ import {
   CommunityUnderContent,
   CommunityComments,
   CommunityPagination,
+  Loading,
 } from '../../components';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Container } from './CommunityDetailPage.styles.js';
@@ -25,7 +26,7 @@ const CommunityDetailPage = () => {
   const [post, setPost] = useState();
   const [totalBoards, setTotalBoards] = useState(0);
   const [selectedPost, setSelectedPost] = useState({});
-  const [likeCount, setLikeCount] = useState(0);
+  const [likeCount, setLikeCount] = useState();
 
   const [filteredCategory, setFilteredCategory] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,7 +34,11 @@ const CommunityDetailPage = () => {
   const [newCommentState, setNewCommentState] = useState(false);
 
   // 서버로부터 해당 작성글 받아오도록 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-  const { mutate: mutatePost, data: postData } = useGetDetailBoard(id);
+  const {
+    mutate: mutatePost,
+    data: postData,
+    isLoading,
+  } = useGetDetailBoard(id);
 
   useEffect(() => {
     // 페이지가 처음 로딩될 때는 mutatePost를 호출하지 않도록
@@ -119,7 +124,9 @@ const CommunityDetailPage = () => {
   };
 
   // 수정, 삭제 버튼은 토큰값의 아이디와 게시글의 아이디가 일치하는 사람에게만 보여주도록 해야함
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <Container>
       {selectedPost && (
         <>

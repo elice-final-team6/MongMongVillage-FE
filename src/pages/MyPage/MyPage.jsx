@@ -8,14 +8,12 @@ const MyPage = () => {
 
   const gotoEditPage = () => {
     navigate(ROUTE.MY_INFO_EDIT_PAGE.link);
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   };
 
   const logout = () => {
     alert('로그아웃 되었습니다.');
-
-    localStorage.removeItem('token');
-    localStorage.removeItem('userId');
-
+    localStorage.clear();
     navigate(ROUTE.MAIN_PAGE.link);
   };
 

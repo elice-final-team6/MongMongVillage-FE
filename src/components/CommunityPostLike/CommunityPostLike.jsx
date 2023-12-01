@@ -3,7 +3,6 @@ import { LikeContainer } from './CommunityPostLike.styles';
 import { usePutBoardLike } from '../../hooks/putBoardLike';
 import { FaHeart } from 'react-icons/fa';
 import { useGetMyLike } from '../../hooks/getMyLike';
-import { redirect } from 'react-router-dom';
 
 const CommunityPostLike = ({ likeCount, setLikeCount, boardId }) => {
   const userId = localStorage.getItem('userId');
@@ -22,9 +21,13 @@ const CommunityPostLike = ({ likeCount, setLikeCount, boardId }) => {
   const { mutate: putBoardLike } = usePutBoardLike(boardId);
 
   const handleLikeClick = () => {
-    putBoardLike();
-    setLikeCount(islikeClick ? likeCount - 1 : likeCount + 1);
-    setIsLikeClick(!islikeClick);
+    if (userId) {
+      putBoardLike();
+      setLikeCount((prev) => (islikeClick ? prev - 1 : prev + 1));
+      setIsLikeClick(!islikeClick);
+    } else {
+      alert('로그인 후 좋아요 기능을 이용해주세요.');
+    }
   };
 
   return (

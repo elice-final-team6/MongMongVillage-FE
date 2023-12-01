@@ -20,6 +20,10 @@ export const Navbar = styled.div`
   display: flex;
   align-items: center;
   margin: 0 auto;
+  .admin {
+    font-size: 14px;
+    color: var(--main-yellow-color);
+  }
 `;
 
 export const Navitem = styled.nav`

@@ -27,14 +27,14 @@ export const ContentInfo = styled.div`
     margin-left: 10px;
   }
 
-  p {
+  span {
     margin: 0;
-    margin-left: 10px;
     font-size: 12px;
   }
 
   .nickname {
     margin-bottom: 8px;
+    font-weight: bold;
   }
 
   img {

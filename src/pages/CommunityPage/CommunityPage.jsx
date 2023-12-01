@@ -1,4 +1,3 @@
-// import { useGetBoards, useGetCommunitySearch } from '../../hooks';
 import { useGetBoards } from '../../hooks/getBoards';
 import { useGetCommunitySearch } from '../../hooks/getCommunitySearch';
 import React, { useState, useEffect } from 'react';
@@ -9,6 +8,7 @@ import {
   CommunitySearchAndPost,
   CommunityList,
   CommunityPagination,
+  Loading,
 } from '../../components';
 import { ROUTE } from '../../routes/Routes';
 import { Container } from './CommunityPage.styles';
@@ -21,7 +21,8 @@ const CATEGORY_DIC = CommunityCategory;
 const ITEMS_PER_PAGE = 10;
 
 const CommunityPage = () => {
-  const [user, setUser] = useState(null);
+  const user = localStorage.getItem('userId');
+
   // navigate 객체 생성
   const navigate = useNavigate();
 
@@ -43,11 +44,6 @@ const CommunityPage = () => {
   const [searchWord, setSearchWord] = useState();
   const [searchTotal, setSearchTotal] = useState();
 
-  useEffect(() => {
-    const storedUserId = localStorage.getItem('userId');
-    setUser(storedUserId);
-  }, []);
-
   // 페이지네이션 관련 기능 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
   // 현재 페이지 상태
   const [currentPage, setCurrentPage] = useState(1);
@@ -56,19 +52,25 @@ const CommunityPage = () => {
   const endIndex = startIndex + ITEMS_PER_PAGE;
 
   // 서버로부터 list 받아옴
-  const { mutate, data } = useGetBoards(currentPage, filteredCategory, sortBy);
+  const {
+    mutate,
+    data,
+    isLoading: boardLoading,
+  } = useGetBoards(currentPage, filteredCategory, sortBy);
+
   // search 결과 서버로부터 받아옴
-  const { mutate: mutateSearch, data: searchData } = useGetCommunitySearch(
-    searchTerm,
-    currentPage,
-  );
+  const {
+    mutate: mutateSearch,
+    data: searchData,
+    isLoading: searchLoading,
+  } = useGetCommunitySearch(searchTerm, currentPage);
 
   useEffect(() => {
     if (searchTerm) {
-      mutateSearch(currentPage);
+      mutateSearch();
     } else {
       // 검색어가 없을 경우 전체 게시글 가져오도록 수정
-      mutate(currentPage, filteredCategory, sortBy);
+      mutate();
     }
   }, [currentPage, filteredCategory, mutate, searchTerm, mutateSearch, sortBy]);
 
@@ -78,6 +80,7 @@ const CommunityPage = () => {
       setTotalBoards(data.total_number_of_boards);
     }
   }, [data, currentPage, filteredCategory, sortBy]);
+
   useEffect(() => {
     if (searchData && searchData.boards) {
       setList(searchData.boards);
@@ -92,6 +95,7 @@ const CommunityPage = () => {
     if (searchValue) {
       setCurrentPage(1);
       setSearchTerm(searchValue);
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }
   };
   // 카테고리 선택 onChange 핸들러
@@ -144,10 +148,10 @@ const CommunityPage = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     setCurrentPage(page);
     if (searchTerm) {
-      mutateSearch(page);
+      mutateSearch();
     } else {
       // 검색어가 없을 경우 전체 게시글 가져오도록 수정
-      mutate(page);
+      mutate();
     }
     // !!! 서버로부터 현재 CurrentPage 와 일치하는 페이지 요청해서 받아오도록 해야함
   };
@@ -161,12 +165,9 @@ const CommunityPage = () => {
   // 현재 페이지에 표시될 아이템들
   const currentPageItems = list;
 
-  // 리스트의 작성자 사진을 누르면 해당 유저의 페이지로 이동
-  // const handleUserClick = (userId) => {
-  //   navigate(`${ROUTE.ㅡㅡㅡㅡ.link}/${userId}`);
-  // }
-
-  return (
+  return boardLoading ? (
+    <Loading />
+  ) : (
     <Container>
       <Title>커뮤니티</Title>
       <CommunityNav

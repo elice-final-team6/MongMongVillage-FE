@@ -20,7 +20,7 @@ import {
 } from './styels';
 import { useGetReview } from '../../hooks/getReview';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ReviewItem } from '../../components';
+import { ReviewItem, Loading } from '../../components';
 
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { Title } from '../../commonStyles';
@@ -50,70 +50,76 @@ const ReviewDetailPage = () => {
     });
   };
 
-  return !reviewLoading && review ? (
-    <>
-      <ReviewDetailContainer>
-        <ReviewTitleContainer>
-          <TitleStarRaiting>
-            <ReviewTitle>{review.title}</ReviewTitle>
-            <StarRaiting>
-              <span>
-                {'★'.repeat(review.rating) + '☆'.repeat(5 - review.rating)}
-              </span>
-              {`(${review.rating})`}
-              <ReviewDate>
-                {new Date(review.createdAt).toLocaleString()} 작성
-              </ReviewDate>
-            </StarRaiting>
-          </TitleStarRaiting>
-          <ProfileContainer>
-            <ProfileImg
-              src={
-                review?.user_id?.profilePicture ??
-                `${`${process.env.PUBLIC_URL}/imges/user.png`}`
-              }
-            ></ProfileImg>
-            <Username>{review?.user_id?.nickname ?? ''}</Username>
-          </ProfileContainer>
-        </ReviewTitleContainer>
-        <MapContainer>
-          <CafeName>
-            <FaMapMarkerAlt size={'24px'} />
-            {review?.cafe_id?.name}
-          </CafeName>
-        </MapContainer>
-        <ReviewMainSection>
-          <ReviewImgContainer>
-            {review.images.length > 0 &&
-              review.images.map((item) => (
-                <ReviewImg src={item} alt="" key={item} />
-              ))}
-          </ReviewImgContainer>
-          <MainText>{review.content.replace(/<br>/g, '\n')}</MainText>
-        </ReviewMainSection>
-        {
-          <ButtonContainer>
-            {review?.user_id?._id === userId && (
-              <Button onClick={linkToReviewEditPage}>수정</Button>
-            )}
-            {role === 'ADMIN' || review?.user_id?._id === userId ? (
-              <Button onClick={deleteReview}>삭제</Button>
-            ) : (
-              <></>
-            )}
-          </ButtonContainer>
-        }
-      </ReviewDetailContainer>
-      <AnotherReviewsContainer>
-        <Title>"{review?.cafe_id?.name}"의 리뷰 리스트</Title>
-        {cafe &&
-          cafe?.reviews.map((item) => (
-            <ReviewItem id={item._id} key={item._id} />
-          ))}
-      </AnotherReviewsContainer>
-    </>
+  const linkToCafeDetailPage = () => {
+    navigate(`${ROUTE.CAFE_DETAIL_PAGE.link}/${review?.cafe_id?._id}`);
+  };
+
+  return reviewLoading ? (
+    <Loading />
   ) : (
-    <ReviewDetailContainer>로딩 중 ...</ReviewDetailContainer>
+    review && (
+      <>
+        <ReviewDetailContainer>
+          <ReviewTitleContainer>
+            <TitleStarRaiting>
+              <ReviewTitle>{review.title}</ReviewTitle>
+              <StarRaiting>
+                <span>
+                  {'★'.repeat(review.rating) + '☆'.repeat(5 - review.rating)}
+                </span>
+                {`(${review.rating})`}
+                <ReviewDate>
+                  {new Date(review.createdAt).toLocaleString()} 작성
+                </ReviewDate>
+              </StarRaiting>
+            </TitleStarRaiting>
+            <ProfileContainer>
+              <ProfileImg
+                src={
+                  review?.user_id?.profilePicture ??
+                  `${`${process.env.PUBLIC_URL}/imges/user.png`}`
+                }
+              ></ProfileImg>
+              <Username>{review?.user_id?.nickname ?? ''}</Username>
+            </ProfileContainer>
+          </ReviewTitleContainer>
+          <MapContainer>
+            <CafeName onClick={linkToCafeDetailPage}>
+              <FaMapMarkerAlt size={'24px'} />
+              {review?.cafe_id?.name}
+            </CafeName>
+          </MapContainer>
+          <ReviewMainSection>
+            <ReviewImgContainer>
+              {review.images.length > 0 &&
+                review.images.map((item) => (
+                  <ReviewImg src={item} alt="" key={item} />
+                ))}
+            </ReviewImgContainer>
+            <MainText>{review.content.replace(/<br>/g, '\n')}</MainText>
+          </ReviewMainSection>
+          {
+            <ButtonContainer>
+              {review?.user_id?._id === userId && (
+                <Button onClick={linkToReviewEditPage}>수정</Button>
+              )}
+              {role === 'ADMIN' || review?.user_id?._id === userId ? (
+                <Button onClick={deleteReview}>삭제</Button>
+              ) : (
+                <></>
+              )}
+            </ButtonContainer>
+          }
+        </ReviewDetailContainer>
+        <AnotherReviewsContainer>
+          <Title>"{review?.cafe_id?.name}"의 리뷰 리스트</Title>
+          {cafe &&
+            cafe?.reviews.map((item) => (
+              <ReviewItem id={item._id} key={item._id} />
+            ))}
+        </AnotherReviewsContainer>
+      </>
+    )
   );
 };
 

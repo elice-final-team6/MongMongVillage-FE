@@ -17,30 +17,6 @@ export const Img = styled.img`
   margin: 0;
 `;
 
-export const SNSButton = styled.button`
-  width: 100%;
-  border-radius: 20px;
-  display: flex;
-  padding: 10px;
-  margin: 5px;
-  box-shadow: 2px 1px 1px lightgray;
-  justify-content: space-around;
-  font-size: 16px;
-  &.google-login-button {
-    background-color: white;
-    border: 1px solid lightgray;
-  }
-  &.naver-login-button {
-    background-color: #2db400;
-    color: white;
-  }
-`;
-
-export const SNSButtonContainer = styled.div`
-  width: 100%;
-  margin: 20px 0;
-`;
-
 export const AuthInputContainer = styled.div`
   border-bottom: 1px solid lightgray;
   width: 95%;

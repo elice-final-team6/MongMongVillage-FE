@@ -14,7 +14,7 @@ const patchReview = async (id, title, content, rating, images) => {
 
   const response = await instance.patch(`/reviews/${id}`, formData, {});
 
-  return response;
+  if (response) return response;
 };
 
 export function usePatchReview(id, title, content, rating, images) {
@@ -24,11 +24,6 @@ export function usePatchReview(id, title, content, rating, images) {
   return useMutation(() => patchReview(id, title, content, rating, images), {
     onSuccess: () => {
       alert('리뷰가 수정되었습니다.');
-      queryClient.invalidateQueries(
-        ['getReviews', 'latest', 1],
-        ['getReview' + id],
-        ['myReviews'],
-      );
 
       navigate(ROUTE.REVIEW_DETAIL_PAGE.link + `/${id}`);
       window.scrollTo({ top: 0, left: 0 });
@@ -37,6 +32,12 @@ export function usePatchReview(id, title, content, rating, images) {
     onError: (error) => {
       console.error(error);
       alert(error.response.data.message);
+    },
+
+    onSettled: () => {
+      queryClient.invalidateQueries(['getReviews', 'latest', 1]);
+      queryClient.invalidateQueries(['getReview' + id]);
+      queryClient.invalidateQueries(['myReviews']);
     },
   });
 }
