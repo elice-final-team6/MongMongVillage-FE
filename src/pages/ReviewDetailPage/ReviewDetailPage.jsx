@@ -85,7 +85,7 @@ const ReviewDetailPage = () => {
           </ReviewTitleContainer>
           <MapContainer>
             <CafeName onClick={linkToCafeDetailPage}>
-              <FaMapMarkerAlt size={'24px'} />
+              <FaMapMarkerAlt size={'24px'} color="green" />
               {review?.cafe_id?.name}
             </CafeName>
           </MapContainer>

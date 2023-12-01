@@ -2,12 +2,13 @@ import { Container, Content, DogCafeList, ErrorContainer } from './styles';
 import { useGetBestContents } from '../../hooks/getBestContents';
 import { GiCurlyWing } from 'react-icons/gi';
 import { BestContentItem } from '../BestContentItem';
+import { Loading } from '../Loading';
 
 const BestContents = () => {
   const { data: bestContents, isLoading, error } = useGetBestContents();
 
   return isLoading ? (
-    <ErrorContainer>Loading...</ErrorContainer>
+    <Loading />
   ) : error ? (
     <ErrorContainer>인기글을 불러오는 도중 에러가 생겼습니다.</ErrorContainer>
   ) : (

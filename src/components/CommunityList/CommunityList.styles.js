@@ -7,4 +7,6 @@ export const ListContainer = styled.div`
   max-width: 1280px; /* 추가 */
   width: 100%; /* 추가 */
   margin: 0 auto;
+
+  margin-bottom: 50px;
 `;

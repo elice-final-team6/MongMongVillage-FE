@@ -13,6 +13,7 @@ export const Title = styled.p`
 `;
 
 export const Content = styled.p`
+  line-height: 2;
   color: gray;
 
   text-overflow: ellipsis;
