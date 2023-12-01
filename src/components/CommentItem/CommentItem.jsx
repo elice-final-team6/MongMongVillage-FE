@@ -27,13 +27,11 @@ const CommentItem = ({ item, postId }) => {
 
   /* 댓글 삭제 */
   const { mutate: deleteComment } = useDeleteComment(item._id, postId);
-  const handleDeleteComment = () => {
-    deleteComment();
-  };
 
-  /* 수정 창에서 엔터 키 입력 */
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') handlePatchComment();
+  const handleDeleteComment = (e) => {
+    console.log(e);
+    e.preventDefault();
+    deleteComment();
   };
 
   /* 수정 모드 토글 함수 */
@@ -57,19 +55,20 @@ const CommentItem = ({ item, postId }) => {
       </CommentTopContainer>
       <CommentBottomContainer>
         {edit ? (
-          <>
+          <form onSubmit={handlePatchComment}>
             <EditInput
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              onKeyDown={handleKeyDown}
             />
             <ButtonContainer>
-              <button onClick={handlePatchComment}>수정</button>
+              <button type="submit" onClick={handlePatchComment}>
+                수정
+              </button>
               <button className="cancel" onClick={toggleEdit}>
                 취소
               </button>
             </ButtonContainer>
-          </>
+          </form>
         ) : (
           <>
             <p className="content">{content}</p>

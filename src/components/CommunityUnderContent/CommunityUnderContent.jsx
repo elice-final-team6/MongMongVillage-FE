@@ -23,14 +23,14 @@ const CommunityUnderContent = ({ onEdit, onDelete, post }) => {
     <UnderContentContainer>
       <ContentInfo>
         <div>
-          {post?.board?.user_id.profilePicture ? (
-            <img src={post?.board?.user_id.profilePicture} alt="UserImg" />
-          ) : (
-            <img
-              src={`${`${process.env.PUBLIC_URL}/imges/user.png`}`}
-              alt="user_img"
-            />
-          )}
+          <img
+            src={
+              post?.board?.user_id?.profilePicture ??
+              `${process.env.PUBLIC_URL}/imges/user.png`
+            }
+            style={{ objectFit: 'cover' }}
+            alt="UserImg"
+          />
         </div>
         <div>
           <span className="nickname">{post?.board?.user_id?.nickname}</span>

@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useGetAllCafes } from '../../../hooks/getAllCafes';
 import { ROUTE } from '../../../routes/Routes';
 import { useNavigate } from 'react-router-dom';
-import { MapContainer, CafeList } from './Map.style';
+import { MapContainer, CafeList, CafeListItem } from './Map.style';
+import { TbMapX } from 'react-icons/tb';
+import { ImPhone } from 'react-icons/im';
+import { FaMapMarkerAlt } from 'react-icons/fa';
 const { kakao } = window;
 
 export default function Map(props) {
   const keyword = props.searchKeyword;
   const { mutate: mutateAllCafes, data: allCafesData } = useGetAllCafes();
   const [resultCafe, setResultCafe] = useState([]);
-  const [long, setLong] = useState();
-  const [lat, setLat] = useState();
+  // const [long, setLong] = useState();
+  // const [lat, setLat] = useState();
   const [selectedCafe, setSelectedCafe] = useState(null);
 
   const navigate = useNavigate();
@@ -35,14 +38,10 @@ export default function Map(props) {
         nameResults.length > 0 ? nameResults : addressResults;
 
       setResultCafe(mergedResults);
-      console.log('검색결과 카페 : ', resultCafe);
     }
   }, [allCafesData]);
 
   useEffect(() => {
-    console.log('검색결과 카페 2 : ', resultCafe);
-    // setLong(resultCafe[0].longitude);
-    // setLat(resultCafe[0].latitude);
     // 정상 출력
     let container = document.getElementById('map');
     if (resultCafe.length === 0) {
@@ -63,6 +62,8 @@ export default function Map(props) {
         level: 7,
       };
 
+      console.log(resultCafe);
+
       //map
       const map = new kakao.maps.Map(container, options);
 
@@ -74,11 +75,14 @@ export default function Map(props) {
           title: el.name,
         });
 
-        const content = `
-          <div style="padding: 10px; background-color: #fff; border-radius: 10px;">
-            <h3 style="margin-bottom: 5px;">${el.name}</h3>
-            <p>${el.road_addr}</p>
-            <p>${el.phone_number}</p>
+        const content = /*html*/ `
+          <div style="padding: 10px; border-radius: 20px; width:400px;
+          
+          ">
+            <h3 style="margin: 8px;">${el.name}</h3>
+            <p style="margin: 5px; font-size:14px;">${el.road_addr}</p>
+            <p style="margin: 5px; font-size:14px;">${el.phone_number}</p>
+            <p style="margin: 5px; color:gray; font-size:12px;">${el.intro}</p>
           </div>
         `;
 
@@ -131,33 +135,49 @@ export default function Map(props) {
           className="map"
           style={{ width: '76%', maxHeight: '600px !important', float: 'left' }}
         ></div>
-        <CafeList
-          className="cafe-list"
-          style={{
-            width: '24%',
-            float: 'left',
-            padding: '20px',
-            border: '1px solid black',
-            overflowY: 'auto',
-            maxHeight: '600px',
-          }}
-        >
+        <CafeList className="cafe-list">
           <h2>카페 목록</h2>
-          <ul>
-            {resultCafe.map((cafe) => (
-              <li
-                key={cafe.id}
-                style={{ cursor: 'pointer', marginBottom: '10px' }}
-                onClick={() =>
-                  navigate(`${ROUTE.CAFE_DETAIL_PAGE.link}/${cafe._id}`)
-                }
-              >
-                <p className="cafename">{cafe.name}</p>
-                <p>{cafe.road_addr}</p>
-                <p>{cafe.phone_number}</p>
-              </li>
-            ))}
-          </ul>
+          {resultCafe.length === 0 ? (
+            <div className="noResult">
+              <TbMapX size={'50px'} color="grey" />
+              <p className="noSearchTitle" style={{ marginTop: '20px' }}>
+                검색 결과가 없습니다.
+              </p>
+              <p>서울의 지역명이나</p>
+              <p>업체의 상호명을 입력해주세요.</p>
+              <p>예 : '강남구' or '멍멍이다방'</p>
+            </div>
+          ) : (
+            <>
+              <p className="searchResult">
+                {'>'}
+                <span> {props.searchKeyword} </span>검색결과
+                <span>
+                  {resultCafe.length > 0 && ` (${resultCafe.length})`}
+                </span>
+              </p>
+              <ul>
+                {resultCafe.map((cafe) => (
+                  <CafeListItem
+                    key={cafe.id}
+                    onClick={() =>
+                      navigate(`${ROUTE.CAFE_DETAIL_PAGE.link}/${cafe._id}`)
+                    }
+                  >
+                    <p className="cafename">{cafe.name}</p>
+                    <p>
+                      <FaMapMarkerAlt />
+                      {cafe.road_addr}
+                    </p>
+                    <p>
+                      <ImPhone />
+                      {cafe.phone_number}
+                    </p>
+                  </CafeListItem>
+                ))}
+              </ul>
+            </>
+          )}
         </CafeList>
       </div>
     </MapContainer>

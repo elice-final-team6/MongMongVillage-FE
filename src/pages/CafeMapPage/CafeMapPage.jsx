@@ -1,11 +1,11 @@
 import { Title } from '../../commonStyles';
 import { Kakao } from '../../components';
-import { Container } from './styles';
+import { Container, Content } from './styles';
 
 const CafeMapPage = () => {
   return (
     <Container>
-      <Title>카페 찾기</Title>
+      <Title>애견카페 찾기</Title>
       <Kakao />
     </Container>
   );

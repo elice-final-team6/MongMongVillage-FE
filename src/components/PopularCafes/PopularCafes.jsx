@@ -7,12 +7,12 @@ import {
   DogCafeListItemTitle,
   DogCafeListItemRating,
   DogCafeInfoContainer,
-  ErrorContainer,
 } from './styles';
 import { useGetPolularCafes } from '../../hooks/getPopularCafes';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE } from '../../routes/Routes';
 import { GiPartyPopper } from 'react-icons/gi';
+import { Loading } from '../Loading';
 
 const PopularCafes = () => {
   const navigate = useNavigate();
@@ -22,12 +22,10 @@ const PopularCafes = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   };
 
-  const { data, isLoading, error } = useGetPolularCafes();
+  const { data, isLoading } = useGetPolularCafes();
 
   return isLoading ? (
-    <ErrorContainer>Loading...</ErrorContainer>
-  ) : error ? (
-    <ErrorContainer>인기글을 불러오는 도중 에러가 생겼습니다.</ErrorContainer>
+    <Loading />
   ) : (
     <Container>
       <Content>

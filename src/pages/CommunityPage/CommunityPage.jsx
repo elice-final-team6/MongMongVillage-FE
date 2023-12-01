@@ -14,6 +14,7 @@ import { ROUTE } from '../../routes/Routes';
 import { Container } from './CommunityPage.styles';
 import { CommunityCategory } from '../../libs/CommunityCategory';
 import { Title } from '../../commonStyles';
+import { showAlert } from '../../util/showAlert';
 
 // 카테고리 객체
 const CATEGORY_DIC = CommunityCategory;
@@ -127,8 +128,12 @@ const CommunityPage = () => {
   // id 값을 params로 넘겨줄 함수 - detail 페이지로 정보 넘겨주기
   // 글작성 클릭시 실행 함수
   const handleNewPostClick = () => {
-    navigate(ROUTE.NEW_POST_PAGE.link);
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    if (!user) {
+      showAlert('', '로그인 후 작성해주세요.', 'warning', () => {});
+    } else {
+      navigate(ROUTE.NEW_POST_PAGE.link);
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }
   };
   // 전체 페이지 수 계산
   const totalPages = Math.ceil(totalBoards / ITEMS_PER_PAGE);

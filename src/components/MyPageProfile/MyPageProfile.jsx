@@ -23,6 +23,8 @@ import { MyProfileImg } from '../MyProfileImg';
 import { FaPencil } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE } from '../../routes/Routes';
+import { Loading } from '../Loading';
+import { showAlert, showConfirm } from '../../util/showAlert';
 
 const MyPageProfile = ({ edit }) => {
   const navigate = useNavigate();
@@ -37,12 +39,14 @@ const MyPageProfile = ({ edit }) => {
   const userId = localStorage.getItem('userId');
   const { isLoading, data: userData } = useGetUserInfo(userId);
   const [preview, setPreview] = useState(myInfo.profilePicture);
+  const [nicknameIsAvailable, setNickNameIsAvailable] = useState(undefined);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('로그인이 필요합니다.');
-      navigate(ROUTE.LOGIN_PAGE.link);
+      showAlert('', '로그인이 필요합니다.', 'waring', () => {
+        navigate(ROUTE.LOGIN_PAGE.link);
+      });
     }
   }, []);
 
@@ -64,10 +68,7 @@ const MyPageProfile = ({ edit }) => {
   const { mutate: deleteUser } = useDeleteUser();
 
   const handleDeleteUser = () => {
-    // eslint-disable-next-line no-restricted-globals
-    if (confirm('정말 탈퇴하시겠습니까?')) {
-      deleteUser();
-    }
+    showConfirm('정말 탈퇴하시겠습니까?', '탈퇴', () => deleteUser());
   };
 
   /* 회원 정보 수정 */
@@ -78,9 +79,16 @@ const MyPageProfile = ({ edit }) => {
   );
 
   const handlePutUser = () => {
-    // eslint-disable-next-line no-restricted-globals
-    if (confirm('회원정보를 수정하시겠습니까?')) {
-      putUser();
+    if (nicknameIsAvailable === undefined) {
+      alert('닉네임 중복확인이 필요합니다.');
+    } else if (!nicknameIsAvailable) {
+      alert('닉네임이 중복되었습니다. 다시 확인해주세요.');
+      setNickNameIsAvailable(undefined);
+    } else {
+      // eslint-disable-next-line no-restricted-globals
+      if (confirm('회원정보를 수정하시겠습니까?')) {
+        putUser();
+      }
     }
   };
 
@@ -106,13 +114,15 @@ const MyPageProfile = ({ edit }) => {
 
     if (!isDuplicate) {
       alert('사용 가능한 닉네임입니다.');
+      setNickNameIsAvailable(true);
     } else {
       alert('이미 존재하는 닉네임입니다.');
+      setNickNameIsAvailable(false);
     }
   };
 
   return isLoading ? (
-    <ProfileContainer>로딩중 . . .</ProfileContainer>
+    <Loading />
   ) : (
     <ProfileContainer>
       <MyProfileImg imgSrc={preview} />

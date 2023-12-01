@@ -1,6 +1,7 @@
 import { instance } from '.';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
+import { showAlert } from '../util/showAlert';
 
 const postLogin = async (email, password) => {
   const response = await instance.post(`/users/login`, {
@@ -25,13 +26,14 @@ export function usePostLogin(email, password) {
       localStorage.setItem('userId', userId);
       localStorage.setItem('role', role);
 
-      alert('로그인에 성공했습니다.');
-      navigate('/');
-      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      showAlert('', '로그인에 성공했습니다.', 'success', () => {
+        navigate('/');
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      });
     },
 
     onError: (error) => {
-      alert(error.response.data.message);
+      showAlert('Error', error.response.data.message, 'error', () => {});
     },
   });
 }

@@ -174,3 +174,18 @@ body {
 * {
   font-family: 'GmarketSansMedium';
 }
+
+.swal-button {
+  background-color: var(--main-yellow-color) !important;
+  border: none !important;
+  font-weight: 700;
+}
+
+.swal2-popup .swal2-styled:focus {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+.swal2-icon {
+  margin: 20px auto;
+  background-color: transparent;
+}

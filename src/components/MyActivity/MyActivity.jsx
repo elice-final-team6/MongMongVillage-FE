@@ -34,7 +34,9 @@ const MyActivity = () => {
         </CountItem>
         <CountItem>
           <p>좋아요</p>
-          <p>{myLikes ? myLikes.length : 0}개</p>
+          <p>
+            {myLikes ? myLikes.filter((item) => item?.board_id).length : 0}개
+          </p>
         </CountItem>
         <CountItem>
           <p>작성리뷰</p>

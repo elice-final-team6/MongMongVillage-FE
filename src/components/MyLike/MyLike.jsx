@@ -8,7 +8,7 @@ const MyLike = () => {
   return myLikePosts?.length > 0 && !isLoading ? (
     <Container>
       {myLikePosts.map((item, idx) => {
-        return <MyLikeItem post={item?.board_id} key={idx} />;
+        return item?.board_id && <MyLikeItem post={item?.board_id} key={idx} />;
       })}
     </Container>
   ) : (

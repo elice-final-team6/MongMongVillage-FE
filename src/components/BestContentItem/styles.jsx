@@ -27,9 +27,21 @@ export const BestInfo = styled.article`
 `;
 
 export const BestTitle = styled.p`
-  padding: 20px 0 8px 8px;
-  font-size: 23px;
-  cursor: pointer;
+  font-size: 22px;
+  padding: 2px;
+  width: 75%;
+
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  overflow-wrap: break-word;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+
+  max-height: 1em;
+  line-height: 2rem; /* 적절한 줄 높이 설정 */
 `;
 
 export const BestWriter = styled.div`

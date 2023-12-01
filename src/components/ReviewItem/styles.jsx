@@ -46,7 +46,7 @@ export const CafeName = styled.p`
 `;
 
 export const Content = styled.p`
-  padding: 10px 0;
+  padding: 5px 0;
   font-size: 16px;
 
   text-overflow: ellipsis;
@@ -57,10 +57,10 @@ export const Content = styled.p`
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 
-  white-space: normal;
-
   max-height: 2.4em;
-  line-height: 1.2em;
+  line-height: 1.5em;
+
+  white-space: pre-wrap;
 `;
 
 export const PreviewImgContainer = styled.div`

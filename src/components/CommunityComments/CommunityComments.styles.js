@@ -16,7 +16,7 @@ export const CommentsContainer = styled.div`
   }
 `;
 
-export const CommentInputContainer = styled.div`
+export const CommentInputContainer = styled.form`
   display: flex;
   padding: 20px;
 `;

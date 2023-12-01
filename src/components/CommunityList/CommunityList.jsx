@@ -12,7 +12,6 @@ const CommunityList = ({ currentPageItems, handlePostClick, totalPages }) => {
           item={item}
           totalPages={totalPages}
           handlePostClick={handlePostClick}
-          // handleUserClick={handleUserClick}
         />
       ))}
     </ListContainer>

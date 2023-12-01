@@ -9,7 +9,7 @@ export const Container = styled.div`
 export const FooterContainer = styled.div`
   width: 90%;
   margin: auto;
-  margin-left: 146px;
+  margin-left: 186px;
 `;
 
 export const LogoListContainer = styled.div`

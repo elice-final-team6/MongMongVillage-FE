@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { LikeContainer } from './CommunityPostLike.styles';
+import { LikeContainer, LikeIcon } from './CommunityPostLike.styles';
 import { usePutBoardLike } from '../../hooks/putBoardLike';
-import { FaHeart } from 'react-icons/fa';
 import { useGetMyLike } from '../../hooks/getMyLike';
+import { showAlert } from '../../util/showAlert';
 
 const CommunityPostLike = ({ likeCount, setLikeCount, boardId }) => {
   const userId = localStorage.getItem('userId');
@@ -10,10 +10,14 @@ const CommunityPostLike = ({ likeCount, setLikeCount, boardId }) => {
   const { data: myLikes } = useGetMyLike();
 
   /* 내가 좋아요 한 리스트 불러와서 해당 글을 좋아요 한 글인지 비교 */
+
   useEffect(() => {
     myLikes?.forEach((item) => {
-      if (item?.board_id?._id === boardId) {
+      if (item?.board_id?._id === boardId && boardId) {
+        console.log('이 글의 board', boardId);
+        console.log(item?.board_id, '보드');
         setIsLikeClick(true);
+        console.log('같');
       }
     });
   }, [myLikes, boardId]);
@@ -26,7 +30,7 @@ const CommunityPostLike = ({ likeCount, setLikeCount, boardId }) => {
       setLikeCount((prev) => (islikeClick ? prev - 1 : prev + 1));
       setIsLikeClick(!islikeClick);
     } else {
-      alert('로그인 후 좋아요 기능을 이용해주세요.');
+      showAlert('', '로그인 후 좋아요 기능을 이용해주세요.', 'warning');
     }
   };
 
@@ -35,7 +39,7 @@ const CommunityPostLike = ({ likeCount, setLikeCount, boardId }) => {
       onClick={handleLikeClick}
       islikeclick={islikeClick ? 'true' : 'false'}
     >
-      <FaHeart color="red" />
+      <LikeIcon islikeclick={islikeClick ? 'true' : 'false'} />
       {likeCount}
     </LikeContainer>
   );

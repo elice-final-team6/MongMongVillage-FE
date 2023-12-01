@@ -19,12 +19,10 @@ import { getRelativeTime } from '../../libs/getRelativeTime.js';
 const CommunityListItem = ({
   item,
   handlePostClick,
-  totalPages,
   //  handleUserClick,
 }) => {
   const formattedContent = item.content.replace(/\n/g, '<br>');
   const [categoryKor, setCategoryKor] = useState('');
-
   useEffect(() => {
     if (item.category === 'info') {
       setCategoryKor('정보글');
@@ -57,20 +55,17 @@ const CommunityListItem = ({
           <Content dangerouslySetInnerHTML={{ __html: formattedContent }} />
         </TopContainer>
         <BottomContainer>
-          <Writer
-          // onClick={() => {
-          //   handleUserClick(item.user.id);
-          // }}
-          >
-            {item.user_id.profilePicture ? (
-              <img src={item.user_id.profilePicture} alt="UserImg" />
-            ) : (
-              <img
-                src={`${`${process.env.PUBLIC_URL}/imges/user.png`}`}
-                alt="user_img"
-              />
-            )}
-            <span>{item.user_id.nickname}</span>
+          <Writer>
+            <img
+              src={
+                item?.user_id?.profilePicture ??
+                `${process.env.PUBLIC_URL}/imges/user.png`
+              }
+              style={{ objectFit: 'cover' }}
+              alt="UserImg"
+            />
+
+            <span>{item?.user_id?.nickname}</span>
           </Writer>
           <Count>댓글 : {item.comment_id.length}</Count>
           <Count>

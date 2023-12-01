@@ -55,6 +55,10 @@ export const CommentBottomContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 20px 0 10px 0;
+  form {
+    width: 100%;
+    display: flex;
+  }
 `;
 
 export const ButtonContainer = styled.div`

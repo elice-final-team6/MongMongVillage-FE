@@ -8,21 +8,20 @@ import {
   CommentInput,
 } from './CommunityComments.styles';
 import { CommentItem } from '../CommentItem';
+import { showAlert } from '../../util/showAlert';
 
 const CommunityComments = ({ post, id, onCommentPosted }) => {
   const [content, setContent] = useState(''); // 입력한 댓글 내용
-  // 댓글 작성
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') handlePostComment();
-  };
 
+  // 댓글 작성
   const { mutate: postComment } = usePostComment(content, id);
 
-  const handlePostComment = () => {
+  const handlePostComment = (e) => {
+    e.preventDefault();
     if (content === '') {
-      alert('내용을 입력 후 작성해주세요.');
+      showAlert('', '내용을 입력 후 작성해주세요.', 'warning');
     } else if (content.length > 200) {
-      alert('댓글은 200자를 초과할 수 없습니다.');
+      showAlert('', '댓글은 200자를 초과할 수 없습니다.', 'warning', () => {});
     } else {
       postComment();
       onCommentPosted();
@@ -37,12 +36,11 @@ const CommunityComments = ({ post, id, onCommentPosted }) => {
         <p>
           댓글 <span>{post.comments.length}</span>
         </p>
-        <CommentInputContainer>
+        <CommentInputContainer onSubmit={handlePostComment}>
           <CommentInput
             placeholder="댓글을 입력해주세요."
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            onKeyDown={handleKeyPress}
           />
           <SubmitButton onClick={handlePostComment}>등록</SubmitButton>
         </CommentInputContainer>

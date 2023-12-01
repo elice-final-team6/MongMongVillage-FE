@@ -22,6 +22,7 @@ export const SearchInputBox = styled.div`
   align-items: center;
   width: 600px;
   margin-left: 60px;
+  overflow: hidden;
 `;
 
 export const PostBTN = styled.button`
@@ -37,19 +38,22 @@ export const PostBTN = styled.button`
 `;
 
 export const SearchButton = styled.button`
-  background-color: transparent;
+  background-color: var(--main-yellow-color);
   align-items: center;
   justify-content: center;
+  padding-right: 17px;
   svg {
     margin: 0 auto;
     padding: 10px;
+    color: white;
+    margin-top: 4px;
+    margin-left: 10px;
   }
 `;
 
 export const SearchInput = styled.input`
-  padding: 10px;
+  padding: 10px 10px 10px 16px;
   border: none;
   height: 24px;
   width: 500px;
-  border-left: 3px solid var(--main-yellow-color);
 `;

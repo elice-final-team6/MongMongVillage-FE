@@ -68,12 +68,3 @@ export const DogCafeListItemRating = styled.span`
     color: var(--main-yellow-color);
   }
 `;
-
-export const ErrorContainer = styled.div`
-  width: 90%;
-  height: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f0f0f0;
-`;

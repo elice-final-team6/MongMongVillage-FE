@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { MyActivity, MyPageProfile } from '../../components';
 import { Container, InfoUpdateButton, LogoutButton } from './styles';
 import { ROUTE } from '../../routes/Routes';
+import { showAlert } from '../../util/showAlert';
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -12,9 +13,11 @@ const MyPage = () => {
   };
 
   const logout = () => {
-    alert('로그아웃 되었습니다.');
-    localStorage.clear();
-    navigate(ROUTE.MAIN_PAGE.link);
+    showAlert('', '로그아웃 되었습니다.', 'success', () => {
+      localStorage.clear();
+      navigate(ROUTE.MAIN_PAGE.link);
+      window.location.reload();
+    });
   };
 
   return (

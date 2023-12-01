@@ -2,7 +2,6 @@ import {
   Container,
   StarRating,
   CafeDetailContainer,
-  CafeImgContainer,
   CafeImg,
   CafeInfoContainer,
   CafeInfo,
@@ -18,6 +17,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Loading, ReviewItem } from '../../components';
 import { ROUTE } from '../../routes/Routes';
 import { Title } from '../../commonStyles';
+import { showAlert } from '../../util/showAlert';
 
 const CafeDetail = () => {
   const navigate = useNavigate();
@@ -43,6 +43,9 @@ const CafeDetail = () => {
           `${process.env.REACT_APP_DB_API_ENDPOINT}/cafes/${id}`,
         );
         if (!response.ok) {
+          showAlert('', '존재하지 않는 데이터입니다.', 'error', () => {
+            window.history.back();
+          });
           throw new Error('데이터를 불러오지 못했습니다.');
         }
 
@@ -60,6 +63,7 @@ const CafeDetail = () => {
     fetchData();
   }, [id]);
 
+  console.log(cafeDetailInfo);
   return isLoading ? (
     <Loading />
   ) : (
@@ -69,15 +73,7 @@ const CafeDetail = () => {
           <Title fontSize="40px">{cafeDetailInfo.info.name}</Title>
 
           {cafeDetailInfo.info.image.length > 0 ? (
-            <CafeImgContainer>
-              <CafeImg
-                style={{
-                  backgroundImage: `url('${cafeDetailInfo.info.image}')`,
-                  backgroundRepeat: 'no-repeat',
-                  backgroundSize: 'cover',
-                }}
-              ></CafeImg>
-            </CafeImgContainer>
+            <CafeImg src={cafeDetailInfo.info.image}></CafeImg>
           ) : (
             <></>
           )}
@@ -104,14 +100,15 @@ const CafeDetail = () => {
                 <CafeInfo>영업시간 정보가 없습니다.</CafeInfo>
               )}
             </InfoMiniContainer>
+
             <InfoMiniContainer>
               <CafeMiniTitle>메뉴</CafeMiniTitle>
               {cafeDetailInfo.info.menu ? (
-                cafeDetailInfo.info.menu
-                  .split('/')
-                  .map((item, index) => (
-                    <CafeInfo key={index}>- {item}</CafeInfo>
-                  ))
+                cafeDetailInfo.info.menu.split('/').map((item, index) => (
+                  <CafeInfo className="menu" key={index}>
+                    - {item}
+                  </CafeInfo>
+                ))
               ) : (
                 <CafeInfo>메뉴 정보가 없습니다.</CafeInfo>
               )}
@@ -119,7 +116,9 @@ const CafeDetail = () => {
             <InfoMiniContainer>
               <CafeMiniTitle>소개</CafeMiniTitle>
               {cafeDetailInfo.info.intro ? (
-                <CafeInfo>{cafeDetailInfo.info.intro}</CafeInfo>
+                <CafeInfo>
+                  {cafeDetailInfo.info.intro.replace(/[.]/gim, '.\n')}
+                </CafeInfo>
               ) : (
                 <CafeInfo>소개 정보가 없습니다.</CafeInfo>
               )}
@@ -127,22 +126,26 @@ const CafeDetail = () => {
 
             <InfoMiniContainer>
               <CafeMiniTitle>
-                전체 리뷰 ( {cafeDetailInfo.totalReviews} )
+                전체 리뷰 ( {cafeDetailInfo.reviews.length} )
               </CafeMiniTitle>
               <ReviewStarRatingContainer>
                 <StarRating>
-                  평균 별점 | {cafeDetailInfo.info.rating}점
+                  평균 별점 | {cafeDetailInfo.info.averageRating}점
                 </StarRating>
                 <WriteReviewBtn onClick={linkToWriteReview}>
                   리뷰 작성하러가기
                   <BsPencilSquare size={'18px'} />
                 </WriteReviewBtn>
               </ReviewStarRatingContainer>
-              <div className="reviewContainer">
-                {cafeDetailInfo.reviews.map((review) => (
-                  <ReviewItem key={review._id} id={review._id} />
-                ))}
-              </div>
+              {cafeDetailInfo?.reviews.length > 0 ? (
+                <div className="reviewContainer">
+                  {cafeDetailInfo.reviews.map((review) => (
+                    <ReviewItem key={review._id} id={review._id} />
+                  ))}
+                </div>
+              ) : (
+                <div className="noReview">작성된 리뷰가 없습니다.</div>
+              )}
             </InfoMiniContainer>
           </CafeInfoContainer>
         </CafeDetailContainer>

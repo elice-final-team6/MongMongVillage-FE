@@ -1,5 +1,6 @@
 import { instance } from '.';
 import { useMutation } from 'react-query';
+import { showAlert } from '../util/showAlert';
 
 const getDetailBoard = async (id) => {
   try {
@@ -20,6 +21,9 @@ const getDetailBoard = async (id) => {
 export function useGetDetailBoard(id) {
   return useMutation(() => getDetailBoard(id), {
     onError: (error) => {
+      showAlert('', '존재하지 않는 데이터입니다.', 'warning', () => {
+        window.history.back();
+      });
       console.error('Failed to fetch Detail Board:', error.message);
     },
   });

@@ -44,9 +44,8 @@ const Kakao = () => {
                 className="form__input"
                 name="place"
                 onChange={keywordChange}
-                placeholder="서울의 '구' 명 이나 업체의 상호명을 입력해주세요... ex) 강서구"
+                placeholder="서울의 지역명 이나 업체의 상호명을 입력해주세요... ex) 강서구"
                 required
-                style={{ width: '500px' }}
               />
               <div className="btn-box">
                 <input
@@ -59,7 +58,6 @@ const Kakao = () => {
             </label>
           </form>
         </div>
-        {/* 제출한 검색어 넘기기 */}
         <Map searchKeyword={keyword} />
       </div>
     </div>

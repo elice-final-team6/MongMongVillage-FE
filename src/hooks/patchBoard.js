@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { instance } from '.';
 import { useMutation, useQueryClient } from 'react-query';
 import { ROUTE } from '../routes/Routes';
+import { showAlert } from '../util/showAlert';
 
 const patchBoard = async (category, content, title, boardId, images) => {
   const formData = new FormData();
@@ -26,15 +27,19 @@ export function usePatchBoard(category, content, title, boardId, images) {
     () => patchBoard(category, content, title, boardId, images),
     {
       onSuccess: () => {
-        alert('수정이 완료되었습니다.');
-        navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${boardId}`);
-
-        queryClient.invalidateQueries(['myBoards']);
-        window.scrollTo(0, 0);
+        showAlert('', '수정이 완료되었습니다.', 'success', () => {
+          navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${boardId}`);
+          queryClient.invalidateQueries(['myBoards']);
+          window.scrollTo(0, 0);
+        });
       },
       onError: (error) => {
-        console.error(error);
-        alert(error.response.data.error + '게시글을 수정 할 수 없습니다.');
+        showAlert(
+          '',
+          error.response.data.error + '게시글을 수정 할 수 없습니다.',
+          'error',
+          () => {},
+        );
       },
     },
   );

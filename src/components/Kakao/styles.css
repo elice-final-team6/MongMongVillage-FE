@@ -1,6 +1,6 @@
 .landing-page {
   height: 100%;
-  width: 80%;
+  width: 85%;
 }
 
 .landing-page__inner {
@@ -16,17 +16,16 @@
   display: block;
   position: relative;
   width: 100%;
-  max-width: 310px;
+  max-width: 410px;
   margin: 0 auto;
 }
 
 .search-form .form__input {
   display: block;
-  width: 350px;
+  width: 450px;
   height: 45px;
   padding: 0 15px 0 35px;
   font-size: 16px;
-  line-height: 45px;
   border-radius: 3px;
   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
 }
@@ -34,7 +33,7 @@
 .search-form .form__input:focus {
   outline: none;
   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
-  width: 450px;
+  width: 550px;
   transition: 0.5s;
 }
 
@@ -65,7 +64,7 @@
 }
 
 .map {
-  width: 75%;
+  width: 75% !important;
   height: 640px;
   border: 1px solid #eee;
 }

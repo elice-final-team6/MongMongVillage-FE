@@ -1,5 +1,6 @@
 import { instance } from '.';
 import { useMutation, useQueryClient } from 'react-query';
+import { showAlert } from '../util/showAlert';
 
 const patchComment = async (commentId, BoardId, content) => {
   const response = await instance.patch(
@@ -15,12 +16,12 @@ export function usePatchComment(commentId, BoardId, content) {
 
   return useMutation(() => patchComment(commentId, BoardId, content), {
     onSuccess: () => {
-      alert('댓글이 수정되었습니다.');
+      showAlert('', '댓글이 수정되었습니다.', 'success');
       queryClient.invalidateQueries(['myComments']);
     },
 
     onError: (error) => {
-      alert(error.response + '댓글 수정을 할 수 없습니다.');
+      showAlert('', error.response + '댓글 수정을 할 수 없습니다.', 'error');
     },
   });
 }
