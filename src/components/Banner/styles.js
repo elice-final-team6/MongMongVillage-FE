@@ -62,3 +62,36 @@ export const BannerPhoneNumber = styled.h3`
   left: 200px;
   cursor: default;
 `;
+
+export const PopolarCafeBtn = styled.button`
+  width: 250px;
+  height: 50px;
+  border-radius: 50px;
+  position: absolute;
+  bottom: 20px;
+  left: 150px;
+  background: #ffa6e2;
+  color: white;
+  font-size: 23px;
+  font-family: 'KOTRAHOPE';
+  z-index: 1;
+`;
+
+export const BtnImg = styled.img`
+  position: absolute;
+  bottom: 30px;
+  left: 350px;
+  width: 40px;
+  height: 40px;
+  transform: rotate(20deg);
+`;
+
+export const HoverContainer = styled.div`
+  &:hover {
+    ${BtnImg} {
+      left: 368px;
+      bottom: 63px;
+      transition: 0.5s;
+    }
+  }
+`;
