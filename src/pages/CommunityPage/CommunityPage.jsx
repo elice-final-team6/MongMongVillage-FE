@@ -162,12 +162,8 @@ const CommunityPage = () => {
 
   // 각 게시글 클릭시 실행 함수
   const handlePostClick = (postId) => {
-    if (user) {
-      navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${postId}`);
-      window.scrollTo(0, 0);
-    } else {
-      alert('로그인 후 작성해주세요.');
-    }
+    navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${postId}`);
+    window.scrollTo(0, 0);
   };
 
   // 현재 페이지에 표시될 아이템들
