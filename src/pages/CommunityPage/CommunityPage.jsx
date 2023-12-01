@@ -127,8 +127,12 @@ const CommunityPage = () => {
   // id 값을 params로 넘겨줄 함수 - detail 페이지로 정보 넘겨주기
   // 글작성 클릭시 실행 함수
   const handleNewPostClick = () => {
-    navigate(ROUTE.NEW_POST_PAGE.link);
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    if (user === null) {
+      alert('로그인 후 작성해주세요.');
+    } else {
+      navigate(ROUTE.NEW_POST_PAGE.link);
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }
   };
   // 전체 페이지 수 계산
   const totalPages = Math.ceil(totalBoards / ITEMS_PER_PAGE);
@@ -158,8 +162,12 @@ const CommunityPage = () => {
 
   // 각 게시글 클릭시 실행 함수
   const handlePostClick = (postId) => {
-    navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${postId}`);
-    window.scrollTo(0, 0);
+    if (user) {
+      navigate(`${ROUTE.COMMUNITY_DETAIL_PAGE.link}/${postId}`);
+      window.scrollTo(0, 0);
+    } else {
+      alert('로그인 후 작성해주세요.');
+    }
   };
 
   // 현재 페이지에 표시될 아이템들
