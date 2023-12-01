@@ -28,6 +28,7 @@ const CommunityUnderContent = ({ onEdit, onDelete, post }) => {
               post?.board?.user_id?.profilePicture ??
               `${process.env.PUBLIC_URL}/imges/user.png`
             }
+            style={{ objectFit: 'cover' }}
             alt="UserImg"
           />
         </div>
