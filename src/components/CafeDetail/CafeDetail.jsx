@@ -130,7 +130,7 @@ const CafeDetail = () => {
               </CafeMiniTitle>
               <ReviewStarRatingContainer>
                 <StarRating>
-                  평균 별점 | {cafeDetailInfo.info.averageRating}점
+                  평균 별점 | {cafeDetailInfo.info.rating}점
                 </StarRating>
                 <WriteReviewBtn onClick={linkToWriteReview}>
                   리뷰 작성하러가기

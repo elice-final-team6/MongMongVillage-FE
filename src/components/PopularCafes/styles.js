@@ -62,9 +62,10 @@ export const DogCafeListItemTitle = styled.span`
 
 export const DogCafeListItemRating = styled.span`
   font-size: 18px;
+  margin-right: 30px;
   span {
     padding: 0 5px;
-    margin-right: 30px;
-    color: var(--main-yellow-color);
+    font-weight: bold;
+    font-size: 20px;
   }
 `;

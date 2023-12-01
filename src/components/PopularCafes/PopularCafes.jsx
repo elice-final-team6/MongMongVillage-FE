@@ -58,10 +58,7 @@ const PopularCafes = () => {
                 <DogCafeListItemTitle>{content.name}</DogCafeListItemTitle>
                 <DogCafeListItemRating>
                   평균 별점
-                  <span>
-                    {'★'.repeat(content.rating) +
-                      '☆'.repeat(5 - content.rating)}
-                  </span>
+                  <span>{content.rating}</span>점
                 </DogCafeListItemRating>
               </DogCafeInfoContainer>
             </DogCafeListItem>
