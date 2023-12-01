@@ -35,14 +35,10 @@ export default function Map(props) {
         nameResults.length > 0 ? nameResults : addressResults;
 
       setResultCafe(mergedResults);
-      console.log('검색결과 카페 : ', resultCafe);
     }
   }, [allCafesData]);
 
   useEffect(() => {
-    console.log('검색결과 카페 2 : ', resultCafe);
-    // setLong(resultCafe[0].longitude);
-    // setLat(resultCafe[0].latitude);
     // 정상 출력
     let container = document.getElementById('map');
     if (resultCafe.length === 0) {
@@ -63,6 +59,8 @@ export default function Map(props) {
         level: 7,
       };
 
+      console.log(resultCafe);
+
       //map
       const map = new kakao.maps.Map(container, options);
 
@@ -76,9 +74,10 @@ export default function Map(props) {
 
         const content = `
           <div style="padding: 10px; background-color: #fff; border-radius: 10px;">
-            <h3 style="margin-bottom: 5px;">${el.name}</h3>
-            <p>${el.road_addr}</p>
-            <p>${el.phone_number}</p>
+            <h3 style="margin-bottom: 8px;">${el.name}</h3>
+            <p style="margin-bottom: 5px;">${el.road_addr}</p>
+            <p style="margin-bottom: 5px;">${el.phone_number}</p>
+            <p style="margin-bottom: 5px;">${el.intro}</p>
           </div>
         `;
 
@@ -143,21 +142,31 @@ export default function Map(props) {
           }}
         >
           <h2>카페 목록</h2>
-          <ul>
-            {resultCafe.map((cafe) => (
-              <li
-                key={cafe.id}
-                style={{ cursor: 'pointer', marginBottom: '10px' }}
-                onClick={() =>
-                  navigate(`${ROUTE.CAFE_DETAIL_PAGE.link}/${cafe._id}`)
-                }
-              >
-                <p className="cafename">{cafe.name}</p>
-                <p>{cafe.road_addr}</p>
-                <p>{cafe.phone_number}</p>
-              </li>
-            ))}
-          </ul>
+          {resultCafe.length === 0 ? (
+            <div>
+              <p className="noSearchTitle" style={{ marginTop: '30px' }}>
+                검색 결과가 없습니다.
+              </p>
+              <p>서울의 '구' 명 이나 업체의 상호명을 입력해주세요.</p>
+              <p>예 : '강남구' or '멍멍이다방'</p>
+            </div>
+          ) : (
+            <ul>
+              {resultCafe.map((cafe) => (
+                <li
+                  key={cafe.id}
+                  style={{ cursor: 'pointer', marginBottom: '10px' }}
+                  onClick={() =>
+                    navigate(`${ROUTE.CAFE_DETAIL_PAGE.link}/${cafe._id}`)
+                  }
+                >
+                  <p className="cafename">{cafe.name}</p>
+                  <p>{cafe.road_addr}</p>
+                  <p>{cafe.phone_number}</p>
+                </li>
+              ))}
+            </ul>
+          )}
         </CafeList>
       </div>
     </MapContainer>

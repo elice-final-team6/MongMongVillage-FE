@@ -57,11 +57,7 @@ const CommunityListItem = ({
           <Content dangerouslySetInnerHTML={{ __html: formattedContent }} />
         </TopContainer>
         <BottomContainer>
-          <Writer
-          // onClick={() => {
-          //   handleUserClick(item.user.id);
-          // }}
-          >
+          <Writer>
             {item.user_id.profilePicture ? (
               <img src={item.user_id.profilePicture} alt="UserImg" />
             ) : (
